@@ -1,0 +1,56 @@
+# POLARIS 배포 스택 — backend + frontend + 3DB (카페24 클라우드 등)
+# 데이터 적재는 pola CLI 로 (로컬에서 이 서버 DB 에 원격 연결).
+#
+# 기동:  docker compose up -d --build
+# 종료:  docker compose down            (볼륨 유지)
+name: polaris
+
+services:
+  mariadb:
+    image: mariadb:11
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD:-polaris_root_dev_only}
+      MARIADB_DATABASE: ${MARIADB_DATABASE:-polaris}
+      MARIADB_USER: ${MARIADB_USER:-polaris}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD:-polaris_dev_only}
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]
+    ports: ["3307:3306"]
+    volumes: ["mariadb_data:/var/lib/mysql"]
+
+  qdrant:
+    image: qdrant/qdrant:v1.12.4
+    restart: unless-stopped
+    ports: ["6333:6333", "6334:6334"]
+    volumes: ["qdrant_data:/qdrant/storage"]
+
+  neo4j:
+    image: neo4j:5.24-community
+    restart: unless-stopped
+    environment:
+      NEO4J_AUTH: "${NEO4J_USER:-neo4j}/${NEO4J_PASSWORD:-polaris_dev_only}"
+      NEO4J_PLUGINS: '["apoc"]'
+    ports: ["7474:7474", "7687:7687"]
+    volumes: ["neo4j_data:/data"]
+
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    environment:
+      MARIADB_HOST: mariadb
+      QDRANT_HOST: qdrant
+      NEO4J_URI: bolt://neo4j:7687
+      CORS_ORIGINS: '["http://localhost","http://localhost:80"]'
+    ports: ["8000:8000"]
+    depends_on: [mariadb, qdrant, neo4j]
+
+  frontend:
+    build: ./frontend
+    restart: unless-stopped
+    ports: ["80:80"]
+    depends_on: [backend]
+
+volumes:
+  mariadb_data:
+  qdrant_data:
+  neo4j_data:

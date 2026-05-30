@@ -1,0 +1,5386 @@
+# 의미 그래프 골드셋 v1 — N=10 시작 (LLM 추출 결과 보고 N=50 까지 사용자 검수)
+#
+# 카테고리:
+#   entity         : chunk_id → 추출된 entities 비교
+#   relation       : chunk_id → 추출된 triples 비교
+#   event          : chunk_id → 추출된 Event 비교
+#   entity_linking : alias → corp_code 매칭 정확도
+#
+# 게이트 (graph/eval/gold_semantic.py SEMANTIC_GATES):
+#   entity         : P≥0.80, R≥0.70, F1≥0.75
+#   relation       : P≥0.75, R≥0.65, F1≥0.70
+#   event          : P≥0.80, R≥0.70, F1≥0.75
+#   entity_linking : P≥0.90, R≥0.85, F1≥0.87
+
+# ────── entity_linking — alias → corp_code 매칭 (Stage 1 yaml 단독 검증) ──────
+
+- id: link_001
+  category: entity_linking
+  alias: 삼성전자
+  expected_corp_code: 00126380
+- id: link_002
+  category: entity_linking
+  alias: 삼성전자(주)
+  expected_corp_code: 00126380
+- id: link_003
+  category: entity_linking
+  alias: Samsung Electronics
+  expected_corp_code: 00126380
+- id: link_004
+  category: entity_linking
+  alias: 에스케이하이닉스
+  expected_corp_code: 00164779
+- id: link_005
+  category: entity_linking
+  alias: SK Hynix
+  expected_corp_code: 00164779
+- id: link_006
+  category: entity_linking
+  alias: 동진쎄미켐
+  expected_corp_code: 00118804
+- id: link_007
+  category: entity_linking
+  alias: (주)솔브레인
+  expected_corp_code: 01489648
+- id: link_008
+  category: entity_linking
+  alias: 한미반도체
+  expected_corp_code: 00161383
+- id: link_009
+  category: entity_linking
+  alias: DB하이텍
+  expected_corp_code: 00160843
+- id: link_010
+  category: entity_linking
+  alias: TSMC
+  expected_corp_code: XTSMC0001
+
+# ────── promoted from _candidates_auto_20260526_1341_01.yml (+179건) ──────
+- id: ent_001
+  category: entity
+  chunk_id: ac85f36404b57580
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 리노공업
+    confidence: 0.95
+    corp_code: '00246417'
+  - type: Product
+    surface: IC TEST SOCKET
+    confidence: 0.9
+    product_id: IC_TEST_SOCKET
+  - type: Product
+    surface: 초음파 진단기
+    confidence: 0.8
+    product_id: ULTRASOUND_SCANNER
+  - type: Product
+    surface: LEENO PIN
+    confidence: 0.95
+    product_id: LEENO_PIN
+  source_candidate_id: ent_cand_001
+- id: ent_002
+  category: entity
+  chunk_id: 68d69ffcc9f3493f
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 삼성전자
+    confidence: 0.95
+    corp_code: 00126380
+  - type: Organization
+    surface: SK하이닉스
+    confidence: 0.95
+    corp_code: 00164779
+  - type: Organization
+    surface: 삼성디스플레이
+    confidence: 0.95
+    corp_code: XSDISP001
+  - type: Organization
+    surface: LG디스플레이
+    confidence: 0.95
+    corp_code: XLGDP0001
+  - type: Organization
+    surface: 삼성SDI
+    confidence: 0.95
+    corp_code: XSSDI0001
+  - type: Organization
+    surface: SK온
+    confidence: 0.95
+    corp_code: XSKON0001
+  - type: Organization
+    surface: LG에너지솔루션
+    confidence: 0.95
+    corp_code: XLGES0001
+  - type: Organization
+    surface: 솔브레인(시안)전자재료유한공사
+    confidence: 0.95
+    corp_code: XDJ_XIAN
+  - type: Organization
+    surface: 솔브레인라사 주식회사
+    confidence: 0.95
+    corp_code: XDJ_SOLRASAKR
+  - type: Organization
+    surface: SOULBRAIN TX LLC
+    confidence: 0.95
+    corp_code: XDJ_SOLTX
+  - type: Organization
+    surface: SOULBRAIN RASA TX LLC
+    confidence: 0.95
+    corp_code: XDJ_SOLRASA
+  - type: Product
+    surface: DRAM
+    confidence: 0.9
+    product_id: DRAM_GENERIC
+  - type: Product
+    surface: NAND
+    confidence: 0.9
+    product_id: NAND_GENERIC
+  - type: Place
+    surface: 중국
+    confidence: 0.95
+    iso_code: CN
+  - type: Place
+    surface: 미국
+    confidence: 0.95
+    iso_code: US
+  source_candidate_id: ent_cand_002
+- id: ent_003
+  category: entity
+  chunk_id: 1dc860718d26cd96
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Product
+    surface: DRAM
+    confidence: 0.95
+    product_id: DRAM_GENERIC
+  - type: Product
+    surface: NAND
+    confidence: 0.95
+    product_id: NAND_GENERIC
+  source_candidate_id: ent_cand_003
+- id: ent_004
+  category: entity
+  chunk_id: d974785c4f672880
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: SK하이닉스
+    confidence: 0.95
+    corp_code: 00164779
+  - type: Place
+    surface: 미국
+    confidence: 0.95
+    iso_code: US
+  - type: Place
+    surface: 중국
+    confidence: 0.95
+    iso_code: CN
+  - type: Place
+    surface: 싱가포르
+    confidence: 0.95
+    iso_code: SG
+  - type: Place
+    surface: 대만
+    confidence: 0.95
+    iso_code: TW
+  - type: Place
+    surface: 홍콩
+    confidence: 0.95
+    iso_code: CN_HK
+  - type: Place
+    surface: 국내
+    confidence: 0.85
+    iso_code: KR
+  - type: Product
+    surface: DRAM
+    confidence: 0.95
+    product_id: DRAM_GENERIC
+  - type: Product
+    surface: NAND
+    confidence: 0.95
+    product_id: NAND_GENERIC
+  source_candidate_id: ent_cand_004
+- id: ent_005
+  category: entity
+  chunk_id: 036ac40b1baa14b5
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 리노공업
+    confidence: 0.95
+    corp_code: '00246417'
+  source_candidate_id: ent_cand_005
+- id: ent_006
+  category: entity
+  chunk_id: e77175fb0150a647
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Place
+    surface: 한국
+    confidence: 0.95
+    iso_code: KR
+  - type: Place
+    surface: 일본
+    confidence: 0.95
+    iso_code: JP
+  - type: Place
+    surface: 독일
+    confidence: 0.95
+    iso_code: DE
+  - type: Place
+    surface: 미국
+    confidence: 0.95
+    iso_code: US
+  - type: Place
+    surface: 한국
+    confidence: 0.95
+    iso_code: KR
+  - type: Place
+    surface: 일본
+    confidence: 0.95
+    iso_code: JP
+  - type: Place
+    surface: 중국
+    confidence: 0.95
+    iso_code: CN
+  - type: Place
+    surface: 한국
+    confidence: 0.95
+    iso_code: KR
+  - type: Place
+    surface: 중국
+    confidence: 0.95
+    iso_code: CN
+  - type: Place
+    surface: 대만
+    confidence: 0.95
+    iso_code: TW
+  - type: Place
+    surface: 동남아
+    confidence: 0.85
+    iso_code: APAC
+  source_candidate_id: ent_cand_006
+- id: ent_007
+  category: entity
+  chunk_id: d52d48e79e59be62
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Product
+    surface: HBM
+    confidence: 0.98
+    product_id: HBM_GENERIC
+  - type: Product
+    surface: MULTI DIE BONDER
+    confidence: 0.95
+    product_id: DIE_BONDER
+  - type: Product
+    surface: BIG DIE BONDER
+    confidence: 0.95
+    product_id: DIE_BONDER
+  - type: Product
+    surface: micro SAW
+    confidence: 0.95
+    product_id: MICRO_SAW
+  source_candidate_id: ent_cand_007
+- id: ent_008
+  category: entity
+  chunk_id: 837fc88c95f8b020
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Technology
+    surface: GAA
+    confidence: 0.95
+    tech_id: GAA
+  - type: Product
+    surface: HBM4
+    confidence: 0.95
+    product_id: HBM4
+  - type: Technology
+    surface: CMP
+    confidence: 0.95
+    tech_id: CMP_SLURRY
+  - type: Product
+    surface: OLED
+    confidence: 0.95
+    product_id: OLED
+  - type: Product
+    surface: V-NAND
+    confidence: 0.95
+    product_id: V_NAND
+  - type: Product
+    surface: HBM4
+    confidence: 0.95
+    product_id: HBM4
+  - type: Product
+    surface: 칩렛
+    confidence: 0.95
+    product_id: CHIPLET
+  - type: Technology
+    surface: TSV
+    confidence: 0.95
+    tech_id: TSV
+  - type: Organization
+    surface: 삼성전자
+    confidence: 0.95
+    corp_code: 00126380
+  - type: Organization
+    surface: SK하이닉스
+    confidence: 0.95
+    corp_code: 00164779
+  source_candidate_id: ent_cand_008
+- id: ent_009
+  category: entity
+  chunk_id: d794957caf2c744f
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: SK하이닉스
+    confidence: 0.95
+    corp_code: 00164779
+  - type: Product
+    surface: DRAM
+    confidence: 0.95
+    product_id: DRAM_GENERIC
+  source_candidate_id: ent_cand_009
+- id: ent_010
+  category: entity
+  chunk_id: 5fc444bc99e021d3
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Product
+    surface: 감광액
+    confidence: 0.95
+    product_id: PHOTORESIST
+  - type: Technology
+    surface: CMP
+    confidence: 0.9
+    tech_id: CMP_SLURRY
+  - type: Product
+    surface: Wet Chemical
+    confidence: 0.95
+    product_id: WET_CHEMICAL
+  - type: Product
+    surface: Colored Resist
+    confidence: 0.95
+    product_id: COLORED_RESIST
+  - type: Product
+    surface: Organic Insulating Layer
+    confidence: 0.95
+    product_id: ORGANIC_INSULATING_LAYER
+  - type: Product
+    surface: Column Spacer
+    confidence: 0.95
+    product_id: COLUMN_SPACER
+  - type: Product
+    surface: CNT 도전재
+    confidence: 0.9
+    product_id: CNT_CONDUCTIVE
+  - type: Product
+    surface: 실리콘 음극재
+    confidence: 0.9
+    product_id: SI_ANODE
+  - type: Place
+    surface: 인도네시아
+    confidence: 0.95
+    iso_code: ID
+  - type: Organization
+    surface: PT.Dongjin Indonesia
+    confidence: 0.95
+    corp_code: XDJ_INDONESIA
+  source_candidate_id: ent_cand_010
+- id: ent_011
+  category: entity
+  chunk_id: b9aa1853f9d8e7e6
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: DB하이텍
+    confidence: 0.95
+    corp_code: 00160843
+  - type: Technology
+    surface: Foundry
+    confidence: 0.85
+    tech_id: FOUNDRY_BUSINESS
+  source_candidate_id: ent_cand_011
+- id: ent_012
+  category: entity
+  chunk_id: fbd697c7fdddcb04
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: SK하이닉스
+    confidence: 0.95
+    corp_code: 00164779
+  - type: Product
+    surface: HBM
+    confidence: 0.95
+    product_id: HBM_GENERIC
+  - type: Product
+    surface: DRAM
+    confidence: 0.95
+    product_id: DRAM_GENERIC
+  - type: Product
+    surface: NAND
+    confidence: 0.95
+    product_id: NAND_GENERIC
+  source_candidate_id: ent_cand_012
+- id: ent_013
+  category: entity
+  chunk_id: 78ad1910d9cf869c
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 리노공업
+    confidence: 0.95
+    corp_code: '00246417'
+  source_candidate_id: ent_cand_013
+- id: ent_014
+  category: entity
+  chunk_id: 550791d2c22b671e
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: Mitsubishi Gas Chemical Trading, Inc.
+    confidence: 0.95
+    corp_code: XMGCT0001
+  - type: Organization
+    surface: PURAC ASIA PACIFIC PTE LTD
+    confidence: 0.95
+    corp_code: XPURAC001
+  - type: Organization
+    surface: Ashland Inc.
+    confidence: 0.95
+    corp_code: XASH0001
+  - type: Organization
+    surface: (주)삼양엔씨켐
+    confidence: 0.95
+    corp_code: XSYNC0001
+  - type: Organization
+    surface: (주)동진첨단소재
+    confidence: 0.95
+    corp_code: XDJ_DCMAT
+  - type: Product
+    surface: 감광액
+    confidence: 0.85
+    product_id: PHOTORESIST
+  - type: Product
+    surface: 발포제
+    confidence: 0.85
+    product_id: FOAMING_AGENT
+  - type: Product
+    surface: Solvent
+    confidence: 0.85
+    product_id: SOLVENT
+  - type: Product
+    surface: PAC
+    confidence: 0.85
+    product_id: PAC_MATERIAL
+  - type: Product
+    surface: RESIN
+    confidence: 0.85
+    product_id: RESIN_MATERIAL
+  source_candidate_id: ent_cand_014
+- id: ent_015
+  category: entity
+  chunk_id: 8e3249d2381e0b2e
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 리노공업
+    confidence: 0.95
+    corp_code: '00246417'
+  - type: Product
+    surface: LEENO PIN
+    confidence: 0.9
+    product_id: LEENO_PIN
+  - type: Product
+    surface: IC TEST SOCKET
+    confidence: 0.9
+    product_id: IC_TEST_SOCKET
+  - type: Product
+    surface: 초음파진단기
+    confidence: 0.85
+    product_id: ULTRASOUND_SCANNER
+  source_candidate_id: ent_cand_015
+- id: ent_016
+  category: entity
+  chunk_id: 42d04ecf143b8d34
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 솔브레인
+    confidence: 0.95
+    corp_code: 01489648
+  - type: Organization
+    surface: 솔브레인(시안)전자재료유한공사
+    confidence: 0.95
+    corp_code: XDJ_XIAN
+  - type: Organization
+    surface: Soulbrain TX LLC
+    confidence: 0.95
+    corp_code: XSOL_TX
+  - type: Organization
+    surface: Soulbrain RASA TX LLC
+    confidence: 0.95
+    corp_code: XSOL_RASA
+  - type: Organization
+    surface: 삼성전자
+    confidence: 0.95
+    corp_code: 00126380
+  - type: Organization
+    surface: SK하이닉스
+    confidence: 0.95
+    corp_code: 00164779
+  - type: Organization
+    surface: LG디스플레이
+    confidence: 0.95
+    corp_code: XLGDP0001
+  - type: Organization
+    surface: 삼성SDI
+    confidence: 0.95
+    corp_code: XSSDI0001
+  - type: Place
+    surface: 중국
+    confidence: 0.95
+    iso_code: CN
+  - type: Place
+    surface: 미국
+    confidence: 0.95
+    iso_code: US
+  source_candidate_id: ent_cand_016
+- id: ent_017
+  category: entity
+  chunk_id: 2259d167127771c7
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Product
+    surface: NAND
+    confidence: 0.9
+    product_id: NAND_GENERIC
+  - type: Place
+    surface: Wuxi
+    confidence: 0.85
+    iso_code: CN_WUXI
+  source_candidate_id: ent_cand_017
+- id: ent_018
+  category: entity
+  chunk_id: 208f04a0bfb5deba
+  chunk_type: text_macro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Product
+    surface: DRAM
+    confidence: 0.98
+    product_id: DRAM_GENERIC
+  - type: Product
+    surface: NAND
+    confidence: 0.98
+    product_id: NAND_GENERIC
+  - type: Product
+    surface: HBM
+    confidence: 0.95
+    product_id: HBM_GENERIC
+  source_candidate_id: ent_cand_018
+- id: ent_019
+  category: entity
+  chunk_id: 5c4ba9b5c5cd4027
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Place
+    surface: 인천광역시
+    confidence: 0.95
+    iso_code: KR_INCHEON
+  - type: Organization
+    surface: (주)동진쎄미켐
+    confidence: 0.95
+    corp_code: 00118804
+  source_candidate_id: ent_cand_019
+- id: ent_020
+  category: entity
+  chunk_id: cc8f948094519468
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 삼성전자
+    confidence: 0.95
+    corp_code: 00126380
+  - type: Organization
+    surface: SK하이닉스
+    confidence: 0.95
+    corp_code: 00164779
+  - type: Organization
+    surface: 삼성디스플레이
+    confidence: 0.95
+    corp_code: XSDISP001
+  - type: Organization
+    surface: LG디스플레이
+    confidence: 0.95
+    corp_code: XLGDP0001
+  - type: Organization
+    surface: 삼성SDI
+    confidence: 0.95
+    corp_code: XSSDI0001
+  - type: Organization
+    surface: SK온
+    confidence: 0.95
+    corp_code: XSKON0001
+  - type: Organization
+    surface: LG에너지솔루션
+    confidence: 0.95
+    corp_code: XLGES0001
+  - type: Organization
+    surface: 솔브레인(시안)전자재료유한공사
+    confidence: 0.95
+    corp_code: XDJ_XIAN
+  - type: Organization
+    surface: 솔브레인라사 주식회사
+    confidence: 0.95
+    corp_code: XDJ_SOLRASAKR
+  - type: Organization
+    surface: Soulbrain TX LLC
+    confidence: 0.95
+    corp_code: XSOL_TX
+  - type: Organization
+    surface: Soulbrain RASA TX LLC
+    confidence: 0.95
+    corp_code: XSOL_RASA
+  - type: Place
+    surface: 중국
+    confidence: 0.95
+    iso_code: CN
+  - type: Place
+    surface: 미국
+    confidence: 0.95
+    iso_code: US
+  - type: Product
+    surface: DRAM
+    confidence: 0.9
+    product_id: DRAM_GENERIC
+  - type: Product
+    surface: NAND
+    confidence: 0.9
+    product_id: NAND_GENERIC
+  source_candidate_id: ent_cand_020
+- id: ent_021
+  category: entity
+  chunk_id: ddf2903f0dfbec64
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Place
+    surface: 경기도 성남시
+    confidence: 0.95
+    iso_code: KR_SEONGNAM
+  - type: Place
+    surface: 충청남도 공주시
+    confidence: 0.95
+    iso_code: KR_GONGJU
+  - type: Place
+    surface: 경기도 파주시
+    confidence: 0.95
+    iso_code: KR_PAJU
+  - type: Place
+    surface: 경기도 용인시
+    confidence: 0.95
+    iso_code: KR_YONGIN
+  - type: Place
+    surface: 대전광역시
+    confidence: 0.95
+    iso_code: KR_DAEJEON
+  - type: Place
+    surface: 중국
+    confidence: 0.95
+    iso_code: CN
+  - type: Place
+    surface: 시안
+    confidence: 0.95
+    iso_code: CN_XIAN
+  - type: Place
+    surface: 미국
+    confidence: 0.95
+    iso_code: US
+  - type: Organization
+    surface: 솔브레인(시안)전자재료유한공사
+    confidence: 0.95
+    corp_code: XDJ_XIAN
+  - type: Organization
+    surface: Soulbrain TX LLC
+    confidence: 0.95
+    corp_code: XSOL_TX
+  - type: Organization
+    surface: Soulbrain RASA TX LLC
+    confidence: 0.95
+    corp_code: XSOL_RASA
+  source_candidate_id: ent_cand_021
+- id: ent_022
+  category: entity
+  chunk_id: 6301bda1fcc8741c
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 동진쎄미켐
+    confidence: 0.95
+    corp_code: 00118804
+  - type: Organization
+    surface: 삼성전자
+    confidence: 0.95
+    corp_code: 00126380
+  - type: Organization
+    surface: 엘지디스플레이
+    confidence: 0.95
+    corp_code: XLGDP0001
+  - type: Organization
+    surface: 삼성디스플레이
+    confidence: 0.95
+    corp_code: XSDISP001
+  - type: Product
+    surface: 감광액
+    confidence: 0.9
+    product_id: PHOTORESIST
+  - type: Product
+    surface: 발포제
+    confidence: 0.9
+    product_id: FOAMING_AGENT
+  source_candidate_id: ent_cand_022
+- id: ent_023
+  category: entity
+  chunk_id: 976603dab842a484
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 솔브레인
+    confidence: 0.95
+    corp_code: 01489648
+  - type: Product
+    surface: HBM
+    confidence: 0.95
+    product_id: HBM_GENERIC
+  source_candidate_id: ent_cand_023
+- id: ent_024
+  category: entity
+  chunk_id: 1df667ae4edb0ff6
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Place
+    surface: 경기도 성남시
+    confidence: 0.95
+    iso_code: KR_SEONGNAM
+  - type: Place
+    surface: 충청남도 공주시
+    confidence: 0.95
+    iso_code: KR_GONGJU
+  - type: Place
+    surface: 경기도 파주시
+    confidence: 0.95
+    iso_code: KR_PAJU
+  - type: Place
+    surface: 경기도 용인시
+    confidence: 0.95
+    iso_code: KR_YONGIN
+  - type: Place
+    surface: 대전광역시
+    confidence: 0.95
+    iso_code: KR_DAEJEON
+  - type: Place
+    surface: 중국
+    confidence: 0.95
+    iso_code: CN
+  - type: Place
+    surface: 시안
+    confidence: 0.95
+    iso_code: CN_XIAN
+  - type: Place
+    surface: 미국
+    confidence: 0.95
+    iso_code: US
+  - type: Organization
+    surface: 솔브레인(시안)전자재료유한공사
+    confidence: 0.95
+    corp_code: XDJ_XIAN
+  - type: Organization
+    surface: SOULBRAIN TX LLC
+    confidence: 0.95
+    corp_code: XDJ_SOLTX
+  - type: Organization
+    surface: SOULBRAIN RASA TX LLC
+    confidence: 0.95
+    corp_code: XDJ_SOLRASA
+  source_candidate_id: ent_cand_024
+- id: ent_025
+  category: entity
+  chunk_id: 80384b9c63fee7ab
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 삼성전자
+    confidence: 0.95
+    corp_code: 00126380
+  - type: Product
+    surface: DRAM
+    confidence: 0.95
+    product_id: DRAM_GENERIC
+  - type: Product
+    surface: NAND
+    confidence: 0.95
+    product_id: NAND_GENERIC
+  source_candidate_id: ent_cand_025
+- id: ent_026
+  category: entity
+  chunk_id: b84aaf6b5c5a9df9
+  chunk_type: news_text
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 삼성전자
+    confidence: 0.95
+    corp_code: 00126380
+  source_candidate_id: ent_cand_026
+- id: ent_027
+  category: entity
+  chunk_id: d040a77c962b8572
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 리노공업
+    confidence: 0.95
+    corp_code: '00246417'
+  - type: Product
+    surface: LEENO PIN
+    confidence: 0.9
+    product_id: LEENO_PIN
+  - type: Product
+    surface: IC TEST SOCKET
+    confidence: 0.9
+    product_id: IC_TEST_SOCKET
+  - type: Product
+    surface: 초음파 진단기
+    confidence: 0.85
+    product_id: ULTRASOUND_SCANNER
+  source_candidate_id: ent_cand_027
+- id: ent_028
+  category: entity
+  chunk_id: af7806556a7fcfe2
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 삼성전자
+    confidence: 0.95
+    corp_code: 00126380
+  - type: Organization
+    surface: 삼성디스플레이
+    confidence: 0.95
+    corp_code: XSDISP001
+  - type: Organization
+    surface: SK하이닉스
+    confidence: 0.95
+    corp_code: 00164779
+  - type: Organization
+    surface: LG디스플레이
+    confidence: 0.95
+    corp_code: XLGDP0001
+  source_candidate_id: ent_cand_028
+- id: ent_029
+  category: entity
+  chunk_id: c9c56df73d7d24f7
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 솔브레인
+    confidence: 0.95
+    corp_code: 01489648
+  - type: Product
+    surface: HBM
+    confidence: 0.98
+    product_id: HBM_GENERIC
+  - type: Product
+    surface: DRAM
+    confidence: 0.98
+    product_id: DRAM_GENERIC
+  - type: Product
+    surface: NAND
+    confidence: 0.92
+    product_id: NAND_GENERIC
+  source_candidate_id: ent_cand_029
+- id: ent_030
+  category: entity
+  chunk_id: f30f363c7657e773
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 삼성전자
+    confidence: 0.95
+    corp_code: 00126380
+  - type: Organization
+    surface: 삼성디스플레이
+    confidence: 0.95
+    corp_code: XSDISP001
+  - type: Organization
+    surface: SK하이닉스
+    confidence: 0.95
+    corp_code: 00164779
+  - type: Organization
+    surface: LG디스플레이
+    confidence: 0.95
+    corp_code: XLGDP0001
+  source_candidate_id: ent_cand_030
+- id: ent_031
+  category: entity
+  chunk_id: 41f627b2f0700535
+  chunk_type: text_macro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: SK하이닉스
+    confidence: 0.95
+    corp_code: 00164779
+  - type: Product
+    surface: DRAM
+    confidence: 0.98
+    product_id: DRAM_GENERIC
+  - type: Product
+    surface: NAND
+    confidence: 0.98
+    product_id: NAND_GENERIC
+  - type: Product
+    surface: DDR5
+    confidence: 0.95
+    product_id: DDR5
+  source_candidate_id: ent_cand_031
+- id: ent_032
+  category: entity
+  chunk_id: d040b25ddcac5e54
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Product
+    surface: HBM
+    confidence: 0.95
+    product_id: HBM_GENERIC
+  - type: Product
+    surface: DRAM
+    confidence: 0.95
+    product_id: DRAM_GENERIC
+  - type: Product
+    surface: NAND
+    confidence: 0.95
+    product_id: NAND_GENERIC
+  - type: Place
+    surface: 한국
+    confidence: 0.9
+    iso_code: KR
+  source_candidate_id: ent_cand_032
+- id: ent_033
+  category: entity
+  chunk_id: 4bc5fc9955552a08
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 리노공업
+    confidence: 0.95
+    corp_code: '00246417'
+  - type: Place
+    surface: 미국
+    confidence: 0.95
+    iso_code: US
+  - type: Place
+    surface: 유럽
+    confidence: 0.95
+    iso_code: EU
+  - type: Place
+    surface: 일본
+    confidence: 0.95
+    iso_code: JP
+  - type: Place
+    surface: 북미
+    confidence: 0.95
+    iso_code: NA
+  source_candidate_id: ent_cand_033
+- id: ent_034
+  category: entity
+  chunk_id: 8e11e459b33f5d85
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: DB하이텍
+    confidence: 0.95
+    corp_code: 00160843
+  - type: Place
+    surface: 미국
+    confidence: 0.95
+    iso_code: US
+  - type: Place
+    surface: 대만
+    confidence: 0.95
+    iso_code: TW
+  - type: Place
+    surface: 일본
+    confidence: 0.95
+    iso_code: JP
+  - type: Place
+    surface: 중국
+    confidence: 0.95
+    iso_code: CN
+  - type: Technology
+    surface: Foundry
+    confidence: 0.9
+    tech_id: FOUNDRY_BUSINESS
+  - type: Product
+    surface: OLED
+    confidence: 0.85
+    product_id: OLED
+  source_candidate_id: ent_cand_034
+- id: ent_035
+  category: entity
+  chunk_id: 04084d44c8d4666a
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 동진쎄미켐
+    confidence: 0.95
+    corp_code: 00118804
+  - type: Place
+    surface: 화성시
+    confidence: 0.95
+    iso_code: KR_HWASEONG
+  source_candidate_id: ent_cand_035
+- id: ent_036
+  category: entity
+  chunk_id: 09218b68fd96cad6
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 북경동진쎄미켐과기유한공사
+    confidence: 0.99
+    corp_code: XDJ_BEIJING
+  - type: Organization
+    surface: 얼도스시동진쎄미켐전자재료유한공사
+    confidence: 0.99
+    corp_code: XDJ_ORDOS
+  - type: Organization
+    surface: 사천동진전자재료과기유한공사
+    confidence: 0.99
+    corp_code: XDJ_SICHUAN
+  - type: Organization
+    surface: 무한동진쎄미켐과기유한공사
+    confidence: 0.99
+    corp_code: XDJ_WUHAN
+  - type: Organization
+    surface: 성도동진쎄미켐과기유한공사
+    confidence: 0.99
+    corp_code: XDJ_CHENGDU
+  - type: Organization
+    surface: 합비동진쎄미켐과기유한공사
+    confidence: 0.99
+    corp_code: XDJ_HEFEI
+  - type: Organization
+    surface: 중경동진쎄미켐전자재료유한공사
+    confidence: 0.99
+    corp_code: XDJ_CHONGQING
+  - type: Organization
+    surface: 혜주동진쎄미켐전자재료유한공사
+    confidence: 0.99
+    corp_code: XDJ_HUIZHOU
+  - type: Organization
+    surface: 복주동진쎄미켐과기유한공사
+    confidence: 0.99
+    corp_code: XDJ_FUZHOU
+  source_candidate_id: ent_cand_036
+- id: ent_037
+  category: entity
+  chunk_id: 96e7046e0f246140
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: Mitsubishi Gas Chemical Trading, Inc.
+    confidence: 0.95
+    corp_code: XMGCT0001
+  - type: Organization
+    surface: PURAC ASIA PACIFIC PTE LTD
+    confidence: 0.95
+    corp_code: XPURAC001
+  - type: Organization
+    surface: Ashland Inc.
+    confidence: 0.95
+    corp_code: XASH0001
+  - type: Organization
+    surface: (주)삼양엔씨켐
+    confidence: 0.95
+    corp_code: XSYNC0001
+  - type: Organization
+    surface: (주)동진첨단소재
+    confidence: 0.95
+    corp_code: XDJ_DCMAT
+  - type: Organization
+    surface: 미원상사(주)
+    confidence: 0.95
+    corp_code: XMIWN0001
+  - type: Product
+    surface: 감광액
+    confidence: 0.9
+    product_id: PHOTORESIST
+  - type: Product
+    surface: 발포제
+    confidence: 0.9
+    product_id: FOAMING_AGENT
+  - type: Product
+    surface: Solvent
+    confidence: 0.9
+    product_id: SOLVENT
+  - type: Product
+    surface: PAC
+    confidence: 0.9
+    product_id: PAC_MATERIAL
+  - type: Product
+    surface: RESIN
+    confidence: 0.9
+    product_id: RESIN_MATERIAL
+  source_candidate_id: ent_cand_037
+- id: ent_038
+  category: entity
+  chunk_id: c3ca2d5443865add
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 삼성전자
+    confidence: 0.95
+    corp_code: 00126380
+  source_candidate_id: ent_cand_038
+- id: ent_039
+  category: entity
+  chunk_id: f1463cb56b3d0163
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 한미반도체
+    confidence: 0.95
+    corp_code: 00161383
+  source_candidate_id: ent_cand_039
+- id: ent_040
+  category: entity
+  chunk_id: 1df667ae4edb0ff6
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 솔브레인
+    confidence: 0.95
+    corp_code: 01489648
+  - type: Place
+    surface: 경기도 성남시
+    confidence: 0.95
+    iso_code: KR_SEONGNAM
+  - type: Place
+    surface: 충청남도 공주시
+    confidence: 0.95
+    iso_code: KR_GONGJU
+  - type: Place
+    surface: 경기도 파주시
+    confidence: 0.95
+    iso_code: KR_PAJU
+  - type: Place
+    surface: 경기도 용인시
+    confidence: 0.95
+    iso_code: KR_YONGIN
+  - type: Place
+    surface: 대전광역시
+    confidence: 0.95
+    iso_code: KR_DAEJEON
+  - type: Place
+    surface: 중국
+    confidence: 0.95
+    iso_code: CN
+  - type: Place
+    surface: 미국
+    confidence: 0.95
+    iso_code: US
+  - type: Organization
+    surface: 솔브레인(시안)전자재료유한공사
+    confidence: 0.95
+    corp_code: XDJ_XIAN
+  - type: Organization
+    surface: SOULBRAIN TX LLC
+    confidence: 0.95
+    corp_code: XDJ_SOLTX
+  - type: Organization
+    surface: SOULBRAIN RASA TX LLC
+    confidence: 0.95
+    corp_code: XDJ_SOLRASA
+  source_candidate_id: ent_cand_040
+- id: ent_041
+  category: entity
+  chunk_id: df5f52157c071eef
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 삼성전자
+    confidence: 0.95
+    corp_code: 00126380
+  source_candidate_id: ent_cand_041
+- id: ent_042
+  category: entity
+  chunk_id: 8fe8ed218865e458
+  chunk_type: text_macro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 엘지디스플레이
+    confidence: 0.95
+    corp_code: XLGDP0001
+  - type: Organization
+    surface: 삼성디스플레이
+    confidence: 0.95
+    corp_code: XSDISP001
+  source_candidate_id: ent_cand_042
+- id: ent_043
+  category: entity
+  chunk_id: c9c56df73d7d24f7
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Product
+    surface: HBM
+    confidence: 0.95
+    product_id: HBM_GENERIC
+  - type: Product
+    surface: DRAM
+    confidence: 0.95
+    product_id: DRAM_GENERIC
+  - type: Product
+    surface: 낸드플래시
+    confidence: 0.95
+    product_id: NAND_GENERIC
+  source_candidate_id: ent_cand_043
+- id: ent_044
+  category: entity
+  chunk_id: 1b07038afe3e1ce5
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 리노공업
+    confidence: 0.95
+    corp_code: '00246417'
+  - type: Product
+    surface: IC TEST SOCKET
+    confidence: 0.95
+    product_id: IC_TEST_SOCKET
+  - type: Product
+    surface: 초음파 진단기
+    confidence: 0.9
+    product_id: ULTRASOUND_SCANNER
+  - type: Product
+    surface: 초음파 프로브
+    confidence: 0.9
+    product_id: ULTRASOUND_PROBE
+  source_candidate_id: ent_cand_044
+- id: ent_045
+  category: entity
+  chunk_id: f476c8d44b2e3211
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 리노공업
+    confidence: 1.0
+    corp_code: '00246417'
+  - type: Product
+    surface: IC TEST SOCKET
+    confidence: 1.0
+    product_id: IC_TEST_SOCKET
+  - type: Product
+    surface: LEENO PIN
+    confidence: 1.0
+    product_id: LEENO_PIN
+  - type: Product
+    surface: 초음파 진단기
+    confidence: 0.9
+    product_id: ULTRASOUND_SCANNER
+  - type: Product
+    surface: IC TEST SOCKET
+    confidence: 1.0
+    product_id: IC_TEST_SOCKET
+  - type: Product
+    surface: LEENO PIN
+    confidence: 1.0
+    product_id: LEENO_PIN
+  - type: Product
+    surface: 초음파진단기
+    confidence: 0.9
+    product_id: ULTRASOUND_SCANNER
+  - type: Product
+    surface: 초음파 프로브
+    confidence: 0.9
+    product_id: ULTRASOUND_PROBE
+  - type: Place
+    surface: 국내
+    confidence: 0.9
+    iso_code: KR
+  source_candidate_id: ent_cand_045
+- id: ent_046
+  category: entity
+  chunk_id: ede154f5889c8940
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 리노공업
+    confidence: 0.95
+    corp_code: '00246417'
+  source_candidate_id: ent_cand_046
+- id: ent_047
+  category: entity
+  chunk_id: 2f53d1856f2b4138
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Product
+    surface: LEENO PIN
+    confidence: 0.95
+    product_id: LEENO_PIN
+  - type: Product
+    surface: IC TEST SOCKET
+    confidence: 0.95
+    product_id: IC_TEST_SOCKET
+  - type: Product
+    surface: 초음파 프로브
+    confidence: 0.95
+    product_id: ULTRASOUND_PROBE
+  - type: Organization
+    surface: 지멘스
+    confidence: 0.95
+    corp_code: XSIEM0001
+  source_candidate_id: ent_cand_047
+- id: ent_048
+  category: entity
+  chunk_id: 5d53c13b4f43daff
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: SK하이닉스
+    confidence: 0.95
+    corp_code: 00164779
+  - type: Organization
+    surface: Micron Technology
+    confidence: 0.95
+    corp_code: XMICR0001
+  - type: Organization
+    surface: AmKor
+    confidence: 0.95
+    corp_code: XAMKR0002
+  - type: Organization
+    surface: JCET
+    confidence: 0.95
+    corp_code: XJCET0001
+  - type: Organization
+    surface: Huatian Technology
+    confidence: 0.95
+    corp_code: XHUAT0001
+  - type: Organization
+    surface: TFME
+    confidence: 0.95
+    corp_code: XTFME0001
+  - type: Organization
+    surface: Infineon
+    confidence: 0.95
+    corp_code: XINF0001
+  - type: Organization
+    surface: ST Micro
+    confidence: 0.95
+    corp_code: XSTM0001
+  - type: Organization
+    surface: PTI
+    confidence: 0.95
+    corp_code: XPTI0001
+  - type: Organization
+    surface: Skyworks
+    confidence: 0.95
+    corp_code: XSWKS0001
+  - type: Organization
+    surface: Luxshare
+    confidence: 0.95
+    corp_code: XLXSH0001
+  - type: Organization
+    surface: JCET스태츠칩팩코리아
+    confidence: 0.95
+    corp_code: XJCETK0001
+  - type: Organization
+    surface: ASE코리아
+    confidence: 0.95
+    corp_code: XASEK0001
+  - type: Organization
+    surface: Amkor코리아
+    confidence: 0.95
+    corp_code: XAMKRK0001
+  - type: Organization
+    surface: 삼성전기
+    confidence: 0.95
+    corp_code: XSEMC0001
+  - type: Organization
+    surface: 삼성전자
+    confidence: 0.95
+    corp_code: 00126380
+  - type: Organization
+    surface: LG이노텍
+    confidence: 0.95
+    corp_code: XLGIT0001
+  - type: Organization
+    surface: 코리아써키트
+    confidence: 0.95
+    corp_code: XKORC0001
+  - type: Organization
+    surface: SFA반도체
+    confidence: 0.95
+    corp_code: XSFAS0001
+  - type: Organization
+    surface: 시그네틱스
+    confidence: 0.95
+    corp_code: XSIGN0001
+  source_candidate_id: ent_cand_048
+- id: ent_049
+  category: entity
+  chunk_id: 25defae9fe2ba5e8
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: DB하이텍
+    confidence: 0.95
+    corp_code: 00160843
+  source_candidate_id: ent_cand_049
+- id: ent_050
+  category: entity
+  chunk_id: 203cc98c68e02f1d
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: DB하이텍
+    confidence: 0.95
+    corp_code: 00160843
+  - type: Person
+    surface: 조기석
+    confidence: 0.95
+    person_id: _dbhi_jogiseok
+  source_candidate_id: ent_cand_050
+- id: ent_051
+  category: entity
+  chunk_id: 980231eea1248294
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Product
+    surface: LEENO PIN
+    confidence: 0.95
+    product_id: LEENO_PIN
+  - type: Product
+    surface: IC TEST SOCKET
+    confidence: 0.95
+    product_id: IC_TEST_SOCKET
+  source_candidate_id: ent_cand_051
+- id: ent_052
+  category: entity
+  chunk_id: fa9adec49eafb4fa
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Place
+    surface: 인천광역시
+    confidence: 0.95
+    iso_code: KR_INCHEON
+  - type: Organization
+    surface: (주)동진쎄미켐
+    confidence: 0.95
+    corp_code: 00118804
+  source_candidate_id: ent_cand_052
+- id: ent_053
+  category: entity
+  chunk_id: 29e333254a33d5cf
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Product
+    surface: UNICELL
+    confidence: 0.95
+    product_id: UNICELL
+  - type: Product
+    surface: DPR & DNR
+    confidence: 0.95
+    product_id: DPR_DNR
+  - type: Place
+    surface: 중국
+    confidence: 0.95
+    iso_code: CN
+  - type: Place
+    surface: 미국
+    confidence: 0.95
+    iso_code: US
+  - type: Place
+    surface: 대만
+    confidence: 0.95
+    iso_code: TW
+  - type: Place
+    surface: 일본
+    confidence: 0.95
+    iso_code: JP
+  source_candidate_id: ent_cand_053
+- id: ent_054
+  category: entity
+  chunk_id: 52be8b352302b21c
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 삼성전자
+    confidence: 0.95
+    corp_code: 00126380
+  - type: Place
+    surface: 한국
+    confidence: 0.95
+    iso_code: KR
+  - type: Place
+    surface: 멕시코
+    confidence: 0.95
+    iso_code: MX
+  - type: Place
+    surface: 베트남
+    confidence: 0.95
+    iso_code: VN
+  - type: Place
+    surface: 브라질
+    confidence: 0.95
+    iso_code: BR
+  - type: Place
+    surface: 헝가리
+    confidence: 0.95
+    iso_code: HU
+  - type: Place
+    surface: 중국
+    confidence: 0.95
+    iso_code: CN
+  - type: Place
+    surface: 화성
+    confidence: 0.95
+    iso_code: KR_HWASEONG
+  - type: Place
+    surface: 평택
+    confidence: 0.95
+    iso_code: KR_PYEONGTAEK
+  - type: Place
+    surface: 천안
+    confidence: 0.95
+    iso_code: KR_CHEONAN
+  - type: Place
+    surface: 아산
+    confidence: 0.95
+    iso_code: KR_ASAN
+  - type: Place
+    surface: 구미
+    confidence: 0.95
+    iso_code: KR_GUMI
+  - type: Place
+    surface: 인도
+    confidence: 0.95
+    iso_code: IN
+  source_candidate_id: ent_cand_054
+- id: ent_055
+  category: entity
+  chunk_id: 7297dfec34f8cb74
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: (주)이오테크닉스
+    confidence: 0.95
+    corp_code: 00369657
+  - type: Place
+    surface: 미국
+    confidence: 0.95
+    iso_code: US
+  - type: Place
+    surface: 중국
+    confidence: 0.95
+    iso_code: CN
+  - type: Place
+    surface: 일본
+    confidence: 0.95
+    iso_code: JP
+  - type: Place
+    surface: 한국
+    confidence: 0.95
+    iso_code: KR
+  source_candidate_id: ent_cand_055
+- id: ent_056
+  category: entity
+  chunk_id: 76257cecd533d424
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 솔브레인(시안)전자재료유한공사
+    confidence: 0.95
+    corp_code: XDJ_XIAN
+  - type: Organization
+    surface: SOULBRAIN TX LLC
+    confidence: 0.95
+    corp_code: XDJ_SOLTX
+  - type: Organization
+    surface: SOULBRAIN RASA TX LLC
+    confidence: 0.95
+    corp_code: XDJ_SOLRASA
+  - type: Organization
+    surface: 삼성전자
+    confidence: 0.95
+    corp_code: 00126380
+  - type: Organization
+    surface: SK하이닉스
+    confidence: 0.95
+    corp_code: 00164779
+  - type: Organization
+    surface: LG디스플레이
+    confidence: 0.95
+    corp_code: XLGDP0001
+  - type: Organization
+    surface: 삼성SDI
+    confidence: 0.95
+    corp_code: XSSDI0001
+  - type: Place
+    surface: 중국
+    confidence: 0.95
+    iso_code: CN
+  - type: Place
+    surface: 미국
+    confidence: 0.95
+    iso_code: US
+  source_candidate_id: ent_cand_056
+- id: ent_057
+  category: entity
+  chunk_id: 2bde10c69d390de9
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: SK하이닉스
+    confidence: 0.95
+    corp_code: 00164779
+  - type: Product
+    surface: HBM
+    confidence: 0.98
+    product_id: HBM_GENERIC
+  - type: Place
+    surface: 아시아
+    confidence: 0.9
+    iso_code: AS
+  source_candidate_id: ent_cand_057
+- id: ent_058
+  category: entity
+  chunk_id: 4e1a2ce98725e7e6
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Place
+    surface: 한국
+    confidence: 0.95
+    iso_code: KR
+  - type: Place
+    surface: 일본
+    confidence: 0.95
+    iso_code: JP
+  - type: Place
+    surface: 독일
+    confidence: 0.95
+    iso_code: DE
+  - type: Place
+    surface: 미국
+    confidence: 0.95
+    iso_code: US
+  - type: Place
+    surface: 중국
+    confidence: 0.95
+    iso_code: CN
+  - type: Place
+    surface: 한국
+    confidence: 0.95
+    iso_code: KR
+  - type: Place
+    surface: 대만
+    confidence: 0.9
+    iso_code: TW
+  - type: Place
+    surface: 동남아
+    confidence: 0.9
+    iso_code: APAC
+  source_candidate_id: ent_cand_058
+- id: ent_059
+  category: entity
+  chunk_id: 7c81e7a7d7db90b8
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 삼성전자
+    confidence: 0.95
+    corp_code: 00126380
+  - type: Organization
+    surface: Qualcomm
+    confidence: 0.95
+    corp_code: XQCOM0001
+  - type: Organization
+    surface: Micron
+    confidence: 0.95
+    corp_code: XMICR0001
+  - type: Organization
+    surface: 삼성전기㈜
+    confidence: 0.95
+    corp_code: XSEMC0001
+  - type: Organization
+    surface: CSOT
+    confidence: 0.95
+    corp_code: XCSOT0001
+  - type: Organization
+    surface: 솔브레인㈜
+    confidence: 0.95
+    corp_code: 01489648
+  - type: Organization
+    surface: SILTRONIC
+    confidence: 0.95
+    corp_code: XSILT0001
+  - type: Organization
+    surface: ㈜비에이치
+    confidence: 0.95
+    corp_code: XBH0001
+  - type: Organization
+    surface: Apple
+    confidence: 0.95
+    corp_code: XAPPL0001
+  - type: Organization
+    surface: NVIDIA
+    confidence: 0.95
+    corp_code: XNVDA0001
+  - type: Organization
+    surface: WNC
+    confidence: 0.95
+    corp_code: XWNC0001
+  - type: Organization
+    surface: Harman
+    confidence: 0.95
+    corp_code: XHARM0001
+  source_candidate_id: ent_cand_059
+- id: ent_060
+  category: entity
+  chunk_id: 05e702e079370c58
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 리노공업
+    confidence: 0.95
+    corp_code: '00246417'
+  - type: Product
+    surface: LEENO PIN
+    confidence: 0.9
+    product_id: LEENO_PIN
+  - type: Product
+    surface: IC TEST SOCKET
+    confidence: 0.9
+    product_id: IC_TEST_SOCKET
+  - type: Product
+    surface: 초음파 진단기
+    confidence: 0.85
+    product_id: ULTRASOUND_SCANNER
+  source_candidate_id: ent_cand_060
+- id: ent_061
+  category: entity
+  chunk_id: a5a7d32ea2ba5430
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 동진쎄미켐
+    confidence: 0.95
+    corp_code: 00118804
+  - type: Product
+    surface: 감광액
+    confidence: 0.85
+    product_id: PHOTORESIST
+  - type: Product
+    surface: 발포제
+    confidence: 0.85
+    product_id: FOAMING_AGENT
+  - type: Organization
+    surface: 북경동진쎄미켐과기유한공사
+    confidence: 0.95
+    corp_code: XDJ_BEIJING
+  - type: Organization
+    surface: 얼도스시동진쎄미켐전자재료유한공사
+    confidence: 0.95
+    corp_code: XDJ_ORDOS
+  - type: Organization
+    surface: 사천동진전자재료과기유한공사
+    confidence: 0.95
+    corp_code: XDJ_SICHUAN
+  - type: Organization
+    surface: 무한동진쎄미켐과기유한공사
+    confidence: 0.95
+    corp_code: XDJ_WUHAN
+  - type: Organization
+    surface: 성도동진쎄미켐과기유한공사
+    confidence: 0.95
+    corp_code: XDJ_CHENGDU
+  - type: Organization
+    surface: 합비동진쎄미켐과기유한공사
+    confidence: 0.95
+    corp_code: XDJ_HEFEI
+  - type: Organization
+    surface: 중경동진쎄미켐전자재료유한공사
+    confidence: 0.95
+    corp_code: XDJ_CHONGQING
+  - type: Organization
+    surface: 혜주동진쎄미켐전자재료유한공사
+    confidence: 0.95
+    corp_code: XDJ_HUIZHOU
+  - type: Organization
+    surface: 복주동진쎄미켐과기유한공사
+    confidence: 0.95
+    corp_code: XDJ_FUZHOU
+  source_candidate_id: ent_cand_061
+- id: ent_062
+  category: entity
+  chunk_id: a15bd78ff55731f4
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 삼성전자
+    confidence: 0.95
+    corp_code: 00126380
+  - type: Product
+    surface: DRAM
+    confidence: 0.95
+    product_id: DRAM_GENERIC
+  - type: Product
+    surface: NAND
+    confidence: 0.95
+    product_id: NAND_GENERIC
+  source_candidate_id: ent_cand_062
+- id: ent_063
+  category: entity
+  chunk_id: 26727aeb13d08021
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 삼성전자
+    confidence: 0.95
+    corp_code: 00126380
+  source_candidate_id: ent_cand_063
+- id: ent_064
+  category: entity
+  chunk_id: 88073f8ee70b8581
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 솔브레인
+    confidence: 0.95
+    corp_code: 01489648
+  - type: Place
+    surface: 경기도 성남시
+    confidence: 0.95
+    iso_code: KR_SEONGNAM
+  - type: Place
+    surface: 충청남도 공주시
+    confidence: 0.95
+    iso_code: KR_GONGJU
+  - type: Place
+    surface: 경기도 파주시
+    confidence: 0.95
+    iso_code: KR_PAJU
+  - type: Place
+    surface: 경기도 용인시
+    confidence: 0.95
+    iso_code: KR_YONGIN
+  - type: Place
+    surface: 중국
+    confidence: 0.95
+    iso_code: CN
+  - type: Place
+    surface: 미국
+    confidence: 0.95
+    iso_code: US
+  - type: Organization
+    surface: 솔브레인(시안)전자재료유한공사
+    confidence: 0.95
+    corp_code: XDJ_XIAN
+  - type: Organization
+    surface: SOULBRAIN TX LLC
+    confidence: 0.95
+    corp_code: XDJ_SOLTX
+  - type: Organization
+    surface: SOULBRAIN RASA TX LLC
+    confidence: 0.95
+    corp_code: XDJ_SOLRASA
+  source_candidate_id: ent_cand_064
+- id: ent_065
+  category: entity
+  chunk_id: b03030aaf8065323
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 삼성전자
+    confidence: 0.95
+    corp_code: 00126380
+  - type: Organization
+    surface: SK하이닉스
+    confidence: 0.95
+    corp_code: 00164779
+  - type: Organization
+    surface: 삼성디스플레이
+    confidence: 0.95
+    corp_code: XSDISP001
+  - type: Organization
+    surface: LG디스플레이
+    confidence: 0.95
+    corp_code: XLGDP0001
+  source_candidate_id: ent_cand_065
+- id: ent_066
+  category: entity
+  chunk_id: 4579fba0703b7336
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 한미반도체
+    confidence: 0.95
+    corp_code: 00161383
+  - type: Product
+    surface: HBM
+    confidence: 0.95
+    product_id: HBM_GENERIC
+  source_candidate_id: ent_cand_066
+- id: ent_067
+  category: entity
+  chunk_id: 2b1225d071768305
+  chunk_type: news_text
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 삼성전자
+    confidence: 0.95
+    corp_code: 00126380
+  - type: Place
+    surface: 수원시
+    confidence: 0.95
+    iso_code: KR_SUWON
+  source_candidate_id: ent_cand_067
+- id: ent_068
+  category: entity
+  chunk_id: b44769949eba4fdf
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: DB하이텍
+    confidence: 0.95
+    corp_code: 00160843
+  - type: Product
+    surface: 디스플레이 구동칩
+    confidence: 0.9
+    product_id: DDI
+  - type: Organization
+    surface: DB글로벌칩
+    confidence: 0.95
+    corp_code: XDBGC0001
+  - type: Product
+    surface: 디스플레이 구동칩
+    confidence: 0.9
+    product_id: DDI
+  source_candidate_id: ent_cand_068
+- id: ent_069
+  category: entity
+  chunk_id: d9376ce24b10c490
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Product
+    surface: DRAM
+    confidence: 0.95
+    product_id: DRAM_GENERIC
+  - type: Technology
+    surface: TSV
+    confidence: 0.95
+    tech_id: TSV
+  source_candidate_id: ent_cand_069
+- id: ent_070
+  category: entity
+  chunk_id: 05ca758330ea9615
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: DB하이텍
+    confidence: 0.95
+    corp_code: 00160843
+  - type: Technology
+    surface: 파운드리
+    confidence: 0.9
+    tech_id: FOUNDRY_BUSINESS
+  source_candidate_id: ent_cand_070
+- id: ent_071
+  category: entity
+  chunk_id: ceb342d2dbfd2183
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 이오테크닉스
+    confidence: 0.95
+    corp_code: 00369657
+  - type: Product
+    surface: OLED
+    confidence: 0.7
+    product_id: OLED
+  source_candidate_id: ent_cand_071
+- id: ent_072
+  category: entity
+  chunk_id: ec223b60cd1bf7ae
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 솔브레인
+    confidence: 0.95
+    corp_code: 01489648
+  - type: Organization
+    surface: 솔브레인(시안)전자재료유한공사
+    confidence: 0.95
+    corp_code: XDJ_XIAN
+  - type: Organization
+    surface: SOULBRAIN TX LLC
+    confidence: 0.95
+    corp_code: XDJ_SOLTX
+  - type: Organization
+    surface: SOULBRAIN RASA TX LLC
+    confidence: 0.95
+    corp_code: XDJ_SOLRASA
+  - type: Organization
+    surface: 삼성전자
+    confidence: 0.95
+    corp_code: 00126380
+  - type: Organization
+    surface: SK하이닉스
+    confidence: 0.95
+    corp_code: 00164779
+  - type: Organization
+    surface: LG디스플레이
+    confidence: 0.95
+    corp_code: XLGDP0001
+  - type: Organization
+    surface: 삼성SDI
+    confidence: 0.95
+    corp_code: XSSDI0001
+  - type: Place
+    surface: 중국
+    confidence: 0.95
+    iso_code: CN
+  - type: Place
+    surface: 미국
+    confidence: 0.95
+    iso_code: US
+  source_candidate_id: ent_cand_072
+- id: ent_073
+  category: entity
+  chunk_id: 5f6c3a319bea79cb
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 동진쎄미켐
+    confidence: 0.95
+    corp_code: 00118804
+  - type: Organization
+    surface: 북경동진쎄미켐과기유한공사
+    confidence: 0.95
+    corp_code: XDJ_BEIJING
+  - type: Organization
+    surface: 사천동진전자재료과기유한공사
+    confidence: 0.95
+    corp_code: XDJ_SICHUAN
+  - type: Organization
+    surface: 무한동진쎄미켐과기유한공사
+    confidence: 0.95
+    corp_code: XDJ_WUHAN
+  - type: Organization
+    surface: 성도동진쎄미켐과기유한공사
+    confidence: 0.95
+    corp_code: XDJ_CHENGDU
+  - type: Organization
+    surface: 합비동진쎄미켐과기유한공사
+    confidence: 0.95
+    corp_code: XDJ_HEFEI
+  - type: Organization
+    surface: 중경동진쎄미켐전자재료유한공사
+    confidence: 0.95
+    corp_code: XDJ_CHONGQING
+  - type: Organization
+    surface: 혜주동진쎄미켐전자재료유한공사
+    confidence: 0.95
+    corp_code: XDJ_HUIZHOU
+  - type: Organization
+    surface: 복주동진쎄미켐과기유한공사
+    confidence: 0.95
+    corp_code: XDJ_FUZHOU
+  - type: Place
+    surface: 중국
+    confidence: 0.95
+    iso_code: CN
+  source_candidate_id: ent_cand_073
+- id: ent_074
+  category: entity
+  chunk_id: d611e9407411d838
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: DB하이텍
+    confidence: 0.95
+    corp_code: 00160843
+  - type: Organization
+    surface: DB글로벌칩
+    confidence: 0.95
+    corp_code: XDBGC0001
+  - type: Place
+    surface: 미국
+    confidence: 0.95
+    iso_code: US
+  - type: Place
+    surface: 일본
+    confidence: 0.95
+    iso_code: JP
+  - type: Place
+    surface: 대만
+    confidence: 0.95
+    iso_code: TW
+  - type: Place
+    surface: 유럽
+    confidence: 0.95
+    iso_code: EU
+  - type: Place
+    surface: 중국
+    confidence: 0.95
+    iso_code: CN
+  - type: Place
+    surface: 중국
+    confidence: 0.95
+    iso_code: CN
+  - type: Place
+    surface: 대만
+    confidence: 0.95
+    iso_code: TW
+  - type: Place
+    surface: 일본
+    confidence: 0.95
+    iso_code: JP
+  - type: Place
+    surface: 유럽
+    confidence: 0.95
+    iso_code: EU
+  source_candidate_id: ent_cand_074
+- id: ent_075
+  category: entity
+  chunk_id: dc00f226032d0e28
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 삼성전자
+    confidence: 0.95
+    corp_code: 00126380
+  - type: Organization
+    surface: Samsung Research
+    confidence: 0.95
+    corp_code: XSAIT0001
+  - type: Organization
+    surface: 반도체연구소
+    confidence: 0.9
+    corp_code: XSAIT0001
+  - type: Organization
+    surface: SAIT
+    confidence: 0.95
+    corp_code: XSAIT0001
+  - type: Place
+    surface: 미국
+    confidence: 0.95
+    iso_code: US
+  - type: Place
+    surface: 우크라이나
+    confidence: 0.95
+    iso_code: UA
+  - type: Place
+    surface: 러시아
+    confidence: 0.95
+    iso_code: RU
+  - type: Place
+    surface: 일본
+    confidence: 0.95
+    iso_code: JP
+  - type: Place
+    surface: 중국
+    confidence: 0.95
+    iso_code: CN
+  - type: Place
+    surface: 인도
+    confidence: 0.95
+    iso_code: IN
+  - type: Place
+    surface: 방글라데시
+    confidence: 0.95
+    iso_code: BD
+  - type: Place
+    surface: 이스라엘
+    confidence: 0.95
+    iso_code: IL
+  source_candidate_id: ent_cand_075
+- id: ent_076
+  category: entity
+  chunk_id: 4eccb792e97c95be
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 이오테크닉스
+    confidence: 0.95
+    corp_code: 00369657
+  - type: Product
+    surface: OLED
+    confidence: 0.85
+    product_id: OLED
+  source_candidate_id: ent_cand_076
+- id: ent_077
+  category: entity
+  chunk_id: ab779d0f6b1c9be0
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 삼성전자
+    confidence: 0.95
+    corp_code: 00126380
+  source_candidate_id: ent_cand_077
+- id: ent_078
+  category: entity
+  chunk_id: 269c6213e228ba6c
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: SK하이닉스
+    confidence: 0.95
+    corp_code: 00164779
+  - type: Product
+    surface: DRAM
+    confidence: 0.95
+    product_id: DRAM_GENERIC
+  - type: Product
+    surface: Foundry
+    confidence: 0.9
+    product_id: FOUNDRY_SERVICE
+  - type: Place
+    surface: 미국
+    confidence: 0.95
+    iso_code: US
+  - type: Place
+    surface: 중국
+    confidence: 0.95
+    iso_code: CN
+  - type: Place
+    surface: 싱가포르
+    confidence: 0.95
+    iso_code: SG
+  - type: Place
+    surface: 대만
+    confidence: 0.95
+    iso_code: TW
+  - type: Place
+    surface: 홍콩
+    confidence: 0.95
+    iso_code: CN_HK
+  source_candidate_id: ent_cand_078
+- id: ent_079
+  category: entity
+  chunk_id: 97c506be501684eb
+  chunk_type: news_text
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 삼성전자
+    confidence: 0.95
+    corp_code: 00126380
+  - type: Organization
+    surface: 구글
+    confidence: 0.9
+    corp_code: XGOOG0001
+  source_candidate_id: ent_cand_079
+- id: ent_080
+  category: entity
+  chunk_id: 29745643b11e72aa
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Product
+    surface: HBM
+    confidence: 0.95
+    product_id: HBM_GENERIC
+  - type: Technology
+    surface: Advanced Packaging
+    confidence: 0.95
+    tech_id: ADV_PACKAGING
+  - type: Technology
+    surface: 2nm
+    confidence: 0.85
+    tech_id: NODE_2NM
+  - type: Technology
+    surface: GAA
+    confidence: 0.9
+    tech_id: GAA
+  - type: Product
+    surface: V-NAND
+    confidence: 0.95
+    product_id: V_NAND
+  - type: Technology
+    surface: Etchant
+    confidence: 0.9
+    tech_id: ETCHANT
+  source_candidate_id: ent_cand_080
+- id: ent_081
+  category: entity
+  chunk_id: 24737aef50b19cf5
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 삼성전자
+    confidence: 0.95
+    corp_code: 00126380
+  - type: Organization
+    surface: 삼성디스플레이
+    confidence: 0.95
+    corp_code: XSDISP001
+  - type: Organization
+    surface: Harman
+    confidence: 0.95
+    corp_code: XHARM0001
+  - type: Product
+    surface: DRAM
+    confidence: 0.95
+    product_id: DRAM_GENERIC
+  - type: Product
+    surface: NAND
+    confidence: 0.95
+    product_id: NAND_GENERIC
+  - type: Place
+    surface: 수원
+    confidence: 0.95
+    iso_code: KR_SUWON
+  - type: Place
+    surface: 구미
+    confidence: 0.95
+    iso_code: KR_GUMI
+  - type: Place
+    surface: 기흥
+    confidence: 0.95
+    iso_code: KR_GIHEUNG
+  - type: Place
+    surface: 화성
+    confidence: 0.95
+    iso_code: KR_HWASEONG
+  - type: Place
+    surface: 평택
+    confidence: 0.95
+    iso_code: KR_PYEONGTAEK
+  - type: Place
+    surface: Brazil
+    confidence: 0.95
+    iso_code: BR
+  - type: Place
+    surface: Germany
+    confidence: 0.95
+    iso_code: DE
+  - type: Place
+    surface: Hungary
+    confidence: 0.95
+    iso_code: HU
+  - type: Place
+    surface: Singapore
+    confidence: 0.95
+    iso_code: SG
+  - type: Place
+    surface: Philippines
+    confidence: 0.95
+    iso_code: PH
+  - type: Place
+    surface: Malaysia
+    confidence: 0.95
+    iso_code: MY
+  - type: Place
+    surface: India
+    confidence: 0.95
+    iso_code: IN
+  - type: Place
+    surface: Hong Kong
+    confidence: 0.95
+    iso_code: CN_HK
+  source_candidate_id: ent_cand_081
+- id: ent_082
+  category: entity
+  chunk_id: c151db1b15836c91
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Product
+    surface: HBM4
+    confidence: 0.9
+    product_id: HBM4
+  - type: Product
+    surface: DDR5
+    confidence: 0.9
+    product_id: DDR5
+  source_candidate_id: ent_cand_082
+- id: ent_083
+  category: entity
+  chunk_id: fbd697c7fdddcb04
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Product
+    surface: HBM
+    confidence: 0.95
+    product_id: HBM_GENERIC
+  - type: Product
+    surface: DRAM
+    confidence: 0.95
+    product_id: DRAM_GENERIC
+  - type: Product
+    surface: NAND
+    confidence: 0.95
+    product_id: NAND_GENERIC
+  source_candidate_id: ent_cand_083
+- id: ent_084
+  category: entity
+  chunk_id: af6f7816588ac362
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 이오테크닉스
+    confidence: 0.95
+    corp_code: 00369657
+  - type: Product
+    surface: OLED
+    confidence: 0.7
+    product_id: OLED
+  source_candidate_id: ent_cand_084
+- id: ent_085
+  category: entity
+  chunk_id: 46d8b878ada043da
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: Harman
+    confidence: 0.9
+    corp_code: XHARM0001
+  - type: Place
+    surface: 멕시코
+    confidence: 0.9
+    iso_code: MX
+  - type: Place
+    surface: 베트남
+    confidence: 0.9
+    iso_code: VN
+  - type: Place
+    surface: 브라질
+    confidence: 0.9
+    iso_code: BR
+  - type: Place
+    surface: 헝가리
+    confidence: 0.9
+    iso_code: HU
+  - type: Place
+    surface: 한국
+    confidence: 0.9
+    iso_code: KR
+  - type: Place
+    surface: 구미
+    confidence: 0.9
+    iso_code: KR_GUMI
+  - type: Place
+    surface: 인도
+    confidence: 0.9
+    iso_code: IN
+  - type: Place
+    surface: 화성
+    confidence: 0.9
+    iso_code: KR_HWASEONG
+  - type: Place
+    surface: 평택
+    confidence: 0.9
+    iso_code: KR_PYEONGTAEK
+  - type: Place
+    surface: 중국
+    confidence: 0.9
+    iso_code: CN
+  - type: Place
+    surface: 천안
+    confidence: 0.9
+    iso_code: KR_CHEONAN
+  - type: Place
+    surface: 아산
+    confidence: 0.9
+    iso_code: KR_ASAN
+  source_candidate_id: ent_cand_085
+- id: ent_086
+  category: entity
+  chunk_id: 981a2d0c462980f9
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: SK하이닉스
+    confidence: 0.95
+    corp_code: 00164779
+  - type: Organization
+    surface: Micron Technology
+    confidence: 0.95
+    corp_code: XMICR0001
+  - type: Organization
+    surface: AmKor
+    confidence: 0.95
+    corp_code: XAMKR0002
+  - type: Organization
+    surface: JCET
+    confidence: 0.95
+    corp_code: XJCET0001
+  - type: Organization
+    surface: Huatian Technology
+    confidence: 0.95
+    corp_code: XHUAT0001
+  - type: Organization
+    surface: TFME
+    confidence: 0.95
+    corp_code: XTFME0001
+  - type: Organization
+    surface: Infineon
+    confidence: 0.95
+    corp_code: XINF0001
+  - type: Organization
+    surface: ST Micro
+    confidence: 0.95
+    corp_code: XSTM0001
+  - type: Organization
+    surface: PTI
+    confidence: 0.95
+    corp_code: XPTI0001
+  - type: Organization
+    surface: Skyworks
+    confidence: 0.95
+    corp_code: XSWKS0001
+  - type: Organization
+    surface: Luxshare
+    confidence: 0.95
+    corp_code: XLXSH0001
+  - type: Organization
+    surface: JCET스태츠칩팩코리아
+    confidence: 0.95
+    corp_code: XJCETK0001
+  - type: Organization
+    surface: ASE코리아
+    confidence: 0.95
+    corp_code: XASEK0001
+  - type: Organization
+    surface: Amkor코리아
+    confidence: 0.95
+    corp_code: XAMKRK0001
+  - type: Organization
+    surface: 삼성전기
+    confidence: 0.95
+    corp_code: XSEMC0001
+  - type: Organization
+    surface: 삼성전자
+    confidence: 0.95
+    corp_code: 00126380
+  - type: Organization
+    surface: LG이노텍
+    confidence: 0.95
+    corp_code: XLGIT0001
+  - type: Organization
+    surface: 코리아써키트
+    confidence: 0.95
+    corp_code: XKORC0001
+  - type: Organization
+    surface: SFA반도체
+    confidence: 0.95
+    corp_code: XSFAS0001
+  - type: Organization
+    surface: 시그네틱스
+    confidence: 0.95
+    corp_code: XSIGN0001
+  source_candidate_id: ent_cand_086
+- id: ent_087
+  category: entity
+  chunk_id: f46dd55181c01c8a
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: DB하이텍
+    confidence: 0.95
+    corp_code: 00160843
+  source_candidate_id: ent_cand_087
+- id: ent_088
+  category: entity
+  chunk_id: a00f29449a415d6f
+  chunk_type: news_text
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 삼성전자
+    confidence: 0.95
+    corp_code: 00126380
+  - type: Organization
+    surface: SK하이닉스
+    confidence: 0.95
+    corp_code: 00164779
+  - type: Organization
+    surface: 삼성전자
+    confidence: 0.95
+    corp_code: 00126380
+  - type: Organization
+    surface: SK하이닉스
+    confidence: 0.95
+    corp_code: 00164779
+  - type: Organization
+    surface: 삼성전자
+    confidence: 0.95
+    corp_code: 00126380
+  - type: Organization
+    surface: SK하이닉스
+    confidence: 0.95
+    corp_code: 00164779
+  - type: Organization
+    surface: 삼성전자
+    confidence: 0.95
+    corp_code: 00126380
+  - type: Organization
+    surface: SK하이닉스
+    confidence: 0.95
+    corp_code: 00164779
+  - type: Organization
+    surface: 삼성전자
+    confidence: 0.95
+    corp_code: 00126380
+  - type: Organization
+    surface: SK하이닉스
+    confidence: 0.95
+    corp_code: 00164779
+  source_candidate_id: ent_cand_088
+- id: ent_089
+  category: entity
+  chunk_id: 71e9625f499a6321
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Product
+    surface: LEENO PIN
+    confidence: 0.95
+    product_id: LEENO_PIN
+  - type: Product
+    surface: IC TEST SOCKET
+    confidence: 0.95
+    product_id: IC_TEST_SOCKET
+  - type: Product
+    surface: 초음파 프로브
+    confidence: 0.95
+    product_id: ULTRASOUND_PROBE
+  - type: Organization
+    surface: 지멘스
+    confidence: 0.95
+    corp_code: XSIEM0001
+  source_candidate_id: ent_cand_089
+- id: ent_090
+  category: entity
+  chunk_id: f8fac623325cbc1f
+  chunk_type: text_macro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 삼성전자
+    confidence: 0.95
+    corp_code: 00126380
+  - type: Product
+    surface: 마이크로 LED
+    confidence: 0.85
+    product_id: MICRO_LED
+  - type: Product
+    surface: OLED
+    confidence: 0.85
+    product_id: OLED
+  - type: Product
+    surface: HBM4
+    confidence: 0.95
+    product_id: HBM4
+  - type: Product
+    surface: DDR5
+    confidence: 0.9
+    product_id: DDR5
+  - type: Product
+    surface: GDDR7
+    confidence: 0.9
+    product_id: GDDR7
+  source_candidate_id: ent_cand_090
+- id: ent_091
+  category: entity
+  chunk_id: b874c191f3091906
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: SK하이닉스
+    confidence: 0.95
+    corp_code: 00164779
+  - type: Product
+    surface: HBM
+    confidence: 0.98
+    product_id: HBM_GENERIC
+  - type: Place
+    surface: 아시아
+    confidence: 0.9
+    iso_code: AS
+  source_candidate_id: ent_cand_091
+- id: ent_092
+  category: entity
+  chunk_id: 534210463aa61047
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 동진쎄미켐
+    confidence: 0.95
+    corp_code: 00118804
+  - type: Organization
+    surface: 북경동진쎄미켐과기유한공사
+    confidence: 0.95
+    corp_code: XDJ_BEIJING
+  - type: Organization
+    surface: 얼도스시동진쎄미켐전자재료유한공사
+    confidence: 0.95
+    corp_code: XDJ_ORDOS
+  - type: Organization
+    surface: 사천동진전자재료과기유한공사
+    confidence: 0.95
+    corp_code: XDJ_SICHUAN
+  - type: Organization
+    surface: 무한동진쎄미켐과기유한공사
+    confidence: 0.95
+    corp_code: XDJ_WUHAN
+  - type: Organization
+    surface: 성도동진쎄미켐과기유한공사
+    confidence: 0.95
+    corp_code: XDJ_CHENGDU
+  - type: Organization
+    surface: 합비동진쎄미켐과기유한공사
+    confidence: 0.95
+    corp_code: XDJ_HEFEI
+  - type: Organization
+    surface: 중경동진쎄미켐전자재료유한공사
+    confidence: 0.95
+    corp_code: XDJ_CHONGQING
+  - type: Organization
+    surface: 혜주동진쎄미켐전자재료유한공사
+    confidence: 0.95
+    corp_code: XDJ_HUIZHOU
+  - type: Organization
+    surface: 복주동진쎄미켐과기유한공사
+    confidence: 0.95
+    corp_code: XDJ_FUZHOU
+  - type: Product
+    surface: 감광액
+    confidence: 0.85
+    product_id: PHOTORESIST
+  - type: Product
+    surface: 발포제
+    confidence: 0.85
+    product_id: FOAMING_AGENT
+  source_candidate_id: ent_cand_092
+- id: ent_093
+  category: entity
+  chunk_id: bd281a249d63f23d
+  chunk_type: text_macro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 엘지디스플레이
+    confidence: 0.95
+    corp_code: XLGDP0001
+  - type: Organization
+    surface: 삼성디스플레이
+    confidence: 0.95
+    corp_code: XSDISP001
+  source_candidate_id: ent_cand_093
+- id: ent_094
+  category: entity
+  chunk_id: ff5443d08ffae02e
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 삼성전자(주)
+    confidence: 0.95
+    corp_code: 00126380
+  - type: Organization
+    surface: 에스케이하이닉스 주식회사
+    confidence: 0.95
+    corp_code: 00164779
+  - type: Product
+    surface: 발포제
+    confidence: 0.85
+    product_id: FOAMING_AGENT
+  - type: Product
+    surface: 감광액
+    confidence: 0.9
+    product_id: PHOTORESIST
+  - type: Place
+    surface: 국내
+    confidence: 0.95
+    iso_code: KR
+  source_candidate_id: ent_cand_094
+- id: ent_095
+  category: entity
+  chunk_id: ff5443d08ffae02e
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 삼성전자
+    confidence: 0.95
+    corp_code: 00126380
+  - type: Organization
+    surface: 에스케이하이닉스
+    confidence: 0.95
+    corp_code: 00164779
+  - type: Product
+    surface: 감광액
+    confidence: 0.9
+    product_id: PHOTORESIST
+  - type: Product
+    surface: 발포제
+    confidence: 0.9
+    product_id: FOAMING_AGENT
+  source_candidate_id: ent_cand_095
+- id: ent_096
+  category: entity
+  chunk_id: 7fbc1bf01d2ea51c
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Product
+    surface: LEENO PIN
+    confidence: 0.95
+    product_id: LEENO_PIN
+  - type: Product
+    surface: IC TEST SOCKET
+    confidence: 0.95
+    product_id: IC_TEST_SOCKET
+  - type: Product
+    surface: 초음파 프로브
+    confidence: 0.95
+    product_id: ULTRASOUND_PROBE
+  - type: Organization
+    surface: 지멘스
+    confidence: 0.95
+    corp_code: XSIEM0001
+  source_candidate_id: ent_cand_096
+- id: ent_097
+  category: entity
+  chunk_id: e3cdd577e713ceeb
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Organization
+    surface: 리노공업
+    confidence: 0.95
+    corp_code: '00246417'
+  - type: Product
+    surface: LEENO PIN
+    confidence: 0.9
+    product_id: LEENO_PIN
+  - type: Product
+    surface: IC TEST SOCKET
+    confidence: 0.9
+    product_id: IC_TEST_SOCKET
+  - type: Product
+    surface: 초음파진단기
+    confidence: 0.85
+    product_id: ULTRASOUND_SCANNER
+  source_candidate_id: ent_cand_097
+- id: ent_098
+  category: entity
+  chunk_id: 1486dbac4beb2263
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Place
+    surface: 한국
+    confidence: 0.95
+    iso_code: KR
+  - type: Place
+    surface: 미국
+    confidence: 0.95
+    iso_code: US
+  - type: Place
+    surface: 중국
+    confidence: 0.95
+    iso_code: CN
+  - type: Place
+    surface: 일본
+    confidence: 0.95
+    iso_code: JP
+  - type: Place
+    surface: 필리핀
+    confidence: 0.95
+    iso_code: PH
+  - type: Place
+    surface: 대만
+    confidence: 0.95
+    iso_code: TW
+  - type: Place
+    surface: 베트남
+    confidence: 0.95
+    iso_code: VN
+  - type: Place
+    surface: 인도네시아
+    confidence: 0.95
+    iso_code: ID
+  - type: Place
+    surface: 홍콩
+    confidence: 0.95
+    iso_code: CN_HK
+  - type: Place
+    surface: 브라질
+    confidence: 0.95
+    iso_code: BR
+  - type: Product
+    surface: OLED
+    confidence: 0.85
+    product_id: OLED
+  source_candidate_id: ent_cand_098
+- id: ent_099
+  category: entity
+  chunk_id: 39d71481c2d8d93f
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Product
+    surface: HBM
+    confidence: 0.95
+    product_id: HBM_GENERIC
+  - type: Product
+    surface: MULTI DIE BONDER
+    confidence: 0.9
+    product_id: DIE_BONDER
+  - type: Product
+    surface: BIG DIE BONDER
+    confidence: 0.9
+    product_id: DIE_BONDER
+  - type: Product
+    surface: micro SAW
+    confidence: 0.95
+    product_id: MICRO_SAW
+  source_candidate_id: ent_cand_099
+- id: ent_100
+  category: entity
+  chunk_id: da2b1cda550d97fd
+  chunk_type: text_micro
+  query_type: chunk_to_entities
+  expected_entities:
+  - type: Place
+    surface: 수원사업장
+    confidence: 0.95
+    iso_code: KR_SUWON
+  - type: Place
+    surface: 구미
+    confidence: 0.95
+    iso_code: KR_GUMI
+  - type: Place
+    surface: 화성
+    confidence: 0.95
+    iso_code: KR_HWASEONG
+  - type: Place
+    surface: 평택
+    confidence: 0.95
+    iso_code: KR_PYEONGTAEK
+  - type: Place
+    surface: 아산
+    confidence: 0.95
+    iso_code: KR_ASAN
+  - type: Place
+    surface: 북미
+    confidence: 0.95
+    iso_code: NA
+  - type: Place
+    surface: 유럽
+    confidence: 0.95
+    iso_code: EU
+  - type: Place
+    surface: 중국
+    confidence: 0.95
+    iso_code: CN
+  - type: Organization
+    surface: 삼성디스플레이
+    confidence: 0.95
+    corp_code: XSDISP001
+  - type: Organization
+    surface: Harman
+    confidence: 0.95
+    corp_code: XHARM0001
+  source_candidate_id: ent_cand_100
+- id: rel_001
+  category: relation
+  chunk_id: 138aa201c9069d28
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: XDJ_XIAN
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: 00126380
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: XDJ_XIAN
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: 00164779
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: XDJ_XIAN
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: XSDISP001
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: XDJ_XIAN
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: XLGDP0001
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_001
+  evidence_span: 당사는 현재 삼성전자, SK하이닉스, 삼성디스플레이, LG디스플레이 등 국내 반도체 및 디스플레이 제조사에 공정용 화학
+    소재 등을 안정적으로 공급하고 있습니다
+- id: rel_002
+  category: relation
+  chunk_id: 3e076165e2eecf13
+  chunk_type: news_text
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: '00246417'
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: 00126380
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_002
+  evidence_span: 주요 고객사는 삼성전자다.
+- id: rel_003
+  category: relation
+  chunk_id: 42d04ecf143b8d34
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: XDJ_XIAN
+    predicate: IS_SUBSIDIARY_OF
+    object_type: Organization
+    object_id: XDJ_XIAN
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: XSOL_TX
+    predicate: IS_SUBSIDIARY_OF
+    object_type: Organization
+    object_id: XDJ_XIAN
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: XSOL_RASA
+    predicate: IS_SUBSIDIARY_OF
+    object_type: Organization
+    object_id: XDJ_XIAN
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: XDJ_XIAN
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: 00126380
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: XDJ_XIAN
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: 00164779
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: XDJ_XIAN
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: XLGDP0001
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: XDJ_XIAN
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: XSSDI0001
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_003
+  evidence_span: 중국(솔브레인(시안)전자재료유한공사), 미국(Soulbrain TX LLC, Soulbrain RASA TX LLC)에
+    현지법인이 있습니다. | 회사의 주요매출처는 삼성전자, SK하이닉스, LG디스플레이 및 삼성SDI 입니다.
+- id: rel_004
+  category: relation
+  chunk_id: 4579fba0703b7336
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 00161383
+    predicate: PRODUCES
+    object_type: Product
+    object_id: HBM_GENERIC
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_004
+  evidence_span: 최신식 하이브리드 본더 전용 공장을 건축함으로써 차세대 프리미엄 HBM(고대역폭메모리) 생산에 대응할 계획입니다.
+- id: rel_005
+  category: relation
+  chunk_id: 795c52c0276d85c7
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: PHOTORESIST
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: WET_CHEMICAL
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: COLORED_RESIST
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: ORGANIC_INSULATING_LAYER
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: COLUMN_SPACER
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: ETCHANT
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_005
+  evidence_span: 당사가 제조하는 반도체 및 디스플레이용 재료는 감광액(Photoresist), 반사방지막(BARC), SOC(Spin-on-carbon),
+    연마제(CMP(화학적기계연마) Slurry), Wet Chemical, Colored Resist, Organic Insulating Layer,
+    Column Spacer 등으로 전자소재의 첨단화와 집적화에 기여하는 화학공정 재료입니다. | 당사는 반도체 및 평판디스플레이용 감광액과 박리액,
+    세척액, 식각액 등 전자재료를 반도체칩 및 TFT-LCD 등의 제조업체에 납품하고 있습니다.
+- id: rel_006
+  category: relation
+  chunk_id: 8fd816b17ef91b73
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 00161383
+    predicate: PRODUCES
+    object_type: Product
+    object_id: HBM_GENERIC
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_006
+  evidence_span: 해당 투자는 한미반도체 7공장 설립을 위한 것으로 이를 통해 차세대 프리미엄 HBM생산에 대응할 계획입니다.
+- id: rel_007
+  category: relation
+  chunk_id: 04795bc5115655cc
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 00369657
+    predicate: PRODUCES
+    object_type: Product
+    object_id: OLED
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_007
+  evidence_span: 레이저를 이용한 LCD, OLED 등 디스플레이에 관련된 다양한 장비들을 판매하고 있습니다.
+- id: rel_008
+  category: relation
+  chunk_id: 05e702e079370c58
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: '00246417'
+    predicate: PRODUCES
+    object_type: Product
+    object_id: LEENO_PIN
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: '00246417'
+    predicate: PRODUCES
+    object_type: Product
+    object_id: IC_TEST_SOCKET
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_008
+  evidence_span: 당사가 국내 최초로 개발한 LEENO PIN을 이용한 IC TEST SOCKET은
+- id: rel_009
+  category: relation
+  chunk_id: 06dde034f477c86d
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 00369657
+    predicate: PRODUCES
+    object_type: Product
+    object_id: OLED
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_009
+  evidence_span: 레이저를 이용한 LCD, OLED 등 디스플레이에 관련된 다양한 장비들을 판매하고 있습니다.
+- id: rel_010
+  category: relation
+  chunk_id: 083892f8f132ec4c
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: '00246417'
+    predicate: PRODUCES
+    object_type: Product
+    object_id: ULTRASOUND_PROBE
+    confidence: 0.85
+    valid_from: ''
+  source_candidate_id: rel_cand_010
+  evidence_span: 초음파 프로브용 부품을 공급하고 있습니다.
+- id: rel_011
+  category: relation
+  chunk_id: 0b9e761e021589de
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 00160843
+    predicate: PRODUCES
+    object_type: Product
+    object_id: DDI
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: XDBGC0001
+    predicate: PRODUCES
+    object_type: Product
+    object_id: DDI
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_011
+  evidence_span: 당사는 전력반도체와 센서, 디스플레이 구동칩 등 시장이 크고 부가가치가 높은 특화제품을 중심으로 매출을 지속적으로 확대해가고
+    있습니다. | 주요 종속기업인 DB글로벌칩의 제품도 글로벌 경기 둔화의 영향을 직접적으로 받고 있으나, 국내외 패널업체와의 긴밀한 협력을 통해
+    디스플레이 구동칩 공급을 확대하고 있으며
+- id: rel_012
+  category: relation
+  chunk_id: 138aa201c9069d28
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 01489648
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: 00126380
+    confidence: 0.95
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 01489648
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: 00164779
+    confidence: 0.95
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 01489648
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: XSDISP001
+    confidence: 0.95
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 01489648
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: XLGDP0001
+    confidence: 0.95
+    valid_from: ''
+  source_candidate_id: rel_cand_012
+  evidence_span: 당사는 현재 삼성전자, SK하이닉스, 삼성디스플레이, LG디스플레이 등 국내 반도체 및 디스플레이 제조사에 공정용 화학
+    소재 등을 안정적으로 공급하고 있습니다.
+- id: rel_013
+  category: relation
+  chunk_id: 1855465214d302ea
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 00160843
+    predicate: IS_SUBSIDIARY_OF
+    object_type: Organization
+    object_id: XDBGC0001
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: XDBGC0001
+    predicate: PRODUCES
+    object_type: Product
+    object_id: OLED
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_013
+  evidence_span: 자회사인 DB글로벌칩은 디스플레이 구동 IC 제품을 설계, 판매하는 사업을 운영하고 있습니다. | 특히 UHD TV,
+    OLED 관련 제품 등 고성장 분야에서의 경쟁우위를 점하기 위해 역량을 확대하고 있습니다.
+- id: rel_014
+  category: relation
+  chunk_id: 1e0c7949ceb8014f
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: UNICELL
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: PHOTORESIST
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: WET_CHEMICAL
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: COLORED_RESIST
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: ORGANIC_INSULATING_LAYER
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: COLUMN_SPACER
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: CNT_CONDUCTIVE
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: SI_ANODE
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Organization
+    object_id: XDJ_INDONESIA
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_014
+  evidence_span: UNICELL이라는 브랜드로 세계 각국에수출하고 있습니다. | 당사가 제조하는 반도체 및 디스플레이용 재료는 감광액(Photoresist),
+    | Wet Chemical,
+- id: rel_015
+  category: relation
+  chunk_id: 22d216ec947577e5
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: '00246417'
+    predicate: PRODUCES
+    object_type: Product
+    object_id: IC_TEST_SOCKET
+    confidence: 0.95
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: '00246417'
+    predicate: PRODUCES
+    object_type: Product
+    object_id: LEENO_PIN
+    confidence: 0.95
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: '00246417'
+    predicate: PRODUCES
+    object_type: Product
+    object_id: ULTRASOUND_SCANNER
+    confidence: 0.95
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: '00246417'
+    predicate: PRODUCES
+    object_type: Product
+    object_id: ULTRASOUND_PROBE
+    confidence: 0.85
+    valid_from: ''
+  source_candidate_id: rel_cand_015
+  evidence_span: 당사는 전량 수입에 의존하던 검사용 PROBE(SPRING CONTACT PROBE:LEENO PIN)와 반도체 검사용
+    소켓(IC TEST SOCKET)을 자체브랜드로 개발하여 제조 및 판매하는 사업 | 초음파 진단기 등에 적용되는 의료기기 부품을 제조 및 판매하는사업
+    등을 영위하고 있습니다. | 2025년도 3분기 누적 매출기준으로 초음파 프로브 등에 적용되는 의료기기 부품류는 전체 매출대비 9.70%(279억원)를
+    차지하였으며
+- id: rel_016
+  category: relation
+  chunk_id: 258a171d72872e49
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: PHOTORESIST
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: WET_CHEMICAL
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: COLORED_RESIST
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: ORGANIC_INSULATING_LAYER
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: COLUMN_SPACER
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: CNT_CONDUCTIVE
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: SI_ANODE
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: IS_SUBSIDIARY_OF
+    object_type: Organization
+    object_id: XDJ_INDONESIA
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_016
+  evidence_span: 당사가 제조하는 반도체 및 디스플레이용 재료는 감광액(Photoresist), | Wet Chemical, Colored
+    Resist, | Colored Resist, Organic Insulating Layer,
+- id: rel_017
+  category: relation
+  chunk_id: 320cab3ff96cdf7c
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 00160843
+    predicate: PRODUCES
+    object_type: Product
+    object_id: DDI
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: XDBGC0001
+    predicate: IS_SUBSIDIARY_OF
+    object_type: Organization
+    object_id: 00160843
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: XDBGC0001
+    predicate: PRODUCES
+    object_type: Product
+    object_id: DDI
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_017
+  evidence_span: 당사는 전력반도체와 센서, 디스플레이 구동칩 등 시장이 크고 부가가치가 높은 특화제품을 중심으로 매출을 지속적으로 확대해가고
+    있습니다. | 주요 종속기업인 DB글로벌칩의 제품도 글로벌 경기 둔화의 영향을 직접적으로 받고 있으나 | 주요 종속기업인 DB글로벌칩의 제품도
+    글로벌 경기 둔화의 영향을 직접적으로 받고 있으나, 국내외 패널업체와의 긴밀한 협력을 통해 디스플레이 구동칩 공급을 확대하고 있으며
+- id: rel_018
+  category: relation
+  chunk_id: 326fcbe466ee2a50
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 01489648
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: 00126380
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 01489648
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: 00164779
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 01489648
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: XLGDP0001
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 01489648
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: XSSDI0001
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_018
+  evidence_span: 회사의 주요매출처는 삼성전자, SK하이닉스, LG디스플레이 및 삼성SDI 입니다.
+- id: rel_019
+  category: relation
+  chunk_id: 33a5478448863a10
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 00160843
+    predicate: PRODUCES
+    object_type: Product
+    object_id: DDI
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00160843
+    predicate: HAS_CEO
+    object_type: Organization
+    object_id: XDBGC0001
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: XDBGC0001
+    predicate: PRODUCES
+    object_type: Product
+    object_id: DDI
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_019
+  evidence_span: 당사는 전력반도체와 센서, 디스플레이 구동칩 등 시장이 크고 부가가치가 높은 특화제품을 중심으로 매출을 지속적으로 확대해가고
+    있습니다. | 또한, 주요 종속기업인 DB글로벌칩의 제품도 글로벌 경기 둔화의 영향을 직접적으로 받고 있으나, | 또한, 주요 종속기업인 DB글로벌칩의
+    제품도 글로벌 경기 둔화의 영향을 직접적으로 받고 있으나, 국내외 패널업체와의 긴밀한 협력을 통해 디스플레이 구동칩 공급을 확대하고 있으며,
+- id: rel_020
+  category: relation
+  chunk_id: 347fc716dee75715
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: PHOTORESIST
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: WET_CHEMICAL
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: COLORED_RESIST
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: ORGANIC_INSULATING_LAYER
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: COLUMN_SPACER
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_020
+  evidence_span: 당사가 제조하는 반도체 및 디스플레이용 재료는 감광액(Photoresist), 반사방지막(BARC), SOC(Spin-on-carbon),
+    연마제(CMP(화학적기계연마) Slurry), Wet Chemical, Colored Resist, Organic Insulating Layer,
+    Column Spacer 등으로 전자소재의 첨단화와 집적화에 기여하는 화학공정 재료입니다.
+- id: rel_021
+  category: relation
+  chunk_id: 3a7972ccd7bee533
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Product
+    subject_id: LEENO_PIN
+    predicate: PRODUCES
+    object_type: Product
+    object_id: LEENO_PIN
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Product
+    subject_id: IC_TEST_SOCKET
+    predicate: PRODUCES
+    object_type: Product
+    object_id: IC_TEST_SOCKET
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Product
+    subject_id: ULTRASOUND_PROBE
+    predicate: PRODUCES
+    object_type: Product
+    object_id: ULTRASOUND_PROBE
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Product
+    subject_id: ULTRASOUND_PROBE
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: XSIEM0001
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_021
+  evidence_span: LEENO PIN과 IC TEST SOCKET은 응용범위가 넓어 IDM 종합 반도체업, Fabless, Foundry,Packaging
+    & Test, 전기전자업 등 여러 사업분야에서 매출이 발생하고 있습니다. | 당사는 초음파 프로브 등에 사용되는 의료기기 부품을 제조하여 판매하고
+    있으며, 전 세계에 자체 개발한 초음파 프로브를 수출하며 | 전 세계에 자체 개발한 초음파 프로브를 수출하며 의료기기/IT융합 전초기지를 구축중인
+    지멘스社와의 의료기기 부품 공급으로 안정적인 매출을 이어가고 있습니다.
+- id: rel_022
+  category: relation
+  chunk_id: 3e11c4672371ff24
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: '00246417'
+    predicate: PRODUCES
+    object_type: Product
+    object_id: LEENO_PIN
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: '00246417'
+    predicate: PRODUCES
+    object_type: Product
+    object_id: IC_TEST_SOCKET
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_022
+  evidence_span: 당사가 국내 최초로 개발한 LEENO PIN을 이용한 IC TEST SOCKET은
+- id: rel_023
+  category: relation
+  chunk_id: 3fb0d1c96dd3023c
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: '00246417'
+    predicate: PRODUCES
+    object_type: Product
+    object_id: LEENO_PIN
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: '00246417'
+    predicate: PRODUCES
+    object_type: Product
+    object_id: IC_TEST_SOCKET
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_023
+  evidence_span: 당사가 국내 최초로 개발한 LEENO PIN을 이용한 IC TEST SOCKET은
+- id: rel_024
+  category: relation
+  chunk_id: 3fb35c8771db65fd
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 00160843
+    predicate: PRODUCES
+    object_type: Technology
+    object_id: FOUNDRY_BUSINESS
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_024
+  evidence_span: 파운드리는 시스템 반도체를 위탁 생산하는 사업으로, 고객을 위한 Wafer 생산뿐만 아니라, Library/PDK(Process
+    Design Kit)/DM(Design Methodology)/Design Service 등 다양한 솔루션 제공을 포함합니다.
+- id: rel_025
+  category: relation
+  chunk_id: 41a2584ca324bfd8
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 00369657
+    predicate: PRODUCES
+    object_type: Product
+    object_id: OLED
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_025
+  evidence_span: 레이저를 이용한 LCD, OLED 등 디스플레이에 관련된 다양한 장비들을 판매하고 있습니다.
+- id: rel_026
+  category: relation
+  chunk_id: 42d04ecf143b8d34
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 01489648
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: 00126380
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 01489648
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: 00164779
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 01489648
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: XLGDP0001
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 01489648
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: XSSDI0001
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_026
+  evidence_span: 회사의 주요매출처는 삼성전자, SK하이닉스, LG디스플레이 및 삼성SDI 입니다.
+- id: rel_027
+  category: relation
+  chunk_id: 44fd015cb31a30c3
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: 00126380
+    confidence: 0.95
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: XLGDP0001
+    confidence: 0.95
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: XSDISP001
+    confidence: 0.95
+    valid_from: ''
+  source_candidate_id: rel_cand_027
+  evidence_span: 삼성전자, 엘지디스플레이, 삼성디스플레이 등 반도체 및 평판디스플레이제조 업체에 관련 감광액 등 전자재료 제품 공급에
+    대한 기본계약에 의해 매월 평균 1,162억 정도 공급 중이며
+- id: rel_028
+  category: relation
+  chunk_id: 4579fba0703b7336
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 00161383
+    predicate: PRODUCES
+    object_type: Product
+    object_id: HBM_GENERIC
+    confidence: 0.9
+    valid_from: '2025-06-20'
+  source_candidate_id: rel_cand_028
+  evidence_span: 최신식 하이브리드 본더 전용 공장을 건축함으로써 차세대 프리미엄 HBM(고대역폭메모리) 생산에 대응할 계획입니다.
+- id: rel_029
+  category: relation
+  chunk_id: 4758df1a8cba3966
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 00161383
+    predicate: PRODUCES
+    object_type: Product
+    object_id: DIE_BONDER
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00161383
+    predicate: PRODUCES
+    object_type: Product
+    object_id: DIE_BONDER
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_029
+  evidence_span: 이외에도 기존의 와이어 본딩 방식에서 플립칩 방식으로 반도체칩을 본딩하는 'FLIP CHIP BONDER', 'MULTI
+    DIE BONDER', 'BIG DIE BONDER' 등 장비를 시장에 선보였으며
+- id: rel_030
+  category: relation
+  chunk_id: 4a207f6b46ef62e3
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 00160843
+    predicate: PRODUCES
+    object_type: Product
+    object_id: DDI
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00160843
+    predicate: HAS_CEO
+    object_type: Organization
+    object_id: XDBGC0001
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_030
+  evidence_span: 당사는 전력반도체와 센서, 디스플레이 구동칩 등 시장이 크고 부가가치가 높은 특화제품을 중심으로 매출을 지속적으로 확대해가고
+    있습니다. | 또한, 주요 종속기업인 DB글로벌칩의 제품도 글로벌 경기 둔화의 영향을 직접적으로 받고 있으나,
+- id: rel_031
+  category: relation
+  chunk_id: 4b4afa9829c40772
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: '00246417'
+    predicate: PRODUCES
+    object_type: Product
+    object_id: IC_TEST_SOCKET
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: '00246417'
+    predicate: PRODUCES
+    object_type: Product
+    object_id: LEENO_PIN
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_031
+  evidence_span: 당사는 전량 수입에 의존하던 검사용 PROBE(SPRING CONTACT PROBE:LEENO PIN)와 반도체 검사용
+    소켓(IC TEST SOCKET)을 자체브랜드로 개발하여 제조 및 판매하는 사업
+- id: rel_032
+  category: relation
+  chunk_id: 4cd02f7cb8361c07
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: 00126380
+    confidence: 0.95
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: XLGDP0001
+    confidence: 0.95
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: XSDISP001
+    confidence: 0.95
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: PHOTORESIST
+    confidence: 0.95
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: FOAMING_AGENT
+    confidence: 0.95
+    valid_from: ''
+  source_candidate_id: rel_cand_032
+  evidence_span: 삼성전자, 엘지디스플레이, 삼성디스플레이 등 반도체 및 평판디스플레이제조 업체에 관련 감광액 등 전자재료 제품 공급에
+    대한 기본계약에 의해 매월 평균 925억원 정도 공급 중이며 | 산업용 기초소재인 발포제는 중계무역 등을 통해 국내.외 거래선에 매월 평균
+    70억원 정도 공급 중입니다
+- id: rel_033
+  category: relation
+  chunk_id: 4f3646d349860b0b
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: XDBGC0001
+    predicate: IS_SUBSIDIARY_OF
+    object_type: Organization
+    object_id: 00160843
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_033
+  evidence_span: 자회사인 DB글로벌칩은 디스플레이 구동 IC 제품을 설계, 판매하는 사업을 운영하고 있습니다.
+- id: rel_034
+  category: relation
+  chunk_id: 539e2d7512b20011
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 01489648
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: 00126380
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 01489648
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: 00164779
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 01489648
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: XSDISP001
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 01489648
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: XLGDP0001
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_034
+  evidence_span: 당사는 현재 삼성전자, SK하이닉스, 삼성디스플레이, LG디스플레이 등 국내 반도체 및 디스플레이 제조사에 공정용 화학
+    소재 등을 안정적으로 공급하고 있습니다.
+- id: rel_035
+  category: relation
+  chunk_id: 5e9311f9e2747dc5
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: 00126380
+    confidence: 0.95
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: XLGDP0001
+    confidence: 0.95
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: XSDISP001
+    confidence: 0.95
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: PHOTORESIST
+    confidence: 0.95
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: FOAMING_AGENT
+    confidence: 0.95
+    valid_from: ''
+  source_candidate_id: rel_cand_035
+  evidence_span: 삼성전자, 엘지디스플레이, 삼성디스플레이 등 반도체 및 평판디스플레이제조 업체에 관련 감광액 등 전자재료 제품 공급에
+    대한 기본계약에 의해 매월 평균 911억 정도 공급 중이며 | 산업용 기초소재인 발포제는 중계무역 등을 통해 국내.외 거래선에 매월 평균 72억
+    정도 공급 중입니다
+- id: rel_036
+  category: relation
+  chunk_id: 5fc444bc99e021d3
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: PHOTORESIST
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: WET_CHEMICAL
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: COLORED_RESIST
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: ORGANIC_INSULATING_LAYER
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: COLUMN_SPACER
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_036
+  evidence_span: 당사가 제조하는 반도체 및 디스플레이용 재료는 감광액(Photoresist), 반사방지막(BARC), SOC(Spin-on-carbon),
+    연마제(CMP(화학적기계연마) Slurry), Wet Chemical, Colored Resist, Organic Insulating Layer,
+    Column Spacer 등으로 전자소재의 첨단화와 집적화에 기여하는 화학공정 재료입니다.
+- id: rel_037
+  category: relation
+  chunk_id: 5fc89fffd926504b
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: '00246417'
+    predicate: PRODUCES
+    object_type: Product
+    object_id: IC_TEST_SOCKET
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: '00246417'
+    predicate: PRODUCES
+    object_type: Product
+    object_id: LEENO_PIN
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_037
+  evidence_span: 당사는 전량 수입에 의존하던 검사용 PROBE(SPRING CONTACT PROBE:LEENO PIN)와 반도체 검사용
+    소켓(IC TEST SOCKET)을 자체브랜드로 개발하여 제조 및 판매하는 사업
+- id: rel_038
+  category: relation
+  chunk_id: 6301bda1fcc8741c
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: 00126380
+    confidence: 0.95
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: XLGDP0001
+    confidence: 0.95
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: XSDISP001
+    confidence: 0.95
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: PHOTORESIST
+    confidence: 0.95
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: FOAMING_AGENT
+    confidence: 0.95
+    valid_from: ''
+  source_candidate_id: rel_cand_038
+  evidence_span: 삼성전자, 엘지디스플레이, 삼성디스플레이 등 반도체 및 평판디스플레이제조 업체에 관련 감광액 등 전자재료 제품 공급에
+    대한 기본계약에 의해 매월 평균 1,171억 정도 공급 중이며 | 산업용 기초소재인 발포제는 중계무역 등을 통해 국내.외 거래선에 매월 평균
+    71억 정도 공급 중입니다
+- id: rel_039
+  category: relation
+  chunk_id: 67ca2d8c4d21eb55
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 00160843
+    predicate: PRODUCES
+    object_type: Product
+    object_id: DDI
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00160843
+    predicate: HAS_CEO
+    object_type: Organization
+    object_id: XDBGC0001
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_039
+  evidence_span: 회사는 전력반도체와 센서, 디스플레이 구동칩 등 시장이 크고 부가가치가 높은 특화제품을 중심으로 매출을 지속적으로 확대해가고
+    있습니다. | 또한, 주요 종속기업인 DB글로벌칩의 제품도 글로벌 경기 둔화의 영향을 직접적으로 받고 있으나
+- id: rel_040
+  category: relation
+  chunk_id: 68d69ffcc9f3493f
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 01489648
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: 00126380
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 01489648
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: 00164779
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 01489648
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: XSDISP001
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 01489648
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: XLGDP0001
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_040
+  evidence_span: 당사는 현재 삼성전자, SK하이닉스, 삼성디스플레이, LG디스플레이 등 국내 반도체 및 디스플레이 제조사에 공정용 화학
+    소재 등을 안정적으로 공급하고 있습니다.
+- id: rel_041
+  category: relation
+  chunk_id: 76257cecd533d424
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 01489648
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: 00126380
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 01489648
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: 00164779
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 01489648
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: XLGDP0001
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 01489648
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: XSSDI0001
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_041
+  evidence_span: 회사의 주요매출처는 삼성전자, SK하이닉스, LG디스플레이 및 삼성SDI 입니다.
+- id: rel_042
+  category: relation
+  chunk_id: 795c52c0276d85c7
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: PHOTORESIST
+    confidence: 0.95
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: WET_CHEMICAL
+    confidence: 0.95
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: COLORED_RESIST
+    confidence: 0.95
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: ORGANIC_INSULATING_LAYER
+    confidence: 0.95
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: COLUMN_SPACER
+    confidence: 0.95
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: ETCHANT
+    confidence: 0.95
+    valid_from: ''
+  source_candidate_id: rel_cand_042
+  evidence_span: 당사가 제조하는 반도체 및 디스플레이용 재료는 감광액(Photoresist), 반사방지막(BARC), SOC(Spin-on-carbon),
+    연마제(CMP(화학적기계연마) Slurry), Wet Chemical, Colored Resist, Organic Insulating Layer,
+    Column Spacer 등으로 전자소재의 첨단화와 집적화에 기여하는 화학공정 재료입니다. | 당사는 반도체 및 평판디스플레이용 감광액과 박리액,
+    세척액, 식각액 등 전자재료를 반도체칩 및 TFT-LCD 등의 제조업체에 납품하고 있습니다.
+- id: rel_043
+  category: relation
+  chunk_id: 7c81e7a7d7db90b8
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: XNVDA0001
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: XHARM0001
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: XWNC0001
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: XHARM0001
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_043
+  evidence_span: Harman은 MCU(Micro Controller Unit)를 포함한 SOC(System-On-Chip), 통신 모듈
+    등을 NVIDIA, WNC 등에서 공급받고 있습니다.
+- id: rel_044
+  category: relation
+  chunk_id: 8a0d409eb70f09d1
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 00160843
+    predicate: PRODUCES
+    object_type: Product
+    object_id: DDI
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00160843
+    predicate: HAS_CEO
+    object_type: Organization
+    object_id: XDBGC0001
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_044
+  evidence_span: 회사는 전력반도체와 센서, 디스플레이 구동칩 등 시장이 크고 부가가치가 높은 특화제품을 중심으로 매출을 지속적으로 확대해가고
+    있습니다. | 또한, 주요 종속기업인 DB글로벌칩의 제품도 글로벌 경기 둔화의 영향을 직접적으로 받고 있으나
+- id: rel_045
+  category: relation
+  chunk_id: 8e11e459b33f5d85
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 00160843
+    predicate: USES_TECH
+    object_type: Technology
+    object_id: FOUNDRY_BUSINESS
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_045
+  evidence_span: 회사의 주요 사업부문은 웨이퍼 수탁 생산 및 판매를 담당하는 Foundry 사업이며
+- id: rel_046
+  category: relation
+  chunk_id: 8e3249d2381e0b2e
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: '00246417'
+    predicate: PRODUCES
+    object_type: Product
+    object_id: LEENO_PIN
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: '00246417'
+    predicate: PRODUCES
+    object_type: Product
+    object_id: IC_TEST_SOCKET
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_046
+  evidence_span: 당사가 국내 최초로 개발한 LEENO PIN을 이용한 IC TEST SOCKET
+- id: rel_047
+  category: relation
+  chunk_id: 8fd816b17ef91b73
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 00161383
+    predicate: PRODUCES
+    object_type: Product
+    object_id: HBM_GENERIC
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_047
+  evidence_span: 차세대 프리미엄 HBM생산에 대응할 계획입니다.
+- id: rel_048
+  category: relation
+  chunk_id: 8fe8ed218865e458
+  chunk_type: text_macro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: XLGDP0001
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: XSDISP001
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_048
+  evidence_span: 디스플레이소재의 주요 매출처는 엘지디스플레이와 삼성디스플레이 등
+- id: rel_049
+  category: relation
+  chunk_id: 980555d6444ccfdb
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 00160843
+    predicate: PRODUCES
+    object_type: Product
+    object_id: DDI
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: XDBGC0001
+    predicate: IS_SUBSIDIARY_OF
+    object_type: Organization
+    object_id: 00160843
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: XDBGC0001
+    predicate: PRODUCES
+    object_type: Product
+    object_id: DDI
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_049
+  evidence_span: 당사는 전력반도체와 센서, 디스플레이 구동칩 등 시장이 크고 부가가치가 높은 특화제품을 중심으로 매출을 지속적으로 확대해가고
+    있습니다. | 주요 종속기업인 DB글로벌칩의 제품도 글로벌 경기 둔화의 영향을 직접적으로 받고 있으나 | 주요 종속기업인 DB글로벌칩의 제품도
+    글로벌 경기 둔화의 영향을 직접적으로 받고 있으나, 국내외 패널업체와의 긴밀한 협력을 통해 디스플레이 구동칩 공급을 확대하고 있으며
+- id: rel_050
+  category: relation
+  chunk_id: 9c09360ec9544953
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 00160843
+    predicate: PRODUCES
+    object_type: Product
+    object_id: DDI
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_050
+  evidence_span: 당사는 전력반도체와 센서, 디스플레이 구동칩 등 시장이 크고 부가가치가 높은 특화제품을 중심으로 매출을 지속적으로 확대해가고
+    있습니다.
+- id: rel_051
+  category: relation
+  chunk_id: 9e711396ef4ffcb6
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Product
+    subject_id: LEENO_PIN
+    predicate: PRODUCES
+    object_type: Product
+    object_id: LEENO_PIN
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Product
+    subject_id: IC_TEST_SOCKET
+    predicate: PRODUCES
+    object_type: Product
+    object_id: IC_TEST_SOCKET
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Product
+    subject_id: ULTRASOUND_PROBE
+    predicate: PRODUCES
+    object_type: Product
+    object_id: ULTRASOUND_PROBE
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Product
+    subject_id: ULTRASOUND_PROBE
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: XSIEM0001
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_051
+  evidence_span: LEENO PIN과 IC TEST SOCKET은 응용범위가 넓어 IDM 종합 반도체업, Fabless, Foundry,Packaging
+    & Test, 전기전자업 등 여러 사업분야에서 매출이 발생하고 있습니다. | 당사는 초음파 프로브 등에 사용되는 의료기기 부품을 제조하여 판매하고
+    있으며, 전 세계에 자체 개발한 초음파 프로브를 수출하며 | 전 세계에 자체 개발한 초음파 프로브를 수출하며 의료기기/IT융합 전초기지를 구축중인
+    지멘스社와의 의료기기 부품 공급으로 안정적인 매출을 이어가고 있습니다.
+- id: rel_052
+  category: relation
+  chunk_id: a4f0cc96868bf19f
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: UNICELL
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: DPR_DNR
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_052
+  evidence_span: 발포제부문의 "UNICELL"과 전자재료 부문의 "DPR & DNR" 등의 확고한 브랜드를 구축하여 왔습니다.
+- id: rel_053
+  category: relation
+  chunk_id: a7484220e23ba43d
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 01489648
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: 00126380
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 01489648
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: 00164779
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 01489648
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: XLGDP0001
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 01489648
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: XSSDI0001
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_053
+  evidence_span: 회사의 주요매출처는 삼성전자, SK하이닉스, LG디스플레이 및 삼성SDI 입니다.
+- id: rel_054
+  category: relation
+  chunk_id: ab02b851e5554e8f
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: '00246417'
+    predicate: PRODUCES
+    object_type: Product
+    object_id: ULTRASOUND_PROBE
+    confidence: 0.85
+    valid_from: ''
+  source_candidate_id: rel_cand_054
+  evidence_span: 초음파 프로브용 부품을 공급하고 있습니다.
+- id: rel_055
+  category: relation
+  chunk_id: ac85f36404b57580
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: '00246417'
+    predicate: PRODUCES
+    object_type: Product
+    object_id: IC_TEST_SOCKET
+    confidence: 0.95
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: '00246417'
+    predicate: PRODUCES
+    object_type: Product
+    object_id: ULTRASOUND_SCANNER
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: '00246417'
+    predicate: PRODUCES
+    object_type: Product
+    object_id: LEENO_PIN
+    confidence: 0.95
+    valid_from: ''
+  source_candidate_id: rel_cand_055
+  evidence_span: 당사는 전량 수입에 의존하던 검사용 PROBE(SPRING CONTACT PROBE:LEENO PIN)와 반도체 검사용
+    소켓(IC TEST SOCKET)을 자체브랜드로 개발하여 제조 및 판매하는 사업 | 초음파 진단기 등에 적용되는 의료기기 부품을 제조 및 판매하는사업
+    등을 영위하고 있습니다 | LEENO PIN과 IC TEST SOCKET 부문은 응용범위가 넓어 IDM 종합 반도체업, Fabless, Foundry,
+    Packaging & Test, 전기전자업 등 여러 사업분야에서 매출이 발생하고 있습니다
+- id: rel_056
+  category: relation
+  chunk_id: b03030aaf8065323
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 01489648
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: 00126380
+    confidence: 0.95
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 01489648
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: 00164779
+    confidence: 0.95
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 01489648
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: XSDISP001
+    confidence: 0.95
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 01489648
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: XLGDP0001
+    confidence: 0.95
+    valid_from: ''
+  source_candidate_id: rel_cand_056
+  evidence_span: 당사는 현재 삼성전자, SK하이닉스, 삼성디스플레이, LG디스플레이 등 국내 반도체 및 디스플레이 제조사에 공정용 화학
+    소재 등을 안정적으로 공급하고 있습니다.
+- id: rel_057
+  category: relation
+  chunk_id: b44769949eba4fdf
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 00160843
+    predicate: PRODUCES
+    object_type: Product
+    object_id: DDI
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_057
+  evidence_span: 당사는 전력반도체와 센서, 디스플레이 구동칩 등 시장이 크고 부가가치가 높은 특화제품을 중심으로 매출을 지속적으로 확대해가고
+    있습니다.
+- id: rel_058
+  category: relation
+  chunk_id: b699f238cd219de5
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: '00246417'
+    predicate: PRODUCES
+    object_type: Product
+    object_id: IC_TEST_SOCKET
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: '00246417'
+    predicate: PRODUCES
+    object_type: Product
+    object_id: LEENO_PIN
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: '00246417'
+    predicate: PRODUCES
+    object_type: Product
+    object_id: ULTRASOUND_SCANNER
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_058
+  evidence_span: 당사는 전량 수입에 의존하던 검사용 PROBE(SPRING CONTACT PROBE:LEENO PIN)와 반도체 검사용
+    소켓(IC TEST SOCKET)을 자체브랜드로 개발하여 제조 및 판매하는 사업 | 당사는 전량 수입에 의존하던 검사용 PROBE(SPRING
+    CONTACT PROBE:LEENO PIN)와 반도체 검사용 소켓(IC TEST SOCKET)을 자체브랜드로 개발하여 제조 및 판매하는 사업과
+    초음파 진단기 등에 적용되는 의료기기 부품을 제조 및 판매하는사업 등을 영위하고 있습니다.
+- id: rel_059
+  category: relation
+  chunk_id: c068c8aa3c318f5f
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 00160843
+    predicate: PRODUCES
+    object_type: Product
+    object_id: DDI
+    confidence: 0.95
+    valid_from: ''
+  source_candidate_id: rel_cand_059
+  evidence_span: 당사는 전력반도체와 센서, 디스플레이 구동칩 등 시장이 크고 부가가치가 높은 특화제품을 중심으로 매출을 지속적으로 확대해가고
+    있습니다.
+- id: rel_060
+  category: relation
+  chunk_id: c151db1b15836c91
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 00126380
+    predicate: PRODUCES
+    object_type: Product
+    object_id: HBM4
+    confidence: 0.95
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00126380
+    predicate: PRODUCES
+    object_type: Product
+    object_id: DDR5
+    confidence: 0.95
+    valid_from: ''
+  source_candidate_id: rel_cand_060
+  evidence_span: 또한 반도체 사업은 HBM4와 DDR5 등 고부가가치 제품 수요에 적극적으로 대응하고 있습니다.
+- id: rel_061
+  category: relation
+  chunk_id: c2689d37a96f3cfb
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: '00246417'
+    predicate: PRODUCES
+    object_type: Product
+    object_id: LEENO_PIN
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: '00246417'
+    predicate: PRODUCES
+    object_type: Product
+    object_id: IC_TEST_SOCKET
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_061
+  evidence_span: 당사가 국내 최초로 개발한 LEENO PIN을 적용한 IC TEST SOCKET은
+- id: rel_062
+  category: relation
+  chunk_id: cac6331ef0028ee7
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: PHOTORESIST
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: FOAMING_AGENT
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_062
+  evidence_span: 당사는 반도체 및 평판디스플레이 등에 사용되는 감광액과 산업용기초소재인 발포제등을 생산, 판매하고 있습니다.
+- id: rel_063
+  category: relation
+  chunk_id: cc8f948094519468
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 01489648
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: 00126380
+    confidence: 0.95
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 01489648
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: 00164779
+    confidence: 0.95
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 01489648
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: XSDISP001
+    confidence: 0.95
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 01489648
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: XLGDP0001
+    confidence: 0.95
+    valid_from: ''
+  source_candidate_id: rel_cand_063
+  evidence_span: 당사는 현재 삼성전자, SK하이닉스, 삼성디스플레이, LG디스플레이 등 국내 반도체 및 디스플레이 제조사에 공정용 화학
+    소재 등을 안정적으로 공급하고 있습니다.
+- id: rel_064
+  category: relation
+  chunk_id: cca460c345120b77
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: '00246417'
+    predicate: PRODUCES
+    object_type: Product
+    object_id: LEENO_PIN
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: '00246417'
+    predicate: PRODUCES
+    object_type: Product
+    object_id: IC_TEST_SOCKET
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_064
+  evidence_span: 당사는 LEENO PIN과 IC TEST SOCKET 등의 미세제조공정에서 축적된 노하우를 바탕으로 의료기기 산업에
+    진출하여 관련부품을 생산하고 있습니다.
+- id: rel_065
+  category: relation
+  chunk_id: d040a77c962b8572
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: '00246417'
+    predicate: PRODUCES
+    object_type: Product
+    object_id: LEENO_PIN
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: '00246417'
+    predicate: PRODUCES
+    object_type: Product
+    object_id: IC_TEST_SOCKET
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_065
+  evidence_span: 당사가 국내 최초로 개발한 LEENO PIN을 이용한 IC TEST SOCKET은
+- id: rel_066
+  category: relation
+  chunk_id: dc19d46140619011
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: '00246417'
+    predicate: PRODUCES
+    object_type: Product
+    object_id: IC_TEST_SOCKET
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: '00246417'
+    predicate: PRODUCES
+    object_type: Product
+    object_id: LEENO_PIN
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: '00246417'
+    predicate: PRODUCES
+    object_type: Product
+    object_id: ULTRASOUND_SCANNER
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_066
+  evidence_span: 당사는 전량 수입에 의존하던 검사용 PROBE(SPRING CONTACT PROBE:LEENO PIN)와 반도체 검사용
+    소켓(IC TEST SOCKET)을 자체브랜드로 개발하여 제조 및 판매하는 사업 | 당사는 전량 수입에 의존하던 검사용 PROBE(SPRING
+    CONTACT PROBE:LEENO PIN)와 반도체 검사용 소켓(IC TEST SOCKET)을 자체브랜드로 개발하여 제조 및 판매하는 사업과
+    초음파 진단기 등에 적용되는 의료기기 부품을 제조 및 판매하는사업 등을 영위하고 있습니다.
+- id: rel_067
+  category: relation
+  chunk_id: dc96d62f07138f73
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: XDBGC0001
+    predicate: IS_SUBSIDIARY_OF
+    object_type: Organization
+    object_id: 00160843
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_067
+  evidence_span: 자회사인 DB글로벌칩은 디스플레이 구동 IC 제품을 설계, 판매하는 사업을 운영하고 있습니다.
+- id: rel_068
+  category: relation
+  chunk_id: e1380f1d1b09b3e7
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 00369657
+    predicate: PRODUCES
+    object_type: Product
+    object_id: OLED
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00369657
+    predicate: SUPPLIES_TO
+    object_type: Product
+    object_id: OLED
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_068
+  evidence_span: 레이저를 이용한 LCD, OLED 등 디스플레이에 관련된 다양한 장비들을 판매하고 있습니다.
+- id: rel_069
+  category: relation
+  chunk_id: e4fcd1738e3447cc
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 00160843
+    predicate: PRODUCES
+    object_type: Product
+    object_id: OLED
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_069
+  evidence_span: 특히 UHD TV, OLED 관련 제품 등 고성장 분야에서의 경쟁우위를 점하기 위해 역량을 확대하고 있습니다.
+- id: rel_070
+  category: relation
+  chunk_id: e6dfcaecb47d40ee
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: XMGCT0001
+    predicate: SUPPLIES_TO
+    object_type: Product
+    object_id: PHOTORESIST
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: XMGCT0001
+    predicate: SUPPLIES_TO
+    object_type: Product
+    object_id: FOAMING_AGENT
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: XPURAC001
+    predicate: SUPPLIES_TO
+    object_type: Product
+    object_id: PHOTORESIST
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: XPURAC001
+    predicate: SUPPLIES_TO
+    object_type: Product
+    object_id: FOAMING_AGENT
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: XASH0001
+    predicate: SUPPLIES_TO
+    object_type: Product
+    object_id: PHOTORESIST
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: XASH0001
+    predicate: SUPPLIES_TO
+    object_type: Product
+    object_id: FOAMING_AGENT
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: XSYNC0001
+    predicate: SUPPLIES_TO
+    object_type: Product
+    object_id: PHOTORESIST
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: XSYNC0001
+    predicate: SUPPLIES_TO
+    object_type: Product
+    object_id: FOAMING_AGENT
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: XDJ_DCMAT
+    predicate: SUPPLIES_TO
+    object_type: Product
+    object_id: PHOTORESIST
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: XDJ_DCMAT
+    predicate: SUPPLIES_TO
+    object_type: Product
+    object_id: FOAMING_AGENT
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_070
+  evidence_span: 당사는Mitsubishi Gas Chemical Trading, Inc., PURAC ASIA PACIFIC PTE
+    LTD, Ashland Inc.등 해외구매처와 (주)삼양엔씨켐, (주)동진첨단소재, 재원산업(주) 등 국내업체로부터 반도체 및 평판디스플레이
+    등에 사용되는 감광액과 산업용기초소재인 발포제의 원료를 직접 또는 간접수입 방식으로 구매하고 있습니다.
+- id: rel_071
+  category: relation
+  chunk_id: e70010aa2f9dfd3c
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: '00246417'
+    predicate: PRODUCES
+    object_type: Product
+    object_id: IC_TEST_SOCKET
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: '00246417'
+    predicate: PRODUCES
+    object_type: Product
+    object_id: LEENO_PIN
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_071
+  evidence_span: 당사는 전량 수입에 의존하던 검사용 PROBE(SPRING CONTACT PROBE:LEENO PIN)와 반도체 검사용
+    소켓(IC TEST SOCKET)을 자체브랜드로 개발하여 제조 및 판매하는 사업
+- id: rel_072
+  category: relation
+  chunk_id: ec223b60cd1bf7ae
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 01489648
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: 00126380
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 01489648
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: 00164779
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 01489648
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: XLGDP0001
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 01489648
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: XSSDI0001
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_072
+  evidence_span: 회사의 주요매출처는 삼성전자, SK하이닉스, LG디스플레이 및 삼성SDI 입니다.
+- id: rel_073
+  category: relation
+  chunk_id: ed43a333934c9d71
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: XDBGC0001
+    predicate: IS_SUBSIDIARY_OF
+    object_type: Organization
+    object_id: 00160843
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: XDBGC0001
+    predicate: PRODUCES
+    object_type: Product
+    object_id: OLED
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_073
+  evidence_span: 주요 종속기업인 DB글로벌칩의 디스플레이 구동IC 사업은 | 특히 UHD TV, OLED 관련 제품 등 고성장 분야에서의
+    경쟁우위를 점하기 위해
+- id: rel_074
+  category: relation
+  chunk_id: efe9735024e566bf
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: '00246417'
+    predicate: PRODUCES
+    object_type: Product
+    object_id: IC_TEST_SOCKET
+    confidence: 0.95
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: '00246417'
+    predicate: PRODUCES
+    object_type: Product
+    object_id: LEENO_PIN
+    confidence: 0.95
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: '00246417'
+    predicate: PRODUCES
+    object_type: Product
+    object_id: ULTRASOUND_SCANNER
+    confidence: 0.95
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: '00246417'
+    predicate: PRODUCES
+    object_type: Product
+    object_id: ULTRASOUND_PROBE
+    confidence: 0.85
+    valid_from: ''
+  source_candidate_id: rel_cand_074
+  evidence_span: 당사는 전량 수입에 의존하던 검사용 PROBE(SPRING CONTACT PROBE:LEENO PIN)와 반도체 검사용
+    소켓(IC TEST SOCKET)을 자체브랜드로 개발하여 제조 및 판매하는 사업 | 초음파 진단기 등에 적용되는 의료기기 부품을 제조 및 판매하는사업
+    등을 영위하고 있습니다 | 2024년도 1분기 매출기준으로 초음파 프로브 등에 적용되는 의료기기 부품류는 전체 매출대비 12.63%(69억원)를
+    차지하였으며
+- id: rel_075
+  category: relation
+  chunk_id: f09704a8b649413b
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: XNVDA0001
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: XHARM0001
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: XWNC0001
+    predicate: SUPPLIES_TO
+    object_type: Organization
+    object_id: XHARM0001
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_075
+  evidence_span: Harman은 MCU(Micro Controller Unit)를 포함한 SOC(System-On-Chip), 통신 모듈
+    등을 NVIDIA, WNC 등에서 공급받고 있습니다
+- id: rel_076
+  category: relation
+  chunk_id: f21956455f4f7e91
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: PHOTORESIST
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00118804
+    predicate: PRODUCES
+    object_type: Product
+    object_id: FOAMING_AGENT
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_076
+  evidence_span: 당사는 반도체 및 평판디스플레이 등에 사용되는 감광액과 산업용기초소재인 발포제등을 생산, 판매하고 있습니다.
+- id: rel_077
+  category: relation
+  chunk_id: f2b1a260aae76027
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: '00246417'
+    predicate: PRODUCES
+    object_type: Product
+    object_id: LEENO_PIN
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: '00246417'
+    predicate: PRODUCES
+    object_type: Product
+    object_id: IC_TEST_SOCKET
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_077
+  evidence_span: 당사가 국내 최초로 개발한 LEENO PIN을 적용한 IC TEST SOCKET은
+- id: rel_078
+  category: relation
+  chunk_id: f476c8d44b2e3211
+  chunk_type: text_micro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: '00246417'
+    predicate: PRODUCES
+    object_type: Product
+    object_id: IC_TEST_SOCKET
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: '00246417'
+    predicate: PRODUCES
+    object_type: Product
+    object_id: LEENO_PIN
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_078
+  evidence_span: 당사는 전량 수입에 의존하던 검사용 PROBE(SPRING CONTACT PROBE:LEENO PIN)와 반도체 검사용
+    소켓(IC TEST SOCKET)을 자체브랜드로 개발하여 제조 및 판매하는 사업
+- id: rel_079
+  category: relation
+  chunk_id: f8fac623325cbc1f
+  chunk_type: text_macro
+  query_type: triple_extraction
+  expected_triples:
+  - subject_type: Organization
+    subject_id: 00126380
+    predicate: PRODUCES
+    object_type: Product
+    object_id: MICRO_LED
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00126380
+    predicate: PRODUCES
+    object_type: Product
+    object_id: OLED
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00126380
+    predicate: PRODUCES
+    object_type: Product
+    object_id: DDR5
+    confidence: 0.9
+    valid_from: ''
+  - subject_type: Organization
+    subject_id: 00126380
+    predicate: PRODUCES
+    object_type: Product
+    object_id: GDDR7
+    confidence: 0.9
+    valid_from: ''
+  source_candidate_id: rel_cand_079
+  evidence_span: DX(디바이스경험) 부문의 영상디스플레이/생활가전 사업은 AI 기술을 접목한 Neo QLED, 마이크로 LED, OLED
+    등 프리미엄 TV 제품과 차별화된 사용 경험을 제공하는 AI 가전제품을 중심으로 발전하고 있습니다. | 또한 고용량 DDR5, SOCAMM2,
+    GDDR7 등 AI 수요와 연계된 고부가 제품의 판매 비중도 지속 늘려 나갈 예정입니다.

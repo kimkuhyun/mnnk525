@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POLARIS · 근거 피드</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body{font-family:'Pretendard',-apple-system,sans-serif;background:#f8fafc;color:#1e293b}
+  ::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:4px}
+  .ph{border:2px dashed #cbd5e1;border-radius:.75rem;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:1.1rem;gap:.3rem}
+  .ph-t{font-weight:600;font-size:.88rem;color:#475569}.ph-d{font-size:.72rem;color:#94a3b8;font-family:ui-monospace,monospace}.ph-i{font-size:1.5rem;opacity:.5}
+  .nav-a{display:flex;align-items:center;gap:.6rem;padding:.6rem .8rem;border-radius:.5rem;color:#475569;font-size:.9rem;font-weight:500;text-decoration:none;cursor:pointer}
+  .nav-a:hover{background:#eff6ff;color:#2563eb}.nav-a.active{background:#2563eb;color:#fff;font-weight:600}
+  .card{background:#fff;border:1px solid #e2e8f0;border-radius:.75rem}
+  .btn{padding:.45rem .85rem;border-radius:.5rem;font-size:.8rem;font-weight:500;cursor:pointer;border:1px solid #e2e8f0;background:#fff;color:#475569;text-decoration:none;display:inline-flex;align-items:center;gap:.3rem}
+  .btn:hover{background:#f1f5f9}.btn-p{background:#2563eb;color:#fff;border-color:#2563eb}.btn-p:hover{background:#1d4ed8}
+  th,td{text-align:left;padding:.6rem .75rem;font-size:.8rem}thead th{color:#94a3b8;font-weight:600;border-bottom:1px solid #e2e8f0}
+</style>
+</head>
+<body>
+<header class="sticky top-0 z-30 h-14 bg-white border-b border-slate-200 flex items-center px-5 gap-4">
+  <div class="flex items-center gap-2"><div class="w-7 h-7 rounded-lg bg-blue-600 text-white font-black grid place-items-center">P</div><span class="font-bold text-lg">POLARIS</span></div>
+  <div class="ml-6 hidden lg:flex items-center gap-2"><button class="btn" onclick="alert('회사 검색·전환')">🔍 회사 검색·전환</button><span class="text-sm text-slate-500">현재: <b class="text-slate-700">[선택 회사]</b></span></div>
+</header>
+<div class="flex">
+  <aside class="w-52 shrink-0 border-r border-slate-200 bg-white min-h-[calc(100vh-3.5rem)] p-3 hidden md:block">
+    <nav class="space-y-1">
+      <a href="dashboard.html" class="nav-a">📊 대시보드</a>
+      <a href="workbench.html" class="nav-a">🕸️ 관계 워크벤치</a>
+      <a href="ask.html" class="nav-a">💬 POLARIS에게 묻기</a>
+      <a href="patents.html" class="nav-a">📜 특허 관계</a>
+      <a href="signals.html" class="nav-a">🔔 시그널</a>
+      <a href="evidence.html" class="nav-a active">📑 근거 피드</a>
+    </nav>
+  </aside>
+  <main class="flex-1 p-5 space-y-4 max-w-[1200px]">
+    <div><h1 class="text-xl font-bold">근거 피드</h1><p class="text-sm text-slate-500">모든 분석의 출처 · 소스별 신뢰도 표기 · F-05</p></div>
+    <div class="flex flex-wrap gap-2" data-filter>
+      <button class="btn btn-p">전체</button><button class="btn">공시 DART</button><button class="btn">뉴스</button><button class="btn">IR</button><button class="btn">특허</button><button class="btn">채용</button><button class="btn">FTC</button>
+    </div>
+    <div class="card p-2">
+      <table class="w-full">
+        <thead><tr><th>제목</th><th>출처(source_type)</th><th>신뢰도</th><th>감성</th><th>일시(ts)</th></tr></thead>
+        <tbody>
+          <tr><td colspan="5"><div class="ph" style="height:64px;align-items:flex-start;text-align:left"><div class="ph-t">📄 문서 행 자리 — 제목 · 소스 배지 · credibility · 감성 · ts</div><div class="ph-d">document_unified (doc_id, source_type, title, credibility, ts) ORDER BY ts DESC</div></div></td></tr>
+          <tr><td colspan="5"><div class="ph" style="height:52px;align-items:flex-start;text-align:left"><div class="ph-t">📄 문서 행 …</div><div class="ph-d">클릭 → 원문 / 관련 그래프</div></div></td></tr>
+          <tr><td colspan="5"><div class="ph" style="height:52px;align-items:flex-start;text-align:left"><div class="ph-t">… (페이지네이션 / 무한스크롤)</div><div class="ph-d">document_unified</div></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</div>
+<script>
+  document.querySelectorAll('[data-filter] .btn').forEach(b=>b.addEventListener('click',()=>{b.parentElement.querySelectorAll('.btn').forEach(x=>x.classList.remove('btn-p'));b.classList.add('btn-p')}));
+</script>
+</body>
+</html>

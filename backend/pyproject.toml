@@ -1,0 +1,24 @@
+[project]
+name = "polaris-api"
+version = "0.1.0"
+description = "POLARIS 백엔드 API (FastAPI) — 3DB 조회 서비스 계층"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "pydantic-settings>=2.5",
+    "pymysql>=1.1",
+    "qdrant-client>=1.12",
+    "neo4j>=5.24",
+    "httpx>=0.27",
+]
+
+[project.optional-dependencies]
+dev = ["ruff>=0.7"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["app"]

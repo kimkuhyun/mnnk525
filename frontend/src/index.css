@@ -1,0 +1,9 @@
+:root { --blue: #2563eb; }
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #f8fafc;
+  color: #1e293b;
+}
+a { text-decoration: none; color: inherit; }

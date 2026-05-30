@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POLARIS · 관계 워크벤치</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body{font-family:'Pretendard',-apple-system,sans-serif;background:#f8fafc;color:#1e293b}
+  ::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:4px}
+  .ph{border:2px dashed #cbd5e1;border-radius:.75rem;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:1.1rem;gap:.3rem}
+  .ph-t{font-weight:600;font-size:.88rem;color:#475569}.ph-d{font-size:.72rem;color:#94a3b8;font-family:ui-monospace,monospace}.ph-i{font-size:1.6rem;opacity:.5}
+  .nav-a{display:flex;align-items:center;gap:.6rem;padding:.6rem .8rem;border-radius:.5rem;color:#475569;font-size:.9rem;font-weight:500;text-decoration:none;cursor:pointer}
+  .nav-a:hover{background:#eff6ff;color:#2563eb}.nav-a.active{background:#2563eb;color:#fff;font-weight:600}
+  .card{background:#fff;border:1px solid #e2e8f0;border-radius:.75rem}
+  .btn{padding:.45rem .85rem;border-radius:.5rem;font-size:.8rem;font-weight:500;cursor:pointer;border:1px solid #e2e8f0;background:#fff;color:#475569;text-decoration:none;display:inline-flex;align-items:center;gap:.3rem}
+  .btn:hover{background:#f1f5f9}.btn-p{background:#2563eb;color:#fff;border-color:#2563eb}.btn-p:hover{background:#1d4ed8}
+  .lens-row{display:flex;align-items:center;justify-content:space-between;padding:.5rem 0;border-bottom:1px solid #f1f5f9}
+</style>
+</head>
+<body>
+<header class="sticky top-0 z-30 h-14 bg-white border-b border-slate-200 flex items-center px-5 gap-4">
+  <div class="flex items-center gap-2">
+    <div class="w-7 h-7 rounded-lg bg-blue-600 text-white font-black grid place-items-center">P</div>
+    <span class="font-bold text-lg">POLARIS</span>
+  </div>
+  <div class="ml-6 hidden lg:flex items-center gap-2">
+    <button class="btn" onclick="alert('회사 검색·전환\n데이터: Qdrant polaris-org-er → Neo4j Organization')">🔍 회사 검색·전환</button>
+    <span class="text-sm text-slate-500">현재: <b class="text-slate-700">[선택 회사]</b></span>
+  </div>
+  <div class="ml-auto flex items-center gap-1.5" data-toggle>
+    <span class="text-xs text-slate-400 mr-1">기간</span>
+    <button class="btn">7일</button><button class="btn btn-p">30일</button><button class="btn">90일</button>
+  </div>
+</header>
+<div class="flex">
+  <aside class="w-52 shrink-0 border-r border-slate-200 bg-white min-h-[calc(100vh-3.5rem)] p-3 hidden md:block">
+    <nav class="space-y-1">
+      <a href="dashboard.html" class="nav-a">📊 대시보드</a>
+      <a href="workbench.html" class="nav-a active">🕸️ 관계 워크벤치</a>
+      <a href="ask.html" class="nav-a">💬 POLARIS에게 묻기</a>
+      <a href="patents.html" class="nav-a">📜 특허 관계</a>
+      <a href="signals.html" class="nav-a">🔔 시그널</a>
+      <a href="evidence.html" class="nav-a">📑 근거 피드</a>
+    </nav>
+  </aside>
+  <main class="flex-1 p-5 flex flex-col gap-4 max-w-[1600px]" style="height:calc(100vh-3.5rem)">
+    <div class="flex items-end justify-between">
+      <div><h1 class="text-xl font-bold">관계 워크벤치</h1><p class="text-sm text-slate-500">그래프 탐색 · F-01 / F-07 렌즈 / F-08 경로 / F-10 drill-down</p></div>
+      <div class="flex gap-2"><button class="btn" onclick="alert('경로 탐색 (F-08)\n두 노드 지정 → Neo4j shortestPath (3~4hop)')">🔗 경로 탐색</button><button class="btn" onclick="alert('내보내기: 현재 그래프 → PNG/CSV')">내보내기</button></div>
+    </div>
+    <div class="flex-1 grid grid-cols-12 gap-4 min-h-0">
+      <!-- 좌: 렌즈 (F-07) -->
+      <div class="card p-4 col-span-12 lg:col-span-3 flex flex-col">
+        <div class="font-semibold text-sm mb-2">🔍 렌즈 (F-07)</div>
+        <div class="text-[11px] text-slate-400 mb-3 font-mono">Cypher WHERE 동적 교체</div>
+        <div class="lens-row"><span class="text-sm">감성 필터</span><div class="flex gap-1" data-filter><button class="btn btn-p">긍정</button><button class="btn">부정</button><button class="btn">중립</button></div></div>
+        <div class="lens-row"><span class="text-sm">엣지 타입</span><div class="flex gap-1" data-filter><button class="btn btn-p">MENTIONS</button><button class="btn">정형</button></div></div>
+        <div class="lens-row"><span class="text-sm">hop</span><div class="flex gap-1" data-toggle><button class="btn btn-p">1</button><button class="btn">2</button></div></div>
+        <div class="lens-row flex-col items-start gap-1"><span class="text-sm">초점 키워드</span><input class="w-full mt-1 px-2 py-1.5 rounded-lg bg-slate-100 text-sm outline-none focus:ring-2 ring-blue-300" placeholder="예: HBM (Keyword 노드)"></div>
+        <div class="mt-auto pt-3"><button class="btn btn-p w-full justify-center" onclick="alert('렌즈 적용 → 그래프 재조회 (Neo4j)')">렌즈 적용</button></div>
+      </div>
+      <!-- 중앙: 그래프 무대 (F-01) -->
+      <div class="card col-span-12 lg:col-span-6 flex flex-col">
+        <div class="flex justify-between items-center px-4 py-2.5 border-b border-slate-100 bg-blue-50/40 rounded-t-xl"><span class="font-semibold text-sm">🕸️ 그래프 무대 (F-01)</span><span class="text-[11px] text-slate-500">노드=멘션빈도 · 선색=감성 · 굵기=공동출현</span></div>
+        <div class="ph flex-1 m-3" style="border-radius:.5rem"><div class="ph-i">🕸️</div><div class="ph-t">관계 그래프 자리 (대형 인터랙티브)</div><div class="ph-d">Neo4j (s)&lt;-[:ABOUT]-(Document)-[:MENTIONS]->(n) · 1~2hop</div></div>
+      </div>
+      <!-- 우: 컨텍스트 -->
+      <div class="col-span-12 lg:col-span-3 flex flex-col gap-4 min-h-0">
+        <div class="card p-4"><div class="font-semibold text-sm mb-2">인과 체인</div><div class="ph" style="height:120px"><div class="ph-t">선택 노드 인과 경로</div><div class="ph-d">Event / Statement chain</div></div></div>
+        <div class="card p-4"><div class="font-semibold text-sm mb-2">근거 (선택 노드)</div><div class="ph" style="height:120px"><div class="ph-t">관련 문서 리스트</div><div class="ph-d">Chunk-[:wasDerivedFrom] · document_unified</div></div></div>
+        <div class="card p-4 flex-1 flex flex-col"><div class="font-semibold text-sm mb-2">💬 여기서 묻기 (F-06)</div><div class="ph flex-1" style="min-height:80px"><div class="ph-t">GraphRAG 미니 답변</div><div class="ph-d">Qdrant→Neo4j 1-2hop→LLM</div></div><div class="flex gap-1 mt-2"><input class="flex-1 px-2 py-1.5 rounded-lg bg-slate-100 text-sm outline-none" placeholder="이 그래프에 대해 질문…"><button class="btn btn-p" onclick="alert('GraphRAG 질의 (F-06)')">▶</button></div></div>
+      </div>
+    </div>
+    <!-- 하단: 스크럽바 (F-10) -->
+    <div class="card p-3">
+      <div class="flex items-center gap-3"><span class="text-xs text-slate-500 shrink-0">시계열 스크럽</span><div class="ph flex-1" style="height:48px;flex-direction:row;gap:.5rem"><span class="ph-t">시간 슬라이더 자리</span><span class="ph-d">MENTIONS.ts 범위 → 그 시점 그래프 재조회</span></div></div>
+    </div>
+  </main>
+</div>
+<script>
+  document.querySelectorAll('[data-toggle]').forEach(g=>g.querySelectorAll('.btn').forEach(b=>b.addEventListener('click',()=>{g.querySelectorAll('.btn').forEach(x=>x.classList.remove('btn-p'));b.classList.add('btn-p')})));
+  document.querySelectorAll('[data-filter] .btn').forEach(b=>b.addEventListener('click',()=>b.classList.toggle('btn-p')));
+</script>
+</body>
+</html>

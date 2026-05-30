@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POLARIS · 묻기</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body{font-family:'Pretendard',-apple-system,sans-serif;background:#f8fafc;color:#1e293b}
+  ::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:4px}
+  .ph{border:2px dashed #cbd5e1;border-radius:.75rem;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:1.1rem;gap:.3rem}
+  .ph-t{font-weight:600;font-size:.88rem;color:#475569}.ph-d{font-size:.72rem;color:#94a3b8;font-family:ui-monospace,monospace}.ph-i{font-size:1.6rem;opacity:.5}
+  .nav-a{display:flex;align-items:center;gap:.6rem;padding:.6rem .8rem;border-radius:.5rem;color:#475569;font-size:.9rem;font-weight:500;text-decoration:none;cursor:pointer}
+  .nav-a:hover{background:#eff6ff;color:#2563eb}.nav-a.active{background:#2563eb;color:#fff;font-weight:600}
+  .card{background:#fff;border:1px solid #e2e8f0;border-radius:.75rem}
+  .btn{padding:.45rem .85rem;border-radius:.5rem;font-size:.8rem;font-weight:500;cursor:pointer;border:1px solid #e2e8f0;background:#fff;color:#475569;text-decoration:none;display:inline-flex;align-items:center;gap:.3rem}
+  .btn:hover{background:#f1f5f9}.btn-p{background:#2563eb;color:#fff;border-color:#2563eb}.btn-p:hover{background:#1d4ed8}
+  .chip{padding:.4rem .7rem;border:1px solid #e2e8f0;border-radius:999px;font-size:.8rem;color:#475569;cursor:pointer;background:#fff}.chip:hover{border-color:#2563eb;color:#2563eb}
+</style>
+</head>
+<body>
+<header class="sticky top-0 z-30 h-14 bg-white border-b border-slate-200 flex items-center px-5 gap-4">
+  <div class="flex items-center gap-2"><div class="w-7 h-7 rounded-lg bg-blue-600 text-white font-black grid place-items-center">P</div><span class="font-bold text-lg">POLARIS</span></div>
+  <div class="ml-6 hidden lg:flex items-center gap-2"><button class="btn" onclick="alert('회사 검색·전환')">🔍 회사 검색·전환</button><span class="text-sm text-slate-500">현재: <b class="text-slate-700">[선택 회사]</b></span></div>
+</header>
+<div class="flex">
+  <aside class="w-52 shrink-0 border-r border-slate-200 bg-white min-h-[calc(100vh-3.5rem)] p-3 hidden md:block">
+    <nav class="space-y-1">
+      <a href="dashboard.html" class="nav-a">📊 대시보드</a>
+      <a href="workbench.html" class="nav-a">🕸️ 관계 워크벤치</a>
+      <a href="ask.html" class="nav-a active">💬 POLARIS에게 묻기</a>
+      <a href="patents.html" class="nav-a">📜 특허 관계</a>
+      <a href="signals.html" class="nav-a">🔔 시그널</a>
+      <a href="evidence.html" class="nav-a">📑 근거 피드</a>
+    </nav>
+  </aside>
+  <main class="flex-1 p-5 max-w-[1000px] mx-auto w-full space-y-4">
+    <div><h1 class="text-xl font-bold">POLARIS에게 묻기</h1><p class="text-sm text-slate-500">자연어 질문 → 그래프 근거 기반 답변 + citation · F-06</p></div>
+    <div class="flex flex-wrap gap-2">
+      <button class="chip" onclick="fillQ(this)">삼성전자와 SK하이닉스의 공통 공급사는?</button>
+      <button class="chip" onclick="fillQ(this)">최근 HBM 관련 부정 신호는?</button>
+      <button class="chip" onclick="fillQ(this)">이 회사 주변에 새로 등장한 기업은?</button>
+    </div>
+    <div class="card p-2 flex gap-2 items-center">
+      <input id="q" class="flex-1 px-3 py-2.5 rounded-lg bg-slate-50 text-sm outline-none focus:ring-2 ring-blue-300" placeholder="질문을 입력하세요… (예: HBM4 공급망 구조)">
+      <button class="btn btn-p" onclick="alert('GraphRAG 질의 (F-06)\n파이프라인: Qdrant top-k → Neo4j 1~2hop 확장 → LLM 답변 + 근거')">▶ 질문</button>
+    </div>
+    <div class="ph" style="min-height:220px;align-items:flex-start;text-align:left">
+      <div class="ph-t">💬 답변 자리 — 자연어 답변 + 문장별 citation(chunk_id/doc_id)</div>
+      <div class="ph-d">Qdrant 벡터 top-k → Neo4j 1~2hop 관계 확장 → LLM 응답 (출처 강제 인용)</div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="card p-4"><div class="font-semibold text-sm mb-2">관계 하이라이트</div><div class="ph" style="height:160px"><div class="ph-t">답변 근거 서브그래프</div><div class="ph-d">Neo4j 응답에 쓰인 노드·엣지</div></div></div>
+      <div class="card p-4"><div class="font-semibold text-sm mb-2">근거 문서</div><div class="ph" style="height:160px"><div class="ph-t">인용 문서 리스트</div><div class="ph-d">document_unified WHERE doc_id IN cited[]</div></div></div>
+    </div>
+  </main>
+</div>
+<script>function fillQ(b){document.getElementById('q').value=b.textContent;}</script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POLARIS · 특허 관계</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body{font-family:'Pretendard',-apple-system,sans-serif;background:#f8fafc;color:#1e293b}
+  ::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:4px}
+  .ph{border:2px dashed #cbd5e1;border-radius:.75rem;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:1.1rem;gap:.3rem}
+  .ph-t{font-weight:600;font-size:.88rem;color:#475569}.ph-d{font-size:.72rem;color:#94a3b8;font-family:ui-monospace,monospace}.ph-i{font-size:1.6rem;opacity:.5}
+  .nav-a{display:flex;align-items:center;gap:.6rem;padding:.6rem .8rem;border-radius:.5rem;color:#475569;font-size:.9rem;font-weight:500;text-decoration:none;cursor:pointer}
+  .nav-a:hover{background:#eff6ff;color:#2563eb}.nav-a.active{background:#2563eb;color:#fff;font-weight:600}
+  .card{background:#fff;border:1px solid #e2e8f0;border-radius:.75rem}
+  .btn{padding:.45rem .85rem;border-radius:.5rem;font-size:.8rem;font-weight:500;cursor:pointer;border:1px solid #e2e8f0;background:#fff;color:#475569;text-decoration:none;display:inline-flex;align-items:center;gap:.3rem}
+  .btn:hover{background:#f1f5f9}.btn-p{background:#2563eb;color:#fff;border-color:#2563eb}.btn-p:hover{background:#1d4ed8}
+</style>
+</head>
+<body>
+<header class="sticky top-0 z-30 h-14 bg-white border-b border-slate-200 flex items-center px-5 gap-4">
+  <div class="flex items-center gap-2"><div class="w-7 h-7 rounded-lg bg-blue-600 text-white font-black grid place-items-center">P</div><span class="font-bold text-lg">POLARIS</span></div>
+  <div class="ml-6 hidden lg:flex items-center gap-2"><button class="btn" onclick="alert('회사 검색·전환')">🔍 회사 검색·전환</button><span class="text-sm text-slate-500">현재: <b class="text-slate-700">[선택 회사]</b></span></div>
+</header>
+<div class="flex">
+  <aside class="w-52 shrink-0 border-r border-slate-200 bg-white min-h-[calc(100vh-3.5rem)] p-3 hidden md:block">
+    <nav class="space-y-1">
+      <a href="dashboard.html" class="nav-a">📊 대시보드</a>
+      <a href="workbench.html" class="nav-a">🕸️ 관계 워크벤치</a>
+      <a href="ask.html" class="nav-a">💬 POLARIS에게 묻기</a>
+      <a href="patents.html" class="nav-a active">📜 특허 관계</a>
+      <a href="signals.html" class="nav-a">🔔 시그널</a>
+      <a href="evidence.html" class="nav-a">📑 근거 피드</a>
+    </nav>
+  </aside>
+  <main class="flex-1 p-5 space-y-4 max-w-[1400px]">
+    <div class="flex items-end justify-between">
+      <div><h1 class="text-xl font-bold">특허 관계</h1><p class="text-sm text-slate-500">회사↔기술↔회사 · 인용망 · F-11 ("어떤 회사가 어떤 기술을 미는가")</p></div>
+      <div class="flex gap-2" data-toggle><button class="btn btn-p">보유 특허</button><button class="btn">인용망</button></div>
+    </div>
+    <div class="card p-4">
+      <div class="flex justify-between items-center mb-2"><span class="font-semibold text-sm">기술 중심 관계망</span><span class="text-[11px] text-slate-500">노드=회사/기술 · 선=보유/인용</span></div>
+      <div class="ph" style="height:340px"><div class="ph-i">📜</div><div class="ph-t">특허 관계 그래프 자리</div><div class="ph-d">Neo4j (Organization)-[:HOLDS_PATENT]->(Patent)-[:ABOUT]->(Technology) · (Patent)-[:CITES]->(Patent)</div></div>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <div class="card p-4 lg:col-span-2"><div class="font-semibold text-sm mb-2">특허 목록</div><div class="ph" style="height:200px"><div class="ph-t">특허 테이블 (제목·CPC·출원일·인용수)</div><div class="ph-d">patent_raw (patent_id, country, pub_date, cpc, assignee)</div></div></div>
+      <div class="card p-4"><div class="font-semibold text-sm mb-2">기술 분포</div><div class="ph" style="height:200px"><div class="ph-i">🧩</div><div class="ph-t">CPC 분포 차트</div><div class="ph-d">patent_raw.cpc GROUP BY</div></div></div>
+    </div>
+  </main>
+</div>
+<script>
+  document.querySelectorAll('[data-toggle]').forEach(g=>g.querySelectorAll('.btn').forEach(b=>b.addEventListener('click',()=>{g.querySelectorAll('.btn').forEach(x=>x.classList.remove('btn-p'));b.classList.add('btn-p')})));
+</script>
+</body>
+</html>

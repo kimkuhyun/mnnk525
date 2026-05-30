@@ -1,0 +1,30 @@
+# ── Python ──
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+
+# ── Node / 프론트엔드 ──
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# ── 환경 (시크릿) ──
+.env
+.env.*
+!.env.example
+
+# ── 데이터 (pola — docker volume·대용량 raw) ──
+pola/data/
+pola/.tmp_crawl_*/
+pola/.playwright-mcp/
+
+# ── OS / IDE ──
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

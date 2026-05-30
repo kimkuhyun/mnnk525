@@ -1,0 +1,1194 @@
+# gold v3 — 자유서술 expected 보일러플레이트 제거 (token_count>=50)
+# 생성: tests/gold/_regen_text_v3.py / 다른 카테고리는 v2 그대로
+# 총 200 queries
+
+- id: 정형수치_001
+  query: "삼성전자 2023년 매각예정분류자산"
+  category: 정형수치
+  no_answer: false
+  expected_chunk_ids: [669e9382db43a6c2]
+  expected_corp_codes: [00126380]
+- id: 정형수치_002
+  query: "한미반도체 2023년 자본잉여금"
+  category: 정형수치
+  no_answer: false
+  expected_chunk_ids: [054c519c99c9288c, 187e866dd24e62f6, 50322c1eff4af0f8, 76066f064bb57f03, 8fab5677f6c8a987, 936df8e65e3ebe8f, 997e578ac9f35a9b, c214df9ca4a0282a]
+  expected_corp_codes: [00161383]
+- id: 정형수치_003
+  query: "삼성전자 2025년 재무활동현금흐름"
+  category: 정형수치
+  no_answer: false
+  expected_chunk_ids: [1475d814ea8d4cc3, 167743e93c6eb888, 330395cf160da2a7, 4e50a9da1222ad49, 83e41c41a7bb1f2c, 98499bd770819241, b98ae27212494c2c, cb41029a366bf8c2]
+  expected_corp_codes: [00126380]
+- id: 정형수치_004
+  query: "SK하이닉스 2022년 배당금의 수취"
+  category: 정형수치
+  no_answer: false
+  expected_chunk_ids: [085b7d45950ad16e, 5bb190084225468a, 7215a7b9f1903c1e, b02449b694cdb2ab, b79fbd348a250d8e, d11aa95a38f62684, d72b43c258f835b8, eb37e3248a4fb46b]
+  expected_corp_codes: [00164779]
+- id: 정형수치_005
+  query: "SK하이닉스 2025년 차입금의 차입"
+  category: 정형수치
+  no_answer: false
+  expected_chunk_ids: [1dd7e83985f4f632, 2dfeee8631939fa5, 7f0deeb145056954, 7f64577515fafe3b, 8682b5b2f54703ad, ac29b87edc3c03af, c3533caee7cb7fc0, e2c57f89dfcccfaa]
+  expected_corp_codes: [00164779]
+- id: 정형수치_006
+  query: "SK하이닉스 2024년 재고자산"
+  category: 정형수치
+  no_answer: false
+  expected_chunk_ids: [66afa85e259aa8a0, 7ec1a66a8aa6736b, 9432d9b42420d10f, bf9ded141f25c196, c5d9489a0d0e8a40, ca7c14fdc0bb4453, da25f778a94c4c75, e193ee27c0654b7f]
+  expected_corp_codes: [00164779]
+- id: 정형수치_007
+  query: "한미반도체 2026년 당기손익인식금융자산의 처분"
+  category: 정형수치
+  no_answer: false
+  expected_chunk_ids: [8768606787f54580, b737497e2fcebd86]
+  expected_corp_codes: [00161383]
+- id: 정형수치_008
+  query: "동진쎄미켐 2022년 무형자산손상차손환입"
+  category: 정형수치
+  no_answer: false
+  expected_chunk_ids: [0b3c3f78d7d4089e, 334c48b7f6d85aaf, 3f2802e737e81d14, 4a0ab8d8443c559e, 866b408342351154, 95f87b4a9bf8e754, af9446ba37371c58, bf984d8f657cdd5e]
+  expected_corp_codes: [00118804]
+- id: 정형수치_009
+  query: "SK하이닉스 2022년 투자활동 현금흐름"
+  category: 정형수치
+  no_answer: false
+  expected_chunk_ids: [82b4156fd6128568, 94ee958e5810b0cb, a63533607d32de34, bdfa801df905fc8c, db2207da2074d9a6, ec39f7738571f59d, ed6d4926c1964d96, f29233f3494c18c3]
+  expected_corp_codes: [00164779]
+- id: 정형수치_010
+  query: "SK하이닉스 2025년 매입채무"
+  category: 정형수치
+  no_answer: false
+  expected_chunk_ids: [1866b281f3115da0, 2ec50662ff769f94, 35e8c26011142bd7, 925db7d80b03408b, 9f7d989c6aea7a10, d11c4de9d93f753b, f3cc6a415eed94f3, f64658e871cd9291]
+  expected_corp_codes: [00164779]
+- id: 정형수치_011
+  query: "SK하이닉스 2024년 확정급여제도의재측정요소"
+  category: 정형수치
+  no_answer: false
+  expected_chunk_ids: [052d50143364f5cd, 0e8fca727cda2f44, 134020e155c9a559, 17383bcca4d4ebfe, 3243f801e72ffb7d, 43bb442d6438e621, 441d7b2511ef7bae, 4627aabd9096cd58, 4c58b383f4ad0a5e, 62e1458dc406208f, 6f57582df018723f, 91d4142a268666de, 978f81243dd2ed6b, c7a5ff4229ae015e, cbc759b50de91eaf, f68ab62d90798c25]
+  expected_corp_codes: [00164779]
+- id: 정형수치_012
+  query: "SK하이닉스 2025년 매출원가"
+  category: 정형수치
+  no_answer: false
+  expected_chunk_ids: [001263e3a440837b, 6413ec403a3e40de, 99ded72c19d67642, 9a36cbcdff6bbb80, c84f238d0930c3c8, d80261fa77c781c6, f66cb17e9b6f4466, f7087af89baa3963]
+  expected_corp_codes: [00164779]
+- id: 정형수치_013
+  query: "삼성전자 2026년 유형자산의 취득"
+  category: 정형수치
+  no_answer: false
+  expected_chunk_ids: [72de254bd947a922, a3e47b73e01a483f]
+  expected_corp_codes: [00126380]
+- id: 정형수치_014
+  query: "솔브레인 2025년 당기총포괄이익"
+  category: 정형수치
+  no_answer: false
+  expected_chunk_ids: [06ae2b88eb2a0f5c, 0b95067fa4a59190, 0f7d6147e3d8e6e4, 48d30b71aa81e3a0, 84c0e12ab17897f3, 9afd9d05d3c167d8, 9bb9bad5e5acfc44, a95e8e25896264cc, ac00c07bd3cc267d, ac3f13c3753f10fb, ad411172f9e0ccc3, b1fb42aed0fe7e92, b976bd35defcddb7, c49d5600872a6415, f229b64a2c5cc1bb, fb6740f1fd319e92]
+  expected_corp_codes: [01489648]
+- id: 정형수치_015
+  query: "SK하이닉스 2025년 유동자산"
+  category: 정형수치
+  no_answer: false
+  expected_chunk_ids: [36fd6d2b46e2534c, 3d9fc5fb3c688d51, 5a959ca48c9d447c, 5adaa9ef861124dd, 5f732e41d7ae9146, 6fb9e2afbb42a11d, 9ec0753bd4c9a1d4, dcd1c1ecb1de5d9d]
+  expected_corp_codes: [00164779]
+- id: 정형수치_016
+  query: "삼성전자 2023년 우선주자본금"
+  category: 정형수치
+  no_answer: false
+  expected_chunk_ids: [2a998b8f29751886, 49341c6ca134a4da, 95504bfa6e34d306, 965df717aaf51119, 9929f94b941013b4, c717ee0c9c2dcf7a, e8ca74bcc3579ac7, f2ee709d8e48a94c]
+  expected_corp_codes: [00126380]
+- id: 정형수치_017
+  query: "삼성전자 2022년 기타비용"
+  category: 정형수치
+  no_answer: false
+  expected_chunk_ids: [18ef01e76dc168c9, 2966f4f492d80556, 3f2a1199dac0e4c3, c2c2844e77931fc0, cb0df018d9c40666, d0d0f5e557b60af4, d3b497f67aba672c, e2732bbfbaf3906e]
+  expected_corp_codes: [00126380]
+- id: 정형수치_018
+  query: "한미반도체 2025년 리스이자비용"
+  category: 정형수치
+  no_answer: false
+  expected_chunk_ids: [0cd2a68df7ffcdb3, 0f22f888ca62c137, 292f49e56289c42e, 3bbcc9967d255a63, 4af852d7c1d42ad6, 4dddabe056ae7829, 821c12a46066bfec, 8a537b895f2355c4, a8c49b4e7346a5af, b4298244c8b0f0db, b842a2193c88f1ee, ba6c391a87f326fa, befe4ec6ec08adf6, c081c0128ff1e192, cd95a6a3d453f6d3, e2890ec50dddc9cf, e5135e677033372d, f4858052599eec60]
+  expected_corp_codes: [00161383]
+- id: 정형수치_019
+  query: "삼성전자 2025년 기타자본항목"
+  category: 정형수치
+  no_answer: false
+  expected_chunk_ids: [00155a05020c350e, 0fc826f93e599feb, 84b2ea472215d106, 9633b32d7c49b5d2, 9f7e82371b9e5441, be028f84a23391a5, cca3d3b9c1bb8f69, d64df881c31dd1a8]
+  expected_corp_codes: [00126380]
+- id: 정형수치_020
+  query: "한미반도체 2025년 법인세환급(납부)"
+  category: 정형수치
+  no_answer: false
+  expected_chunk_ids: [00ab2f34467a8c8c, 0f3233d29a1c6c87, 3b6e203f33beee63, 3bc84355ae677537, 4487f42c1d02a114, 82276d17b3c94818, ba93c9d529614d02, e3ba41805e457f93]
+  expected_corp_codes: [00161383]
+- id: 정형수치_021
+  query: "SK하이닉스 2023년 유동자산"
+  category: 정형수치
+  no_answer: false
+  expected_chunk_ids: [1759e06c47bc4364, 3a48cfb3977f5345, 6112a7f59ce63b79, 62002dcbd8a91f6a, 6ac51aa190790bea, 94c372b945cd7456, b1e303b561a9ea9d, e7b96db6a65749c9]
+  expected_corp_codes: [00164779]
+- id: 정형수치_022
+  query: "SK하이닉스 2023년 종속기업 유상증자 및 소유지분변동"
+  category: 정형수치
+  no_answer: false
+  expected_chunk_ids: [09364528cd8a478e, 385fb745f081fda7, 3e9ccda2ae34fb27, 3ed5514ff04d4f13, 4effe650351076a7, 52a62fa6b651cbde, 65557837ac9a6d16, 65d69bc494991c4c, 65decc6511920718, 6cc87d7a5738f2e8, 7ae229defc69d5c7, 7bb632c8ac88dd35, 8535e7d3b2cd6189, 88b86a0d8354c671, a293bbf92ab7a9cf, ac5290c576a34c8f, c0c17ff9afdb01f7, c50ebfd084f5e60b, cb0836dcd8a106f5, cca29e8e2d3a3013, d03eee10c36f843c, d6b8bcc7a5f7b754, db6ab4e988aa8b62, dc9b98f0e42d6c1d, e38c8f38857495bc, e538b0c60375ff00, e7cb9050b429e991, ea538b8bc625ef03, ed777df58d7bff4c]
+  expected_corp_codes: [00164779]
+- id: 정형수치_023
+  query: "솔브레인 2023년 재고자산"
+  category: 정형수치
+  no_answer: false
+  expected_chunk_ids: [134c5f3240a6d656, 3f309e416928e5f4, 49c935dd26af3a2e, b7f8137c29c2ce58, b97e9434d3a54eed, ccc705711d916a67, ee4374558593ba91]
+  expected_corp_codes: [01489648]
+- id: 정형수치_024
+  query: "한미반도체 2022년 유형자산처분이익"
+  category: 정형수치
+  no_answer: false
+  expected_chunk_ids: [3961d1bc6dfe47e4, 3e43e04004dc0f99, 823381e38c0279ff, b16512a23dd9a6ba, b28c526228ea69e6, cb9cb127ee930e0e, df6062b3e242ce3f, fdfaa5dd4ae3b28f]
+  expected_corp_codes: [00161383]
+- id: 정형수치_025
+  query: "삼성전자 2023년 자본금"
+  category: 정형수치
+  no_answer: false
+  expected_chunk_ids: [2d298eaf9d026b55, 424b2df134c17f5c, 6a6714f64825a927, 6ac53276a9edced3, 9b47ab279572fd4e, a4422315ec8c3b35, c92914a328a6c3dc, f5fb83d8043d6dc5]
+  expected_corp_codes: [00126380]
+- id: 정형수치_026
+  query: "삼성전자 2022년 외화환산으로 인한 현금의 변동"
+  category: 정형수치
+  no_answer: false
+  expected_chunk_ids: [0acf082f336172cd, 6153058b66742684, 88d716e6bea40e4f, 96c776cd7768534c, 9dba42a45473de0e, b4ab92d62dcd08de, c2c9779c1fc7e4ab, f13d96a9c4d69eb0]
+  expected_corp_codes: [00126380]
+- id: 정형수치_027
+  query: "동진쎄미켐 2025년 퇴직급여"
+  category: 정형수치
+  no_answer: false
+  expected_chunk_ids: [14be7a5523a9b230, 3999e429507dbaee, 3afd473361f85be0, 4bfd81e48b30065f, 88ba24e98634af98, a3e86f35dc6eb979, e66d998ff036eb73, ee6b9ca726726022]
+  expected_corp_codes: [00118804]
+- id: 정형수치_028
+  query: "SK하이닉스 2025년 법인세차감후 기타포괄손익"
+  category: 정형수치
+  no_answer: false
+  expected_chunk_ids: [00d2f29add8fba32, 3835bca7020427d9, 43be1f96e6d2afa7, 72f825fcdf8b9e0a, 886aeba655fb4a30, 88b07982aeac1ba6, b419bbded4989d99, f6b9ba314586317e]
+  expected_corp_codes: [00164779]
+- id: 정형수치_029
+  query: "한미반도체 2023년 기초현금및현금성자산"
+  category: 정형수치
+  no_answer: false
+  expected_chunk_ids: [1816ac7bd5d78888, 523b5e28a8d5e0e9, 53d39962436a997f, 80e840ba74f596db, a028d71e1b3f3e46, b78c508eeb528978, d123c4f759060ae0, d6fb8143c2e37511]
+  expected_corp_codes: [00161383]
+- id: 정형수치_030
+  query: "한미반도체 2023년 기타유동부채의 증가(감소)"
+  category: 정형수치
+  no_answer: false
+  expected_chunk_ids: [06766b7ba4137553, 2d85c6d318abe29c, ce18ef0a94ebf363, f051e4f4ed9bf7ec]
+  expected_corp_codes: [00161383]
+- id: 정형수치_031
+  query: "동진쎄미켐 2025년 영업활동으로 인한 현금흐름"
+  category: 정형수치
+  no_answer: false
+  expected_chunk_ids: [126c73910113b0fa, 5c39b32a555c56cf, 5c5b1ff268f7825c, 823b9290323cf9c4, a7f0c83aa4827dd3, c589d92b65818006, cdfdf075f2e0e464, f970800017f31167]
+  expected_corp_codes: [00118804]
+- id: 정형수치_032
+  query: "동진쎄미켐 2022년 기타자본구성요소"
+  category: 정형수치
+  no_answer: false
+  expected_chunk_ids: [0251e9eea1f6af8e, 1c01de7b8f003db1, 28ba8a48e0066b70, 2baa2ff55bad788d, 9e69ded47d1a3f64, bcae58a215a46816, e5732f5c34cb4655, ea03096ec00251b5]
+  expected_corp_codes: [00118804]
+- id: 정형수치_033
+  query: "동진쎄미켐 2022년 기타비유동부채"
+  category: 정형수치
+  no_answer: false
+  expected_chunk_ids: [198a1ef4bb39c8c4, 2eb87f309d8373e7, 3370b7f3fb9f7621, 46c7ed10c5c7880a, 5b182d1a85bc2fbb, 81c90baa97ebb1fd, bcb64c844e7b7ab2, fbd4d37a650429e5]
+  expected_corp_codes: [00118804]
+- id: 정형수치_034
+  query: "한미반도체 2024년 단기금융상품의 취득"
+  category: 정형수치
+  no_answer: false
+  expected_chunk_ids: [ea7b351bbbcb5a21, efa11727a79486f7]
+  expected_corp_codes: [00161383]
+- id: 정형수치_035
+  query: "SK하이닉스 2022년 이익잉여금"
+  category: 정형수치
+  no_answer: false
+  expected_chunk_ids: [2ea82f4205670c2d, 45ae479a8a80ef4c, 4cbc3429ed7d3c9c, 58e29ef83d1e0cd1, 67aec5d23013f7bf, 67d03757add685a0, cb618bc64e95b7c1, e0d931c999850fef]
+  expected_corp_codes: [00164779]
+- id: 정형수치_036
+  query: "삼성전자 2024년 매출채권"
+  category: 정형수치
+  no_answer: false
+  expected_chunk_ids: [03ee8386ef7e3432, 45029fb5c1bba6c2, 550f6f0e671d34b0, 8c9c1cdb7b2d5a11, 9cef2794af9f9a17, a9fdbffffdf11a4d, c64c061ddb2a08dc, f2398271a86c0040]
+  expected_corp_codes: [00126380]
+- id: 정형수치_037
+  query: "솔브레인 2022년 종속기업투자주식"
+  category: 정형수치
+  no_answer: false
+  expected_chunk_ids: [26b7e511e897c3a5, 7c835e3c243aae8e, b7cf363c0a6c5568, f193f7843484d58b]
+  expected_corp_codes: [01489648]
+- id: 정형수치_038
+  query: "SK하이닉스 2025년 자본총계"
+  category: 정형수치
+  no_answer: false
+  expected_chunk_ids: [1a728151ecb714ec, 1f700b26cc87847e, 20f4cdd459acf5de, 258ca9f0d28da142, 3a19f25ad7671788, 481ffa06684ad6e1, 64e7abee18dfdcb1, 65f64e03a23f26c4, 7065fce1580ad1f8, 7fa1e538069d8b0f, 8f4ad929b82177c6, 9012f6f2dad83dbc, 91483d30596e1b7c, ae713dc5c7fe8519, ee4007a21aede41b, fbf7a2ebc374ea47]
+  expected_corp_codes: [00164779]
+- id: 정형수치_039
+  query: "삼성전자 2022년 기말의 현금및현금성자산"
+  category: 정형수치
+  no_answer: false
+  expected_chunk_ids: [27e824488c70299e, 2d02b2a81a123460, 500f050468a63952, d874a5e87e310d52, d960fddcb3ac806c, e003430e8f4281db, e218e31adf50ddcf, e236e9cfd1a80ea6]
+  expected_corp_codes: [00126380]
+- id: 정형수치_040
+  query: "한미반도체 2022년 지배기업지분순이익"
+  category: 정형수치
+  no_answer: false
+  expected_chunk_ids: [2a29ba48196d912d, 370b82b8cba551f0, 40b7d01f82d57989, 87da772eea3674ca]
+  expected_corp_codes: [00161383]
+- id: 시계열_001
+  query: "동진쎄미켐 기본주당이익 추이"
+  category: 시계열
+  no_answer: false
+  expected_chunk_ids: [23a7aed6609017d6]
+  expected_corp_codes: [00118804]
+- id: 시계열_002
+  query: "솔브레인 기타금융자산 추이"
+  category: 시계열
+  no_answer: false
+  expected_chunk_ids: [6e9e785c77a4d6b6]
+  expected_corp_codes: [01489648]
+- id: 시계열_003
+  query: "SK하이닉스 법인세비용(수익) 추이"
+  category: 시계열
+  no_answer: false
+  expected_chunk_ids: [8bb2a2a5ea33113f]
+  expected_corp_codes: [00164779]
+- id: 시계열_004
+  query: "삼성전자 기타포괄손익 추이"
+  category: 시계열
+  no_answer: false
+  expected_chunk_ids: [4cca925989e7db55]
+  expected_corp_codes: [00126380]
+- id: 시계열_005
+  query: "삼성전자 자산총계 추이"
+  category: 시계열
+  no_answer: false
+  expected_chunk_ids: [e314278d10206699]
+  expected_corp_codes: [00126380]
+- id: 시계열_006
+  query: "한미반도체 자기주식소각 추이"
+  category: 시계열
+  no_answer: false
+  expected_chunk_ids: [cda48f4bb5ffb7e1]
+  expected_corp_codes: [00161383]
+- id: 시계열_007
+  query: "한미반도체 수익(매출액) 추이"
+  category: 시계열
+  no_answer: false
+  expected_chunk_ids: [86c5c95a3da62808]
+  expected_corp_codes: [00161383]
+- id: 시계열_008
+  query: "삼성전자 기타비유동자산 추이"
+  category: 시계열
+  no_answer: false
+  expected_chunk_ids: [6a96f9eaba5e4eb3]
+  expected_corp_codes: [00126380]
+- id: 시계열_009
+  query: "SK하이닉스 기타포괄손익누계액 추이"
+  category: 시계열
+  no_answer: false
+  expected_chunk_ids: [82c45fe07f9d7654]
+  expected_corp_codes: [00164779]
+- id: 시계열_010
+  query: "솔브레인 법인세비용 추이"
+  category: 시계열
+  no_answer: false
+  expected_chunk_ids: [6848c386e11c39c1]
+  expected_corp_codes: [01489648]
+- id: 시계열_011
+  query: "SK하이닉스 당기순이익(손실) 추이"
+  category: 시계열
+  no_answer: false
+  expected_chunk_ids: [6e532fcc3ed28b22]
+  expected_corp_codes: [00164779]
+- id: 시계열_012
+  query: "SK하이닉스 매출액 추이"
+  category: 시계열
+  no_answer: false
+  expected_chunk_ids: [c56ec3da64773025]
+  expected_corp_codes: [00164779]
+- id: 시계열_013
+  query: "솔브레인 금융비용 추이"
+  category: 시계열
+  no_answer: false
+  expected_chunk_ids: [5f0d6c1d351656ed]
+  expected_corp_codes: [01489648]
+- id: 시계열_014
+  query: "솔브레인 당기법인세부채 추이"
+  category: 시계열
+  no_answer: false
+  expected_chunk_ids: [9f491b3026a408e2]
+  expected_corp_codes: [01489648]
+- id: 시계열_015
+  query: "동진쎄미켐 감가상각비 추이"
+  category: 시계열
+  no_answer: false
+  expected_chunk_ids: [9349fcd6709d908b]
+  expected_corp_codes: [00118804]
+- id: 시계열_016
+  query: "삼성전자 장기충당부채 추이"
+  category: 시계열
+  no_answer: false
+  expected_chunk_ids: [cad3bb21ccc1b260]
+  expected_corp_codes: [00126380]
+- id: 시계열_017
+  query: "SK하이닉스 차입금 추이"
+  category: 시계열
+  no_answer: false
+  expected_chunk_ids: [0788a8b5467a53fd]
+  expected_corp_codes: [00164779]
+- id: 시계열_018
+  query: "삼성전자 기타포괄손익-공정가치금융자산평가손익 추이"
+  category: 시계열
+  no_answer: false
+  expected_chunk_ids: [72fbbcf39b868cb6]
+  expected_corp_codes: [00126380]
+- id: 시계열_019
+  query: "삼성전자 단기금융상품 추이"
+  category: 시계열
+  no_answer: false
+  expected_chunk_ids: [df7dc17f841c2459]
+  expected_corp_codes: [00126380]
+- id: 시계열_020
+  query: "솔브레인 유동부채 추이"
+  category: 시계열
+  no_answer: false
+  expected_chunk_ids: [6dee7235df4ea4cb]
+  expected_corp_codes: [01489648]
+- id: 시계열_021
+  query: "SK하이닉스 비지배지분 추이"
+  category: 시계열
+  no_answer: false
+  expected_chunk_ids: [f85405bf50b9e324]
+  expected_corp_codes: [00164779]
+- id: 시계열_022
+  query: "한미반도체 영업활동현금흐름 추이"
+  category: 시계열
+  no_answer: false
+  expected_chunk_ids: [4e817f40debdced9]
+  expected_corp_codes: [00161383]
+- id: 시계열_023
+  query: "SK하이닉스 배당금수취 추이"
+  category: 시계열
+  no_answer: false
+  expected_chunk_ids: [0b7362753ffc62a4]
+  expected_corp_codes: [00164779]
+- id: 시계열_024
+  query: "SK하이닉스 충당부채 추이"
+  category: 시계열
+  no_answer: false
+  expected_chunk_ids: [d3af0ad805ef3001]
+  expected_corp_codes: [00164779]
+- id: 시계열_025
+  query: "SK하이닉스 유동자산 추이"
+  category: 시계열
+  no_answer: false
+  expected_chunk_ids: [e02e5946272d89b7]
+  expected_corp_codes: [00164779]
+- id: 시계열_026
+  query: "SK하이닉스 기타지급채무 추이"
+  category: 시계열
+  no_answer: false
+  expected_chunk_ids: [d09cca450b3cbc92]
+  expected_corp_codes: [00164779]
+- id: 시계열_027
+  query: "동진쎄미켐 대손상각비 추이"
+  category: 시계열
+  no_answer: false
+  expected_chunk_ids: [f0d952e7945a9fcc]
+  expected_corp_codes: [00118804]
+- id: 시계열_028
+  query: "솔브레인 기타비금융부채 추이"
+  category: 시계열
+  no_answer: false
+  expected_chunk_ids: [a20727672de6bed4]
+  expected_corp_codes: [01489648]
+- id: 시계열_029
+  query: "솔브레인 이연법인세자산 추이"
+  category: 시계열
+  no_answer: false
+  expected_chunk_ids: [53a6a585429c9ed4]
+  expected_corp_codes: [01489648]
+- id: 시계열_030
+  query: "동진쎄미켐 희석주당이익 추이"
+  category: 시계열
+  no_answer: false
+  expected_chunk_ids: [d88d720a66e8f0a6]
+  expected_corp_codes: [00118804]
+- id: 비교_001
+  query: "한미반도체 vs 동진쎄미켐 2024년 부채총계"
+  category: 비교
+  no_answer: false
+  expected_chunk_ids: [0780a13da14f1f24, 1146982bd294175a, 149aafdaef9cbddd, 1ec312e39dbf1b7a, 22bd50e793a22f4a, 3a3fb7e0668a1175, 4adc0b53d80a5ef5, 70f14b7e7a22cd6e, 76c1fa5aa704ed49, 901b18c2b5a0188f, 9067c632a56640b2, a08d198b20e7bcea, a409f9ea6b62140d, b683c1d9aa9da2c2, ba7c85e8bbbfb274, febc825715b7f00f]
+  expected_corp_codes: [00161383, 00118804]
+- id: 비교_002
+  query: "솔브레인 vs 삼성전자 2024년 금융비용"
+  category: 비교
+  no_answer: false
+  expected_chunk_ids: [24b6780ebeb38f0b, 27bf0b09a009c46a, 47c465c4b1b4cd25, 4fbba4a5a887c388, 669aaa462b617c7b, 709a56940caff42a, 8adf6e9add984bff, 8e433ca348d94087, 9f2dcf94e83ac764, c290f863d8b3ae66, d188e5a643ea5870, e0f9c890c879cc3d, f2e2c72c9abf44c5, fe76fdef82b5826e]
+  expected_corp_codes: [01489648, 00126380]
+- id: 비교_003
+  query: "동진쎄미켐 vs 솔브레인 2025년 금융수익"
+  category: 비교
+  no_answer: false
+  expected_chunk_ids: [0198f4f6bb9ffeaf, 1a8752a355df9265, 1b0fdaccc1c74b58, 42946b4d40073cf7, 529a70775de97086, 610395baefa04ab5, 87a5d45489aed7a2, a54ef0b710dc0149, ae77fe83deead86f, b7d2b214e9020a4b, d0cbc642e8422542, d652d31caaf5ea11, da3e27a56ee146bf, e25f5a5c974b45c0, ef1739c256800ea1, fc03ac9468ae2c3a]
+  expected_corp_codes: [00118804, 01489648]
+- id: 비교_004
+  query: "동진쎄미켐 vs 삼성전자 2024년 비지배지분"
+  category: 비교
+  no_answer: false
+  expected_chunk_ids: [0bd3d65e53c78021, 11d7ac1fa2c51b2b, 2e67e2590ab4a596, 3cba0d0676d7f72f, 3e4e59100bac091a, 607eebb7ab3f262b, 6137c3f989348628, 967a11aa839a0fed]
+  expected_corp_codes: [00118804, 00126380]
+- id: 비교_005
+  query: "한미반도체 vs SK하이닉스 2024년 기초현금및현금성자산"
+  category: 비교
+  no_answer: false
+  expected_chunk_ids: [06a03c120901fabc, 0ff858f8bff0d648, 136116b20ae7fe24, 1c93f3175ed5ea7a, 58d3fdbdc1ce0464, 5f5802a2619d0959, 66803b747560112e, 759b768538f2fed2, 888727226246961b, 9acce98b1ad4bba2, c8c53a9f02e0a4f2, cda622d63c9c7447, daa6ba40a81b30ed, ddc92eb6ff0faae1, f8e8f23dee07036a, faa2aaa7a8440822]
+  expected_corp_codes: [00161383, 00164779]
+- id: 비교_006
+  query: "삼성전자 vs SK하이닉스 2025년 자본총계"
+  category: 비교
+  no_answer: false
+  expected_chunk_ids: [065bc5e1d4d2e150, 149a0b8880eb4d19, 166a66ab7d544002, 1a728151ecb714ec, 1f700b26cc87847e, 20f4cdd459acf5de, 258ca9f0d28da142, 3011f228688ab58b, 3a19f25ad7671788, 3f009f105c20eccc, 423808ec6539127f, 481ffa06684ad6e1, 64e7abee18dfdcb1, 65f64e03a23f26c4, 68c4bcbcc3272ec5, 6ac6cc5b64798243, 6b29ec895a87fc02, 6e687092d8736cb4, 7065fce1580ad1f8, 787618794f5408c3, 7fa1e538069d8b0f, 8f4ad929b82177c6, 9012f6f2dad83dbc, 91483d30596e1b7c, 9eb44e89a89d6ff0, a40dea8f174df5e8, ae713dc5c7fe8519, bbba76bdd507df16, dad3a9e68321941c, e357c283119364a6, ee4007a21aede41b, fbf7a2ebc374ea47]
+  expected_corp_codes: [00126380, 00164779]
+- id: 비교_007
+  query: "동진쎄미켐 vs 삼성전자 2024년 유형자산의 처분"
+  category: 비교
+  no_answer: false
+  expected_chunk_ids: [14c805e7539aefda, 215c3d09dd6f00ed, 2beb16571b2d4be4, 52010fdba6759dc5, 56ba3605b95beb48, 6410acf81a80eaff, 6df58393e5bbe09f, 767da42583ad1897, a64d98d97028e0e2, bb7661e180602105, bf62302d33c6e3b9, cde5fc9385a841f5, d3cb90e388e41fd0, d6b39ed1591182d1, f2e767f83c6a4861, f6dc04baefaeca6e]
+  expected_corp_codes: [00118804, 00126380]
+- id: 비교_008
+  query: "솔브레인 vs 동진쎄미켐 2025년 배당금의 지급"
+  category: 비교
+  no_answer: false
+  expected_chunk_ids: [04ba00dbeefe47ea, 1280be6a596da48a, 266833f0f336ae63, 3452d6d6a573d262, 35c890dd7b411057, 5a6262a8bd93d599, 972f0ce996308d0f, a23b394fa4d8324e, c339cf2bd5d10a3b, c7d09dcc6bee74a2, d8ea8c65818ef45b, f344a1423e82b636]
+  expected_corp_codes: [01489648, 00118804]
+- id: 비교_009
+  query: "한미반도체 vs 동진쎄미켐 2025년 이연법인세자산"
+  category: 비교
+  no_answer: false
+  expected_chunk_ids: [089f76a823c01805, 1d3f5bd118757f75, 266f4ebb908d5582, 39d365b4c9bb3af3, 4045a51c02e15bdc, 40b31401554e1b0f, 54c7ca38764e7eaa, 64caf0ae0b87602a, 70ea1fe20cefdb9b, 733f6d63786ebf55, 7bb81b5750a57a58, 7d894b71d2c6aef3, a0d3a06651b69f34, ab56eb35ea65044b, c2b3f2b5acaef7c6]
+  expected_corp_codes: [00161383, 00118804]
+- id: 비교_010
+  query: "삼성전자 vs 솔브레인 2025년 주식발행초과금"
+  category: 비교
+  no_answer: false
+  expected_chunk_ids: [0f25e6c43090982c, 1810035d034bb36b, 26319d6b63c9e8b2, 3007997ac0c71816, 35486e830e0466a8, 3845e36689e76919, 646608b84b32629e, 66cf8a62ee8a923a, 6a588e46a9d17425, 74031b5a986d2bc8, 767bed4ff86e318b, 852fc47ea98f1c4d, addec2ca3e4d0007, c8a09fc3a69f947d, cc9553ad3fbcabc7, fc811a9284d25ed0]
+  expected_corp_codes: [00126380, 01489648]
+- id: 비교_011
+  query: "솔브레인 vs 동진쎄미켐 2024년 비지배지분"
+  category: 비교
+  no_answer: false
+  expected_chunk_ids: [2a6d2c394b5cf1b3, 34dc1bd54c8c0443, 3ff1ecdec0dca090, 4d08f3cec72ab0e3, 7000c46035d58d81, 76bd88c66faccbe3, adc2ec86392307d3, b8582f0cb6241d9f]
+  expected_corp_codes: [01489648, 00118804]
+- id: 비교_012
+  query: "삼성전자 vs 한미반도체 2025년 판매비와관리비"
+  category: 비교
+  no_answer: false
+  expected_chunk_ids: [1c4f49bd4372966f, 2919bde08db2cb3a, 3cd231770e957ae6, 42f08ca1d94940a9, 4dc9f5b5f1898b39, 58db505e692dea5e, 6617e0bf354835fd, 691d2d3860f78ffb, 711bb0b4def9d5ac, 7aaa27985dd02bca, 87de26e5fd3d14ff, 8fb66bc358e53476, a307e86f0b8f4938, ab56cbfaf9eb71cd, ce0e723619662298, fe84ed149fffd68c]
+  expected_corp_codes: [00126380, 00161383]
+- id: 비교_013
+  query: "한미반도체 vs SK하이닉스 2024년 이익잉여금"
+  category: 비교
+  no_answer: false
+  expected_chunk_ids: [23b3ca022e39abf7, 29fe9c8738a85532, 2fa8ac323e1767eb, 3ac932543759f4b4, 4c86aa1c29a47e3e, 60a584d75e7eec3e, 6880649201f70aef, 7c7c9f4214eb6c9e, b879f6bb17805dd0, c641867aa8f11f34, cdac20414777cd49, d41688a2d1a79f17, dd0dfbc16bd4c928, ef2088970ecf3fbd, f11336be9f190112, fb09e3deefad9ef1]
+  expected_corp_codes: [00161383, 00164779]
+- id: 비교_014
+  query: "삼성전자 vs 솔브레인 2024년 이자의 지급"
+  category: 비교
+  no_answer: false
+  expected_chunk_ids: [07b2bf26873e01a9, 113cec328c735ec4, 1831b09fc1eb7905, 238e177a6e5aa113, 4716c795b3634314, 510987e201c7ae2b, 6cc272a300c01525, 7756a641c4c397f7, 8abb86e887645b26, 9a2d9dc201fe9bf5, aaeb1c6c2984a239, abbdb45838bfdd48, b5b642b004cdc94c, cd404dd4148617de, ec9537ed8868a203, f0fdcf8316d2aa14]
+  expected_corp_codes: [00126380, 01489648]
+- id: 비교_015
+  query: "솔브레인 vs 삼성전자 2024년 비유동자산"
+  category: 비교
+  no_answer: false
+  expected_chunk_ids: [13715fcd92665db1, 36ebb00bf8a0a8c3, 54b6f97322501d58, 5ffef41cc90779b2, 612fff66db753631, 6183aff25e720340, 6f1f12d8d0dcd3cc, 820c29ef015dc40a, 87267fedefcb7aaa, 897f41eb2f38b085, ae37f96fb60bf1ef, c98fe7da4ec9d531, d3ad0c08592f3564, e1647320f9542497, f21b54c766df1cae, fa8240a71733f00f]
+  expected_corp_codes: [01489648, 00126380]
+- id: 비교_016
+  query: "솔브레인 vs 삼성전자 2025년 기타비유동자산"
+  category: 비교
+  no_answer: false
+  expected_chunk_ids: [266b1dbe77221be5, 2c6db4fb9392e12e, 8dc18f200a6be1b8, 95bb208ce5c6a077, 97bcf70521c2e381, 98452096fcbd35d5, 9df73336c9894046, 9fe8e49e37a4aeba, a37bbb2f2b9c0d58, abfcf4e56efc4a2a, c803e0885f7c939e]
+  expected_corp_codes: [01489648, 00126380]
+- id: 비교_017
+  query: "솔브레인 vs 삼성전자 2024년 기타비용"
+  category: 비교
+  no_answer: false
+  expected_chunk_ids: [026a0849626712f6, 0709865c87f6cab5, 247c0363061a8717, 2d01a9c94327b515, 686972301351be25, 89abd6414e714fc7, 8ddef666f7c47aac, c62c184a50bc981f, e73f23b446b2ee05]
+  expected_corp_codes: [01489648, 00126380]
+- id: 비교_018
+  query: "SK하이닉스 vs 삼성전자 2025년 비유동자산"
+  category: 비교
+  no_answer: false
+  expected_chunk_ids: [2059f80e57247920, 2868477be263c5c5, 32c2d96cb7c9e760, 392d21a438e5dfd3, 3eb1af3aae5ef07d, 519c92c32ff9b3bc, 5645f402c78e1445, 58cd1ff8b9f0c267, 5b48078347fdf059, 7b563246eeb2caaf, b2df2ab1e371d872, b99214b058b715dd, d8036cd18678f1d4, e296af3dfe4103fb, edd4b8b6b850fe7e, f93fe00ca3abf13f]
+  expected_corp_codes: [00164779, 00126380]
+- id: 비교_019
+  query: "한미반도체 vs 동진쎄미켐 2024년 기타유동자산"
+  category: 비교
+  no_answer: false
+  expected_chunk_ids: [1f4d35186fdc2128, 48097624b4b3ee49, 52e9a7287d868761, 5724d0df2a1bee42, 6608d67042fd60b1, 7d8f0c1f40e41a19, 8f003fcc41335ddf, 9699e51445e93fcb, 97e92cc255e0b1fd, 986b78bf151259f8, af9d982315fd9337, c8e8f4c51fcea553, d01cd69365e19e1f, d27ceb33acb40cfa, dbd0a6074452e3d5, e14660ff827e92c3]
+  expected_corp_codes: [00161383, 00118804]
+- id: 비교_020
+  query: "솔브레인 vs 동진쎄미켐 2024년 금융비용"
+  category: 비교
+  no_answer: false
+  expected_chunk_ids: [21ebb7d9e987e0d6, 24b6780ebeb38f0b, 2739fff49a36fde0, 27bf0b09a009c46a, 29de77f804f50596, 2af7865d3c2ce685, 39e240bee4fcd695, 47c465c4b1b4cd25, 9e2a40584ba1cd68, b2221ad58553dfd0, c290f863d8b3ae66, f2e2c72c9abf44c5, f99aa4c04fbc420e, fe76fdef82b5826e]
+  expected_corp_codes: [01489648, 00118804]
+- id: 비교_021
+  query: "동진쎄미켐 vs SK하이닉스 2025년 자본총계"
+  category: 비교
+  no_answer: false
+  expected_chunk_ids: [12aec735437cedfb, 1a728151ecb714ec, 1f700b26cc87847e, 20f4cdd459acf5de, 258ca9f0d28da142, 261d67e96f793429, 3a19f25ad7671788, 481ffa06684ad6e1, 500b92d7273b0e6f, 5868e52e4ddd0ac6, 64e7abee18dfdcb1, 65f64e03a23f26c4, 6d559e0a25496986, 7065fce1580ad1f8, 79e24c89a68c7acf, 7fa1e538069d8b0f, 8f4ad929b82177c6, 9012f6f2dad83dbc, 91483d30596e1b7c, 9d7a21aace79b029, a6d0579af94d58ea, ae713dc5c7fe8519, b5db0e863843cc14, be86902b521937c9, beea91b06a593bf1, c12f128e6d236bfb, d40397160a358b17, dfbe9631fb792c4f, e6c08edbcd3f76f5, ee4007a21aede41b, fbf7a2ebc374ea47, fca4f8adbcdb4d8b]
+  expected_corp_codes: [00118804, 00164779]
+- id: 비교_022
+  query: "한미반도체 vs 삼성전자 2024년 유형자산의 처분"
+  category: 비교
+  no_answer: false
+  expected_chunk_ids: [086cab9ce26e9490, 215c3d09dd6f00ed, 21ec293ed217183d, 2beb16571b2d4be4, 2e701c28ce78015c, 4412875ad56f247a, 56ba3605b95beb48, 6410acf81a80eaff, 718c5e35468bd862, 767da42583ad1897, 9e1016279c1045f0, bf62302d33c6e3b9, e45611fc48b8e84e, f2e767f83c6a4861, f35a6c84a5012f7a, f6dc04baefaeca6e]
+  expected_corp_codes: [00161383, 00126380]
+- id: 비교_023
+  query: "삼성전자 vs 동진쎄미켐 2024년 자본금"
+  category: 비교
+  no_answer: false
+  expected_chunk_ids: [036dab00d26677d8, 13cad0bcac8dc36a, 13fdbaa26c244fdc, 4bacc8e186593864, 4df794be5e67409d, 54ac050c6c3ef838, 83dc17fa0322b38f, 8893f928f4ee5791, 8a19196bc8ec76f3, 9866bdef518f749a, 9b5ede0cfe87b9f1, b4281de482d533a1, b6347d905fbc61aa, c0e9d1378231f487, da8ddd4822e00698, e9806feb2a48d5fa]
+  expected_corp_codes: [00126380, 00118804]
+- id: 비교_024
+  query: "한미반도체 vs 동진쎄미켐 2025년 매출총이익"
+  category: 비교
+  no_answer: false
+  expected_chunk_ids: [07eaf9eaccf5558f, 0df5eb8954dfdfdc, 0e2f53ca95caf30c, 1b09c14df6f8b508, 1edc42e1e366eb09, 1f59262d442c804b, 27376a4da4a8439d, 336ebb28570b2ad3, 4b41f07561eb1d39, 4f07a36062e4bdae, 5145a18a9252cd54, 562ad0a1f604e017, 6284d603e2eddc2e, 741adc9fbea985c3, b7f0f1abee6aca81, f357d87766a7914e]
+  expected_corp_codes: [00161383, 00118804]
+- id: 비교_025
+  query: "SK하이닉스 vs 솔브레인 2024년 비유동부채"
+  category: 비교
+  no_answer: false
+  expected_chunk_ids: [0c6861b32fa71dfe, 0e33a4f1a2f9ad95, 12596424a8a45729, 1516cff9075be323, 1575b20963e08b4e, 1642563e27bed5cf, 41fa56ded63667dc, 44ef452e9082b54b, 47e9331070955b63, 5f132f2e24f84886, 8e2042f0fcbfb1ea, 97ef2f507f3f3818, b674eb27e718528c, cf9ececf9b18e70c, e8d052a867ea0c11, fa9f4d469355dfba]
+  expected_corp_codes: [00164779, 01489648]
+- id: 비교_026
+  query: "솔브레인 vs SK하이닉스 2025년 무형자산의 처분"
+  category: 비교
+  no_answer: false
+  expected_chunk_ids: [307503bcdb7d3823, 4258f874faeb0e0e, 5ed5ee10d2ce668a, 6b1d27a47258685f, 78bc55c0649ed9f0, 827a8c54c4d137ee, a8dd937c865b9a76, aa82d678fcaef3f1, d850de24a58aea1f, f95cfb7d90a9dacf, fe8b166057d74dfe]
+  expected_corp_codes: [01489648, 00164779]
+- id: 비교_027
+  query: "삼성전자 vs 동진쎄미켐 2024년 이연법인세자산"
+  category: 비교
+  no_answer: false
+  expected_chunk_ids: [04d44bfe1f444c16, 0da147566e1ccf17, 17efe63c15bb9767, 277bc3b39280b601, 2af180fd43d79002, 2e065705add15196, 2f5e04b2159f9ff0, 359342c4ee6f9aa6, 41c4dae711551cc4, 457906156c765741, 548020f3a9d3a1e4, 682bd11cc93c0c3a, 8401cd044f7360c2, 8439e4926312e7e7, c9ce174717020bd8, fb7a8f790ed4b998]
+  expected_corp_codes: [00126380, 00118804]
+- id: 비교_028
+  query: "한미반도체 vs 동진쎄미켐 2024년 유동자산"
+  category: 비교
+  no_answer: false
+  expected_chunk_ids: [0a59798e99362a75, 0b2351a7dff91267, 164f99ff9bb81059, 177d490fda2c2fbf, 185a7721d6ea7f9e, 39a20f09e15f30e4, 59807a8e9afab98b, 60389df5cdcabb16, 7038ebac533bd59b, 713ca54a318cf5bb, 7ee5750faa2a35d7, a34a256e8d2c4df5, c5dbcc3450eb7217, e97d4ab718a9e822, f2eea74dc2909d07, f74100b3ba72f223]
+  expected_corp_codes: [00161383, 00118804]
+- id: 비교_029
+  query: "삼성전자 vs SK하이닉스 2024년 이연법인세자산"
+  category: 비교
+  no_answer: false
+  expected_chunk_ids: [0da147566e1ccf17, 17efe63c15bb9767, 2af180fd43d79002, 359342c4ee6f9aa6, 41c4dae711551cc4, 457906156c765741, 4f166dc186a82bec, 682bd11cc93c0c3a, 770a9f0a99a26681, 7bade030df496de1, 929a0bcc1a6caddd, 9651f65d8565a8a9, bc704465cba311e5, dbf182be30e8041a, f6654796accb9313, fb7a8f790ed4b998]
+  expected_corp_codes: [00126380, 00164779]
+- id: 비교_030
+  query: "SK하이닉스 vs 솔브레인 2024년 자본총계"
+  category: 비교
+  no_answer: false
+  expected_chunk_ids: [13755e6dddd6f22c, 2fbdb963917654fb, 30fff351e72d5127, 32c134780bb626b8, 3ee83b75bb7ba073, 41a427a4b50530cd, 439387111a829e7e, 486af4fe4e2e2b0a, 4cc71f4a674a63bd, 59c5c85f77a8f4f6, 5e0962b82e86e37a, 71ce46427626dde2, 820eeece3a4a0ed1, 857fb29d4071c92a, 860eeb3884e4ca5c, 88287ba11f37690a, 91adc02f4fb4228e, 9fc14699445fd549, b2a278e2b2c40d2b, b83061ef2820664b, bb877dea325a3ca0, c007150682bc98b3, cbbcab015a57eaf3, d493c26f1babf25a, d693b736c3e097a6, d9d8510dbed9c6ad, db4b290fe1854350, dc9b9ba289b859f5, e65342b309649268, e7f3d157ccc90167, f18ac3a8afe95fa5, f6e8d246e92c7f10]
+  expected_corp_codes: [00164779, 01489648]
+- id: 자유서술_001
+  query: "삼성전자 마. 주요 매출처"
+  category: 자유서술
+  no_answer: false
+  expected_chunk_ids: [a1bc582381cdf9b9]
+  expected_corp_codes: [00126380]
+- id: 자유서술_002
+  query: "동진쎄미켐 가. 원재료에 관한 사항"
+  category: 자유서술
+  no_answer: false
+  expected_chunk_ids: [550791d2c22b671e]
+  expected_corp_codes: [00118804]
+- id: 자유서술_003
+  query: "동진쎄미켐 5. 부외거래"
+  category: 자유서술
+  no_answer: false
+  expected_chunk_ids: [d5df14d1b641f62e]
+  expected_corp_codes: [00118804]
+- id: 자유서술_004
+  query: "동진쎄미켐 가. 주요계약사항"
+  category: 자유서술
+  no_answer: false
+  expected_chunk_ids: [0898ae3990045fdf]
+  expected_corp_codes: [00118804]
+- id: 자유서술_005
+  query: "동진쎄미켐 다. 판매방법 및 조건"
+  category: 자유서술
+  no_answer: false
+  expected_chunk_ids: [7e2b139527658cdf]
+  expected_corp_codes: [00118804]
+- id: 자유서술_006
+  query: "SK하이닉스 나. 주요 제품 등의 가격변동추이"
+  category: 자유서술
+  no_answer: false
+  expected_chunk_ids: [c0e3c069d3df92e9]
+  expected_corp_codes: [00164779]
+- id: 자유서술_007
+  query: "솔브레인 나. 판매경로 및 판매방법 등"
+  category: 자유서술
+  no_answer: false
+  expected_chunk_ids: [326fcbe466ee2a50]
+  expected_corp_codes: [01489648]
+- id: 자유서술_008
+  query: "솔브레인 나. 요약연결포괄손익계산서"
+  category: 자유서술
+  no_answer: false
+  expected_chunk_ids: [949969e245bf5069]
+  expected_corp_codes: [01489648]
+- id: 자유서술_009
+  query: "삼성전자 다. 사업부문별 현황"
+  category: 자유서술
+  no_answer: false
+  expected_chunk_ids: [a1d4db1291df00bc]
+  expected_corp_codes: [00126380]
+- id: 자유서술_010
+  query: "동진쎄미켐 2. 주요 제품 및 서비스"
+  category: 자유서술
+  no_answer: false
+  expected_chunk_ids: [f21956455f4f7e91]
+  expected_corp_codes: [00118804]
+- id: 자유서술_011
+  query: "동진쎄미켐 3. 기타 참고사항(배당 관련 정관의 내용 등)"
+  category: 자유서술
+  no_answer: false
+  expected_chunk_ids: [e637823e06fae46e]
+  expected_corp_codes: [00118804]
+- id: 자유서술_012
+  query: "삼성전자 나. 회계감사인의 변경"
+  category: 자유서술
+  no_answer: false
+  expected_chunk_ids: [bdbf11ac1a467e4e]
+  expected_corp_codes: [00126380]
+- id: 자유서술_013
+  query: "동진쎄미켐 사업보고서 및 감사보고서 첨부"
+  category: 자유서술
+  no_answer: false
+  expected_chunk_ids: [4cf1277f103e9c89]
+  expected_corp_codes: [00118804]
+- id: 자유서술_014
+  query: "삼성전자 나. 보유 또는 처분대상이 되는 자기주식의 종류와 수, 취득방법 - 회사는 현재 장내 직접취득으로 보통주 120,813,769주, 우선주 13,603,461주의 자기주식을 보유하고 있으며, 이 중 임직원 보상목적으로 취득하여 보유하고 있는 자기주식은 보통주 47,454,455주입니다."
+  category: 자유서술
+  no_answer: false
+  expected_chunk_ids: [30377ec6536d771c]
+  expected_corp_codes: [00126380]
+- id: 자유서술_015
+  query: "솔브레인 가. 재무위험관리요소"
+  category: 자유서술
+  no_answer: false
+  expected_chunk_ids: [ab8a55b633828321]
+  expected_corp_codes: [01489648]
+- id: 자유서술_016
+  query: "삼성전자 가. 매출실적"
+  category: 자유서술
+  no_answer: false
+  expected_chunk_ids: [d98eabacf4a7d075]
+  expected_corp_codes: [00126380]
+- id: 자유서술_017
+  query: "동진쎄미켐 가. 금융위험요소"
+  category: 자유서술
+  no_answer: false
+  expected_chunk_ids: [c8f38ee8296d363f]
+  expected_corp_codes: [00118804]
+- id: 자유서술_018
+  query: "SK하이닉스 마. 후보자에 대한 이사회의 추천 사유"
+  category: 자유서술
+  no_answer: false
+  expected_chunk_ids: [c4083ed32c52cbd8]
+  expected_corp_codes: [00164779]
+- id: 자유서술_019
+  query: "SK하이닉스 1. 생산능력 및 생산능력의 산출근거"
+  category: 자유서술
+  no_answer: false
+  expected_chunk_ids: [cbafca5139f39c2b]
+  expected_corp_codes: [00164779]
+- id: 자유서술_020
+  query: "솔브레인 나. 회사의 영업개황 등"
+  category: 자유서술
+  no_answer: false
+  expected_chunk_ids: [05d5c517896a1415]
+  expected_corp_codes: [01489648]
+- id: 자유서술_021
+  query: "삼성전자 가. 주요 원재료 현황"
+  category: 자유서술
+  no_answer: false
+  expected_chunk_ids: [f09704a8b649413b]
+  expected_corp_codes: [00126380]
+- id: 자유서술_022
+  query: "솔브레인 나. 시장의 특성"
+  category: 자유서술
+  no_answer: false
+  expected_chunk_ids: [af7806556a7fcfe2]
+  expected_corp_codes: [01489648]
+- id: 자유서술_023
+  query: "SK하이닉스 다. 회사의 고객관리 정책"
+  category: 자유서술
+  no_answer: false
+  expected_chunk_ids: [6232b065b99ca16a]
+  expected_corp_codes: [00164779]
+- id: 자유서술_024
+  query: "SK하이닉스 3. 중요한 회계추정 및 가정"
+  category: 자유서술
+  no_answer: false
+  expected_chunk_ids: [243abe7eb910c043]
+  expected_corp_codes: [00164779]
+- id: 자유서술_025
+  query: "삼성전자 가. 이사의 수ㆍ보수총액 내지 최고 한도액"
+  category: 자유서술
+  no_answer: false
+  expected_chunk_ids: [b962727f2ba5e3f6]
+  expected_corp_codes: [00126380]
+- id: 자유서술_026
+  query: "삼성전자 다. 생산능력, 생산실적, 가동률"
+  category: 자유서술
+  no_answer: false
+  expected_chunk_ids: [46d8b878ada043da]
+  expected_corp_codes: [00126380]
+- id: 자유서술_027
+  query: "SK하이닉스 마. 후보자에 대한 이사회의 추천 사유- 정덕균(재선임)"
+  category: 자유서술
+  no_answer: false
+  expected_chunk_ids: [69b8160901ca23de]
+  expected_corp_codes: [00164779]
+- id: 자유서술_028
+  query: "SK하이닉스 2. 생산실적 및 가동률"
+  category: 자유서술
+  no_answer: false
+  expected_chunk_ids: [10cf292bc1d10ddd]
+  expected_corp_codes: [00164779]
+- id: 자유서술_029
+  query: "솔브레인 나. 주요 원재료 등의 가격변동추이"
+  category: 자유서술
+  no_answer: false
+  expected_chunk_ids: [9668dff89bc42b4e]
+  expected_corp_codes: [01489648]
+- id: 자유서술_030
+  query: "삼성전자 나. 주요 원재료 가격 변동 추이"
+  category: 자유서술
+  no_answer: false
+  expected_chunk_ids: [25f62099369f2e9e]
+  expected_corp_codes: [00126380]
+- id: no_answer_001
+  query: "SK이노베이션 2024년 영업이익"
+  category: no_answer
+  no_answer: true
+  expected_chunk_ids: []
+- id: no_answer_002
+  query: "HD현대중공업 감사의견"
+  category: no_answer
+  no_answer: true
+  expected_chunk_ids: []
+- id: no_answer_003
+  query: "포스코홀딩스 2024년 매출액"
+  category: no_answer
+  no_answer: true
+  expected_chunk_ids: []
+- id: no_answer_004
+  query: "네이버 최대주주 지분율"
+  category: no_answer
+  no_answer: true
+  expected_chunk_ids: []
+- id: no_answer_005
+  query: "HD현대중공업 2024년 영업이익"
+  category: no_answer
+  no_answer: true
+  expected_chunk_ids: []
+- id: no_answer_006
+  query: "네이버 임원 현황"
+  category: no_answer
+  no_answer: true
+  expected_chunk_ids: []
+- id: no_answer_007
+  query: "카카오 2023년 자산총계"
+  category: no_answer
+  no_answer: true
+  expected_chunk_ids: []
+- id: no_answer_008
+  query: "SK이노베이션 임원 현황"
+  category: no_answer
+  no_answer: true
+  expected_chunk_ids: []
+- id: no_answer_009
+  query: "포스코홀딩스 2024년 매출액"
+  category: no_answer
+  no_answer: true
+  expected_chunk_ids: []
+- id: no_answer_010
+  query: "LG화학 2024년 매출액"
+  category: no_answer
+  no_answer: true
+  expected_chunk_ids: []
+- id: no_answer_011
+  query: "네이버 2024년 영업이익"
+  category: no_answer
+  no_answer: true
+  expected_chunk_ids: []
+- id: no_answer_012
+  query: "HD현대중공업 최대주주 지분율"
+  category: no_answer
+  no_answer: true
+  expected_chunk_ids: []
+- id: no_answer_013
+  query: "카카오 2024년 매출액"
+  category: no_answer
+  no_answer: true
+  expected_chunk_ids: []
+- id: no_answer_014
+  query: "포스코홀딩스 최대주주 지분율"
+  category: no_answer
+  no_answer: true
+  expected_chunk_ids: []
+- id: no_answer_015
+  query: "포스코홀딩스 2023년 자산총계"
+  category: no_answer
+  no_answer: true
+  expected_chunk_ids: []
+- id: no_answer_016
+  query: "네이버 2023년 자산총계"
+  category: no_answer
+  no_answer: true
+  expected_chunk_ids: []
+- id: no_answer_017
+  query: "네이버 임원 현황"
+  category: no_answer
+  no_answer: true
+  expected_chunk_ids: []
+- id: no_answer_018
+  query: "LG화학 감사의견"
+  category: no_answer
+  no_answer: true
+  expected_chunk_ids: []
+- id: no_answer_019
+  query: "포스코홀딩스 감사의견"
+  category: no_answer
+  no_answer: true
+  expected_chunk_ids: []
+- id: no_answer_020
+  query: "HD현대중공업 임원 현황"
+  category: no_answer
+  no_answer: true
+  expected_chunk_ids: []
+- id: no_answer_021
+  query: "카카오 감사의견"
+  category: no_answer
+  no_answer: true
+  expected_chunk_ids: []
+- id: no_answer_022
+  query: "네이버 감사의견"
+  category: no_answer
+  no_answer: true
+  expected_chunk_ids: []
+- id: no_answer_023
+  query: "네이버 최대주주 지분율"
+  category: no_answer
+  no_answer: true
+  expected_chunk_ids: []
+- id: no_answer_024
+  query: "카카오 임원 현황"
+  category: no_answer
+  no_answer: true
+  expected_chunk_ids: []
+- id: no_answer_025
+  query: "LG화학 2024년 매출액"
+  category: no_answer
+  no_answer: true
+  expected_chunk_ids: []
+- id: no_answer_026
+  query: "카카오 2024년 영업이익"
+  category: no_answer
+  no_answer: true
+  expected_chunk_ids: []
+- id: no_answer_027
+  query: "네이버 감사의견"
+  category: no_answer
+  no_answer: true
+  expected_chunk_ids: []
+- id: no_answer_028
+  query: "포스코홀딩스 2023년 자산총계"
+  category: no_answer
+  no_answer: true
+  expected_chunk_ids: []
+- id: no_answer_029
+  query: "HD현대중공업 감사의견"
+  category: no_answer
+  no_answer: true
+  expected_chunk_ids: []
+- id: no_answer_030
+  query: "포스코홀딩스 임원 현황"
+  category: no_answer
+  no_answer: true
+  expected_chunk_ids: []
+- id: 충돌_001
+  query: "동진쎄미켐 2023년 감사의견"
+  category: 출처_충돌_검증
+  no_answer: false
+  expected_chunk_ids: [082ecaefba262233, 24adee414baee7f5, 3b81096e3097c6db, 628c89548145ae68, 7563fe639b878ee2, ab1fb65662f9735a, b25555df00d531f9, b5147c43754e536c, c17762f083ff293d, da637fe49de4154b, ecffb2f71598144f, ff82a5c5ac9707d9]
+  expected_corp_codes: [00118804]
+  note: "분기·사업보고서 다중 출처 — 정답 1건"
+- id: 충돌_002
+  query: "한미반도체 2023년 감사의견"
+  category: 출처_충돌_검증
+  no_answer: false
+  expected_chunk_ids: [0dfe19e3b6b46d39, 15de866c9d0ea1ad, 248d2f00c6cfd1c7, 324eabe4d59df992, 4c2883465a822c4f, 56a21ff0058d0faa, 648a6720c19db517, 72e924980eff52d1, 803fadf2ba83e608, 84aba47b22463657, d7ff8a5aaa704dc6, f2a68e139d257054]
+  expected_corp_codes: [00161383]
+  note: "분기·사업보고서 다중 출처 — 정답 1건"
+- id: 충돌_003
+  query: "한미반도체 2025년 감사의견"
+  category: 출처_충돌_검증
+  no_answer: false
+  expected_chunk_ids: [02a2a9381902eafa, 0480f4ef714dce13, 0786fc6e76561704, 1a218d1796f39c11, 32758541d34e621c, 3af30ca01e53ce6f, 5583da971c125329, 5be308f6765abcf1, 746e35d832c28ed3, 8ef941e426b6fb01, a30dad1f87fee366, a4b2e989c4b88d49, a62c31eee0e45e8f, ae88581539473ac8, bb97c01cbf405357, bdda26605aa34a60, bdf9f7b554a0a8ab, c83ac54c1defc1e6, d53752fe8c2e5404, dedeaa1ce30b96f9, e36c42db0b6f73ab, e7c82f8631391f33, e7d5714e7f0391d7, ef06c4b44c98a258]
+  expected_corp_codes: [00161383]
+  note: "분기·사업보고서 다중 출처 — 정답 1건"
+- id: 충돌_004
+  query: "한미반도체 2026년 감사의견"
+  category: 출처_충돌_검증
+  no_answer: false
+  expected_chunk_ids: [02f1db57fb11626b, 488c41bf4e924038, c04932d1a5bac162, c73962804db7e95e, cc444909dc7c23ba, dc97801baaf90fc6]
+  expected_corp_codes: [00161383]
+  note: "분기·사업보고서 다중 출처 — 정답 1건"
+- id: 충돌_005
+  query: "삼성전자 2022년 감사의견"
+  category: 출처_충돌_검증
+  no_answer: false
+  expected_chunk_ids: [03ddaab990be54f7, 05d29b94fb767a5c, 0b4aaa81b962cd5d, 215f43f40b0d9f52, 2459d7d3a31a98a2, 6f852613e2eef1d2, 9605ace54e277ad3, ae98dac72c6f58ea, afa146c304b2f53b, bcc57d7846922fbe, d7f8446c67b99e3f, daf4b69a056fc8ff]
+  expected_corp_codes: [00126380]
+  note: "분기·사업보고서 다중 출처 — 정답 1건"
+- id: 충돌_006
+  query: "SK하이닉스 2023년 감사의견"
+  category: 출처_충돌_검증
+  no_answer: false
+  expected_chunk_ids: [2704ea446180bda4, 30bcbdeedbfae255, 46fc1462512fafba, 4a88f0260617e39b, 4dca2aac1b121539, 67437f3b75798f32, 83846f8ebe6f5c2c, 8ffa3427bb2e5bb8, aa1f4babc2be475f, d21bbd6b212c12b5, db54cd31241191a2, e20b37cde6f620e5]
+  expected_corp_codes: [00164779]
+  note: "분기·사업보고서 다중 출처 — 정답 1건"
+- id: 충돌_007
+  query: "삼성전자 2026년 감사의견"
+  category: 출처_충돌_검증
+  no_answer: false
+  expected_chunk_ids: [0d7a894ef34114c1, 605ddf7f465ae1f2, 73bd86bf266e9f0d, 7dbc6d7bfed95ac7, 8fadf6f01b2978dd, cc96be526de8bd47]
+  expected_corp_codes: [00126380]
+  note: "분기·사업보고서 다중 출처 — 정답 1건"
+- id: 충돌_008
+  query: "SK하이닉스 2025년 감사의견"
+  category: 출처_충돌_검증
+  no_answer: false
+  expected_chunk_ids: [0df1c8453a4cb6b8, 1b5d70e36afa2aba, 21b9e089c8c0a585, 30ebdf9e553ea1f5, 3af08f0c1f536d77, 4353efd5260e76ad, 54c8336314c93ba9, 58a8e28b26616060, 5df76531f96882f0, 71659bc288d31fc8, 732972739550761b, 870203bd1a82d1af, 8d67982de618edd2, 9be6f6cb651f1c12, a4002979f23f3ae9, c52d49dc4b0da384, c5895576c0099597, cf1772db2349307c, d307be41e5c37fb1, d95180bdae84d09d, e1ac69c3b0caae19, e2c1499fc1fe4bb8, e709cd42ec8e605f, f492ce3700e63aac]
+  expected_corp_codes: [00164779]
+  note: "분기·사업보고서 다중 출처 — 정답 1건"
+- id: 충돌_009
+  query: "삼성전자 2025년 감사의견"
+  category: 출처_충돌_검증
+  no_answer: false
+  expected_chunk_ids: [24a6d70513709ecb, 2e1026f4d0ac0620, 32639a30ae435722, 398d9743b12056f0, 3c614162666c29fd, 43384b46aa343354, 46c74467e0116204, 4ee369753d7c337c, 4fb45f392ee4ffde, 529eec9c073fbf32, 55bec5b161ccd18c, 6746d5eb0df53e3d, 6b76c8c4a0ecde64, 712666b8121d1a58, 85adfd6ab0aa472e, a5f43c2a95aad95e, aa20e11f7606258d, ac7e4b6f114ec40a, b2f73b5776b63c21, c011d7951fa4ff29, c1e256604e9367de, ca6404f74c9f398f, d1f1b6d9c743c137, eaafb2c528ea1c05]
+  expected_corp_codes: [00126380]
+  note: "분기·사업보고서 다중 출처 — 정답 1건"
+- id: 충돌_010
+  query: "솔브레인 2022년 감사의견"
+  category: 출처_충돌_검증
+  no_answer: false
+  expected_chunk_ids: [0136ccb4d631da69, 2edb5d4532931cb9, 2f3e34cf764a961b, 3f9029897a4071d2, 41c1c5c61cabfbe9, 57ae21fd1ab615e8, 5bd060f6c46f60bb, 845736beedf7f4d7, d9cb6d3329673a71, db5b02cc5feedc86, e68896d78229448e, f1158f4898da9388]
+  expected_corp_codes: [01489648]
+  note: "분기·사업보고서 다중 출처 — 정답 1건"
+- id: 충돌_011
+  query: "솔브레인 2025년 감사의견"
+  category: 출처_충돌_검증
+  no_answer: false
+  expected_chunk_ids: [1d4c70dc0fa957cb, 247c0e72c033c8d8, 2e542cbabdd9dbc6, 2eefe1c20b628e29, 3515d35593e3fd75, 3659fe7391881a2c, 3a042be06c38b6c4, 3fb7e1495a91b24b, 414b36c5054d00dc, 42f189abc6a08363, 4f41a94ec018769c, 5158f7c95fe52b08, 549d8117bdccf3cf, 5646d7224c5bf3e3, 71c7b49efb01c34f, 89b189dca3b7a6ba, 94af42ccd239f84c, 97c65b9dd7d78310, 993eba533902b46e, c3bd574285f04abf, c610f63f71e145eb, df0add17a7d6396e, e2d7ab5e5937a697, e46572b0566f4914]
+  expected_corp_codes: [01489648]
+  note: "분기·사업보고서 다중 출처 — 정답 1건"
+- id: 충돌_012
+  query: "동진쎄미켐 2025년 감사의견"
+  category: 출처_충돌_검증
+  no_answer: false
+  expected_chunk_ids: [2c1d6a970c453f3d, 2f95f505e1c8058a, 39a4548ebcf706a1, 3a8018963f7fa8ac, 3b962f09e0479f72, 4de975c1e60666e7, 548b55004308cb4e, 6a2cc4ca55284177, 6ae0be13e1375444, 73f5f0a50d79a2a8, 7a12c0527bcf6322, 7aaae523f60738a8, 9246c069cb7c8259, a7c1675f39b480e3, a81a24c4d8e62d15, c14bf1c2dfae19f8, c419bf7cad4633e4, ce0d55b172627adc, e83837b19f624c06, ec8c4173f69c1378, ee8b918192c0b868, f448ecbf1a207aa5, f8be360cb22f9822, ff38ff95a7191fbb]
+  expected_corp_codes: [00118804]
+  note: "분기·사업보고서 다중 출처 — 정답 1건"
+- id: 충돌_013
+  query: "한미반도체 2024년 감사의견"
+  category: 출처_충돌_검증
+  no_answer: false
+  expected_chunk_ids: [1c82d24909e0392f, 214b00801c396d6d, 395227c5339979bc, 50c9bbee6a7d2e17, 6b07b483ed9fe766, 7c98c6f185728427, 82f18e795273404b, 84a4e43481f46eae, 8d1ddc0c2c276430, b144abea1200d38b, befc77d6b4341bdf, c7737c60a1e0373e, d5b35784a4b8e107, ed57501189350106, f396c0a1a483f970]
+  expected_corp_codes: [00161383]
+  note: "분기·사업보고서 다중 출처 — 정답 1건"
+- id: 충돌_014
+  query: "솔브레인 2023년 감사의견"
+  category: 출처_충돌_검증
+  no_answer: false
+  expected_chunk_ids: [0f0268730b2fe90e, 13cc6abf2966e7dc, 22bf86fd9e529aff, 2d9d3fab5b5a339b, 6b5ce5c5743acb76, 8c68c3c66fb1f9fc, 8e58256fc43aa97b, a636195383eefc23, a6ebcd36193c4eb9, ca391e80d307e98f, fb41c1209859fbb5, fed3971c9834377f]
+  expected_corp_codes: [01489648]
+  note: "분기·사업보고서 다중 출처 — 정답 1건"
+- id: 충돌_015
+  query: "솔브레인 2024년 감사의견"
+  category: 출처_충돌_검증
+  no_answer: false
+  expected_chunk_ids: [036e131f9d7f2eec, 07a1208be956b6e4, 0cb9015ad7cde611, 10f252460f8a04bc, 15be2f33d7de87ac, 2c466708aa1c8e07, 3419c79d1e33a091, 4ff7ec2fc873f6b7, 53e69e3c61aff779, 67307b8a7c3fc6ac, 75a5572c87ee9fd7, 816d53d8f6ad5f5a, 933aad57d52b1c30, a5b592774815cbc9, f57350eefd85dac6]
+  expected_corp_codes: [01489648]
+  note: "분기·사업보고서 다중 출처 — 정답 1건"
+- id: 충돌_016
+  query: "삼성전자 2023년 감사의견"
+  category: 출처_충돌_검증
+  no_answer: false
+  expected_chunk_ids: [2b91410effd07126, 44434743e6f4a375, 4c2a3f627d63508c, 6063713696b07f59, 6cdad75b030a6720, 71082d1d53bb83a0, 82e717d4ce142547, 98115fb914c2c2ce, c6bbe9c680d216c3, d3ca20ae63e71e09, da69c35e29eec03e, dbe8f35b41e20791]
+  expected_corp_codes: [00126380]
+  note: "분기·사업보고서 다중 출처 — 정답 1건"
+- id: 충돌_017
+  query: "한미반도체 2022년 감사의견"
+  category: 출처_충돌_검증
+  no_answer: false
+  expected_chunk_ids: [0492ceebd16877b8, 180ea77409b5f25f, 182f1788e46b34cd, 51999e832cf47872, 69d2e4892bbd62d7, 868374f78a9dabaf, 8f0878f9f39c4973, ae7267d39b7ffa30, b20383e7b9e6cf9f, bb37a55907df0f74, d5cbe5e8e69d8e4a, f1ff713a8aa49ce0]
+  expected_corp_codes: [00161383]
+  note: "분기·사업보고서 다중 출처 — 정답 1건"
+- id: 충돌_018
+  query: "SK하이닉스 2024년 감사의견"
+  category: 출처_충돌_검증
+  no_answer: false
+  expected_chunk_ids: [041ebd7042b74438, 1249b7ec09e9aa23, 4988c842b795e5fa, 6440c9a970036d03, 6df46e3f152cf87c, 71cf3339e0e349e7, 736b8dac60e4fdc5, 836ec4c6ff9c2164, 8c231aee89836a01, 98bd5a1f1c7c2b51, a70a80def56a0494, cefc4e5703aeee07, d106645222b24264, ee0913efbeca3882, f1ae28f562049b94]
+  expected_corp_codes: [00164779]
+  note: "분기·사업보고서 다중 출처 — 정답 1건"
+- id: 충돌_019
+  query: "동진쎄미켐 2026년 감사의견"
+  category: 출처_충돌_검증
+  no_answer: false
+  expected_chunk_ids: [439cb2b934b85a09, 98781546f8b344e9, 997d9183679f0a15, d6ce239c6ab91b3c, eb3266df66d2ba89, ee0f8393bc4a59f5]
+  expected_corp_codes: [00118804]
+  note: "분기·사업보고서 다중 출처 — 정답 1건"
+- id: 충돌_020
+  query: "삼성전자 2024년 감사의견"
+  category: 출처_충돌_검증
+  no_answer: false
+  expected_chunk_ids: [011bc3269f9d060e, 01ef6a7c530f1f5b, 1933bc3b0d6890d3, 1db3412b3540661b, 2aea371ab944b82f, 62bd34cb7f3248d6, 79384dc74d09c285, 9126ce85135f780e, 9c4aeef27f28efca, 9f1b1cb27104519f, 9f2bbbbfd55c3fe7, bff2c1628bbfe8b3, c31f7e05d6d0df1c, d9420dd80cc016a9, e23484a9d6970284]
+  expected_corp_codes: [00126380]
+  note: "분기·사업보고서 다중 출처 — 정답 1건"
+- id: 시점_001
+  query: "2024년 기준 동진쎄미켐 임원 강주성"
+  category: 시점
+  no_answer: false
+  expected_chunk_ids: [cbae9647995d9bbe]
+  expected_corp_codes: [00118804]
+- id: 시점_002
+  query: "2025년 기준 삼성전자 임원 전영현"
+  category: 시점
+  no_answer: false
+  expected_chunk_ids: [72219b007419b247]
+  expected_corp_codes: [00126380]
+- id: 시점_003
+  query: "2025년 기준 솔브레인 임원 김석주"
+  category: 시점
+  no_answer: false
+  expected_chunk_ids: [ac11781fdeab56de]
+  expected_corp_codes: [01489648]
+- id: 시점_004
+  query: "2025년 기준 동진쎄미켐 임원 최정민"
+  category: 시점
+  no_answer: false
+  expected_chunk_ids: [9f2eee39db26dc32]
+  expected_corp_codes: [00118804]
+- id: 시점_005
+  query: "2022년 기준 삼성전자 임원 김종훈"
+  category: 시점
+  no_answer: false
+  expected_chunk_ids: [f5508c11e249cd11]
+  expected_corp_codes: [00126380]
+- id: 시점_006
+  query: "2022년 기준 SK하이닉스 임원 곽노정"
+  category: 시점
+  no_answer: false
+  expected_chunk_ids: [6976d06e061f51f5]
+  expected_corp_codes: [00164779]
+- id: 시점_007
+  query: "2022년 기준 솔브레인 임원 정재선"
+  category: 시점
+  no_answer: false
+  expected_chunk_ids: [8f6cf67997bf66f2]
+  expected_corp_codes: [01489648]
+- id: 시점_008
+  query: "2024년 기준 동진쎄미켐 임원 김진활"
+  category: 시점
+  no_answer: false
+  expected_chunk_ids: [df4dc9bdcc45b1b6]
+  expected_corp_codes: [00118804]
+- id: 시점_009
+  query: "2022년 기준 동진쎄미켐 임원 장준"
+  category: 시점
+  no_answer: false
+  expected_chunk_ids: [9246f64b8d7b1880]
+  expected_corp_codes: [00118804]
+- id: 시점_010
+  query: "2024년 기준 SK하이닉스 임원 정덕균"
+  category: 시점
+  no_answer: false
+  expected_chunk_ids: [f4c67eb1ea7abe66]
+  expected_corp_codes: [00164779]
+- id: 시점_011
+  query: "2024년 기준 솔브레인 임원 박덕현"
+  category: 시점
+  no_answer: false
+  expected_chunk_ids: [c98307a07c0d7211]
+  expected_corp_codes: [01489648]
+- id: 시점_012
+  query: "2024년 기준 솔브레인 임원 양동성"
+  category: 시점
+  no_answer: false
+  expected_chunk_ids: [cad58feb1ca7e302]
+  expected_corp_codes: [01489648]
+- id: 시점_013
+  query: "2025년 기준 동진쎄미켐 임원 이학준"
+  category: 시점
+  no_answer: false
+  expected_chunk_ids: [71790901e8b143c5]
+  expected_corp_codes: [00118804]
+- id: 시점_014
+  query: "2024년 기준 동진쎄미켐 임원 허철"
+  category: 시점
+  no_answer: false
+  expected_chunk_ids: [4476be6c93d56465]
+  expected_corp_codes: [00118804]
+- id: 시점_015
+  query: "2025년 기준 동진쎄미켐 임원 정해일"
+  category: 시점
+  no_answer: false
+  expected_chunk_ids: [0947f46845959215]
+  expected_corp_codes: [00118804]
+- id: 시점_016
+  query: "2026년 기준 동진쎄미켐 임원 박종대"
+  category: 시점
+  no_answer: false
+  expected_chunk_ids: [45ce1b70bb8ef2b8]
+  expected_corp_codes: [00118804]
+- id: 시점_017
+  query: "2024년 기준 동진쎄미켐 임원 안태용"
+  category: 시점
+  no_answer: false
+  expected_chunk_ids: [a10ad08f960fdff7]
+  expected_corp_codes: [00118804]
+- id: 시점_018
+  query: "2023년 기준 동진쎄미켐 임원 강철우"
+  category: 시점
+  no_answer: false
+  expected_chunk_ids: [ffff25e6c471076a]
+  expected_corp_codes: [00118804]
+- id: 시점_019
+  query: "2022년 기준 동진쎄미켐 임원 유성재"
+  category: 시점
+  no_answer: false
+  expected_chunk_ids: [6d402a95f685380a]
+  expected_corp_codes: [00118804]
+- id: 시점_020
+  query: "2024년 기준 SK하이닉스 임원 안현"
+  category: 시점
+  no_answer: false
+  expected_chunk_ids: [7f443b23da72daef]
+  expected_corp_codes: [00164779]
