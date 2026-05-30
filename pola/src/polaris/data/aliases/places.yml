@@ -1,0 +1,139 @@
+# Place alias 사전 — 반도체 글로벌 공급망 거점 (ISO 3166-1 alpha-2).
+
+KR:
+  kor_name: 한국
+  aliases: [한국, 대한민국, "South Korea", Korea, 국내]
+US:
+  kor_name: 미국
+  aliases: [미국, "United States", USA, "U.S.", America]
+CN:
+  kor_name: 중국
+  aliases: [중국, China, "People's Republic of China", PRC]
+JP:
+  kor_name: 일본
+  aliases: [일본, Japan]
+TW:
+  kor_name: 대만
+  aliases: [대만, Taiwan, 타이완]
+NL:
+  kor_name: 네덜란드
+  aliases: [네덜란드, Netherlands, 화란]
+DE:
+  kor_name: 독일
+  aliases: [독일, Germany, Deutschland]
+VN:
+  kor_name: 베트남
+  aliases: [베트남, Vietnam, "Viet Nam"]
+IN:
+  kor_name: 인도
+  aliases: [인도, India]
+SG:
+  kor_name: 싱가포르
+  aliases: [싱가포르, Singapore]
+MY:
+  kor_name: 말레이시아
+  aliases: [말레이시아, Malaysia]
+PH:
+  kor_name: 필리핀
+  aliases: [필리핀, Philippines]
+MX:
+  kor_name: 멕시코
+  aliases: [멕시코, Mexico]
+EU:
+  kor_name: 유럽연합
+  aliases: [유럽연합, "European Union", 유럽]
+  # "EU" 단독 alias 제거 — "EUV" 등에서 부분 매칭 충돌
+
+# ────── 한국 반도체 산업 거점 도시 (KR-* sub-code) ──────────────
+KR_PYEONGTAEK:
+  kor_name: 평택
+  aliases: [평택, 평택시, "Pyeongtaek"]
+KR_HWASEONG:
+  kor_name: 화성
+  aliases: [화성, 화성시, "Hwaseong"]
+KR_GIHEUNG:
+  kor_name: 기흥
+  aliases: [기흥, 기흥구, "Giheung"]
+KR_ICHEON:
+  kor_name: 이천
+  aliases: [이천, 이천시, "Icheon"]
+KR_CHEONGJU:
+  kor_name: 청주
+  aliases: [청주, 청주시, "Cheongju"]
+KR_GUMI:
+  kor_name: 구미
+  aliases: [구미, 구미시, "Gumi"]
+KR_ASAN:
+  kor_name: 아산
+  aliases: [아산, 아산시, "Asan"]
+KR_CHEONAN:
+  kor_name: 천안
+  aliases: [천안, 천안시, "Cheonan"]
+KR_GWANGJU:
+  kor_name: 광주
+  aliases: [광주, 광주광역시]
+  ambiguous_alone: [광주]
+KR_SUWON:
+  kor_name: 수원
+  aliases: [수원, 수원시, 수원사업장, "Suwon"]
+KR_DAEJEON:
+  kor_name: 대전
+  aliases: [대전, 대전광역시, "Daejeon"]
+KR_INCHEON:
+  kor_name: 인천
+  aliases: [인천, 인천광역시, "Incheon"]
+KR_SEONGNAM:
+  kor_name: 성남
+  aliases: ["경기도 성남시", 성남, 성남시, "Seongnam"]
+KR_GONGJU:
+  kor_name: 공주
+  aliases: ["충청남도 공주시", 공주시, 공주, "Gongju"]
+KR_PAJU:
+  kor_name: 파주
+  aliases: ["경기도 파주시", 파주, 파주시, "Paju"]
+KR_YONGIN:
+  kor_name: 용인
+  aliases: ["경기도 용인시", 용인, 용인시, "Yongin"]
+
+# ────── 중국·해외 반도체 거점 (도시/주) ─────────────────────
+CN_XIAN:
+  kor_name: 시안
+  aliases: [시안, "Xi'an", "Xian"]
+CN_WUXI:
+  kor_name: 우시
+  aliases: [우시, "Wuxi"]
+CN_HK:
+  kor_name: 홍콩
+  aliases: [홍콩, "Hong Kong", HK]
+ID:
+  kor_name: 인도네시아
+  aliases: [인도네시아, "Indonesia"]
+BR:
+  kor_name: 브라질
+  aliases: [브라질, "Brazil"]
+HU:
+  kor_name: 헝가리
+  aliases: [헝가리, "Hungary"]
+UA:
+  kor_name: 우크라이나
+  aliases: [우크라이나, "Ukraine"]
+RU:
+  kor_name: 러시아
+  aliases: [러시아, "Russia"]
+BD:
+  kor_name: 방글라데시
+  aliases: [방글라데시, "Bangladesh"]
+IL:
+  kor_name: 이스라엘
+  aliases: [이스라엘, "Israel"]
+# 지역 그룹
+APAC:
+  kor_name: 동남아
+  aliases: [동남아, "Southeast Asia", "동남아시아"]
+NA:
+  kor_name: 북미
+  aliases: [북미, "North America"]
+AS:
+  kor_name: 아시아
+  aliases: [아시아, "Asia"]
+  ambiguous_alone: [Asia]

@@ -9,7 +9,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from .config import settings
-from .routers import meta
+from .routers import company, dashboard, evidence, graph, insights, meta, news
 
 app = FastAPI(title="POLARIS API", version="0.1.0")
 
@@ -22,9 +22,12 @@ app.add_middleware(
 )
 
 app.include_router(meta.router, prefix="/api")
-# 화면별 라우터는 여기에 추가:
-# app.include_router(dashboard.router, prefix="/api")
-# app.include_router(graph.router, prefix="/api")
+app.include_router(graph.router, prefix="/api")
+app.include_router(dashboard.router, prefix="/api")
+app.include_router(company.router, prefix="/api")
+app.include_router(evidence.router, prefix="/api")
+app.include_router(news.router, prefix="/api")
+app.include_router(insights.router, prefix="/api")
 
 
 @app.get("/")

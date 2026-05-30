@@ -25,7 +25,13 @@ credentials/
 
 # 데이터 (Docker volume 으로 관리)
 .docker-data/
-data/
+data/*
+# 단, LLM 추출 산출(jsonl)은 재현 픽스처로 커밋 → LLM 없이 graph_load 로 그래프 재현
+!data/4_dbGoldTest/
+data/4_dbGoldTest/*
+!data/4_dbGoldTest/news_extracts/
+data/4_dbGoldTest/news_extracts/*
+!data/4_dbGoldTest/news_extracts/*.jsonl
 runs/
 ___test/
 *.sqlite

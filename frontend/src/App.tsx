@@ -1,24 +1,15 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
-import Layout from './components/Layout'
-import Dashboard from './pages/Dashboard'
-import Workbench from './pages/Workbench'
-import Ask from './pages/Ask'
-import Patents from './pages/Patents'
-import Signals from './pages/Signals'
-import Evidence from './pages/Evidence'
+import Landing from './pages/Landing'
+import Workspace from './pages/Workspace'
 
 export default function App() {
   return (
-    <Layout>
-      <Routes>
-        <Route path="/" element={<Navigate to="/dashboard" replace />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/workbench" element={<Workbench />} />
-        <Route path="/ask" element={<Ask />} />
-        <Route path="/patents" element={<Patents />} />
-        <Route path="/signals" element={<Signals />} />
-        <Route path="/evidence" element={<Evidence />} />
-      </Routes>
-    </Layout>
+    <Routes>
+      {/* 진입화면 — 풀스크린 (기존 유지) */}
+      <Route path="/" element={<Landing />} />
+      {/* 인텔리전스 워크스페이스 — 트렌드 띠 + 관계지도 한 화면 */}
+      <Route path="/app" element={<Workspace />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   )
 }

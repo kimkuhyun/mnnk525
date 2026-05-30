@@ -1,0 +1,24 @@
+<svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="t-halo" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#E8F0FF" stop-opacity="0.45"></stop>
+        <stop offset="40%" stop-color="#7AB0FF" stop-opacity="0.15"></stop>
+        <stop offset="100%" stop-color="#7AB0FF" stop-opacity="0"></stop>
+      </radialGradient>
+    </defs>
+    <rect width="1200" height="800" fill="#0B0820"></rect>
+    <!-- distant star -->
+    <circle cx="430" cy="240" r="160" fill="url(#t-halo)"></circle>
+    <circle cx="430" cy="240" r="14" fill="#FFFFFF" opacity="0.95"></circle>
+    <circle cx="430" cy="240" r="5" fill="#FFFFFF"></circle>
+    <!-- starfield dust -->
+    <circle cx="180" cy="120" r="1.5" fill="#FFFFFF" opacity="0.5"></circle>
+    <circle cx="780" cy="180" r="1.8" fill="#FFFFFF" opacity="0.6"></circle>
+    <circle cx="980" cy="320" r="1.2" fill="#FFFFFF" opacity="0.4"></circle>
+    <circle cx="220" cy="420" r="1.4" fill="#FFFFFF" opacity="0.4"></circle>
+    <circle cx="640" cy="100" r="1.0" fill="#FFFFFF" opacity="0.3"></circle>
+    <circle cx="1080" cy="500" r="1.6" fill="#FFFFFF" opacity="0.5"></circle>
+    <!-- brand -->
+    <text x="600" y="620" text-anchor="middle" font-family="serif" font-size="80" letter-spacing="14" fill="#F2EDFF" font-weight="500">POLARIS</text>
+    <text x="600" y="680" text-anchor="middle" font-family="serif" font-style="italic" font-size="24" fill="#8B85B8">판단의 대행이 아닌, 판단의 도구.</text>
+  </svg>

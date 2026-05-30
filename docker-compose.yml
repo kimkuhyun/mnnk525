@@ -1,5 +1,5 @@
-# POLARIS 배포 스택 — backend + frontend + 3DB (카페24 클라우드 등)
-# 데이터 적재는 pola CLI 로 (로컬에서 이 서버 DB 에 원격 연결).
+# POLARIS 배포 스택 — backend + frontend + 3DB 
+# 데이터 적재는 pola CLI 로 
 #
 # 기동:  docker compose up -d --build
 # 종료:  docker compose down            (볼륨 유지)

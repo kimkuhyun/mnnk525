@@ -2,8 +2,6 @@
 
 반도체 기업 GraphRAG. Qdrant + MariaDB + Neo4j + bge-m3 + Contextual Retrieval.
 
-**상태**: 6 소스 · 8사 (5사 + DB하이텍·리노공업·이오테크닉스) · 41,324 청크. 벡터 6/6 + 그래프 F1=1.0 + 적재 정합 **10/10**.
-
 ## 폴더 구조
 
 ```
@@ -15,7 +13,6 @@ pola/                         # 패키지 루트
 │   ├── 2_Chuck/              #   정제 · 청크 · 임베딩
 │   └── 4_dbGoldTest/         #   평가 산출물 (verify.json 등)
 ├── docs/APIdocs/             # API 메타카탈로그 xlsx
-├── docker/                   # 3DB docker-compose
 ├── tests/gold/               # 평가 골드셋 (v3.yml, graph_v1.yml)
 ├── pyproject.toml
 └── .env                      # API 키, DB 접속, POLARIS_CORPS 등
@@ -27,24 +24,33 @@ pola/                         # 패키지 루트
 ## Quickstart
 
 ```powershell
-# 1. 의존성 (GPU 백엔드 1개 선택)
-pip install -e .[cuda]        # NVIDIA
-pip install -e .[directml]    # Windows + AMD GPU
-pip install -e .[cpu]         # CPU only
+# 1. 의존성 (uv — GPU extra 1개 선택)
+uv sync --extra cuda          # NVIDIA  (또는 --extra cpu / --extra directml)
 
-# 2. 환경 + 3DB
-cp .env.example .env
-docker compose -f docker/docker-compose.yml up -d
+# 2. 환경 + 3DB (3DB 는 상위 루트 compose 사용)
+copy .env.example .env
+docker compose -f ..\docker-compose.yml up -d mariadb qdrant neo4j
 
-# 3. raw 수집 → 적재 → 스위치 → 검증
-polaris ingest                  # 6종 raw 수집 (DART/뉴스/KRX/BOK/KOSIS/FTC)
-polaris build                   # standby 컬렉션에 적재 (init-db + load + load-source all + load-finmetric)
-polaris promote-run             # standby → active 스위치 (검색 노출)
-polaris verify                  # 3DB 정합 10/10 (active 기준)
+# 3. 적재 (Windows: 한글 깨짐 방지 필수)
+$env:PYTHONIOENCODING="utf-8"
+uv run polaris ingest           # raw 수집 (DART/뉴스/KRX/BOK/KOSIS/FTC)
+uv run polaris build            # 청킹·임베딩·3DB 적재
+uv run polaris promote-run      # standby → active 스위치
+uv run polaris verify           # 정합 10/10
 
 # 4. 평가
-polaris eval                    # 벡터 6/6
-polaris graph-eval              # 그래프 F1=1.0
+uv run polaris eval             # 벡터 6/6
+uv run polaris graph-eval       # 그래프 F1=1.0
+```
+
+> 이후 명령은 `uv run polaris ...` 또는 `.venv\Scripts\activate` 후 `polaris ...`.
+
+## 뉴스 적재 (v2 — DART 와 별도 파이프라인)
+
+크롤 → 3DB 적재. 둘 다 멱등(재실행 안전). 상세: [`news_crawl/README`](src/polaris/ingest/news_crawl/README.md)
+```powershell
+uv run python -m polaris.ingest.news_crawl.run --since 2026-01-01 --sources 전자신문 한국경제 --keyword 삼성전자 --full
+uv run python -m polaris.ingest.news_crawl.load    # news_raw → document_unified → Qdrant·Neo4j·mention_daily
 ```
 
 ## 새 회사 추가 — `.env` 한 줄 + 명령 3개

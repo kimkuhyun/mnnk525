@@ -474,6 +474,18 @@ def build(
     _run("polaris-load-qdrant", load_qdrant)
     _run("polaris-load-neo4j", load_neo4j)
 
+    # 6/8 이 standby_run_id 를 발급 → 이후 load-source(7/8)·finmetric(8/N)·graph(9~)
+    # 가 active(promote 전엔 None) 가 아닌 standby 로 적재하도록 환경변수 노출.
+    import os as _os
+    from polaris.config import mariadb_conn as _mc
+    _conn = _mc(); _cur = _conn.cursor()
+    _cur.execute("SELECT standby_run_id FROM active_run_manifest WHERE id=1")
+    _standby = _cur.fetchone()[0]
+    _cur.close(); _conn.close()
+    if _standby:
+        _os.environ["POLARIS_TARGET_RUN_ID"] = _standby
+        typer.echo(f"[build] 적재 대상 run_id = standby={_standby} (load-source·finmetric·graph 공통)")
+
     if sources != "none":
         typer.echo(f"\n=== 7/8 load-source {sources} ===")
         targets = list(SOURCE_MODULES) if sources == "all" else \

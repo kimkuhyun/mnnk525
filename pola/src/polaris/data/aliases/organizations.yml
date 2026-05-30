@@ -1,0 +1,494 @@
+# Organization alias 사전 — 의미 그래프 entity linking 의 1차 매칭원.
+#
+# 형식:
+#   "<corp_code 8자리>":
+#     name: 정식명
+#     aliases: [...]              # 추가 표기 (티커·약어·영문 등)
+#     ticker: [...]               # KRX 종목코드
+#     ambiguous_alone: [...]      # 단독 매칭 차단 (예: "삼성"만 → 그룹 vs 전자 모호)
+#     subsidiaries: [...]         # 자회사 (별도 corp_code 매핑은 옵션)
+#
+# 신규 회사 추가 시: corp_code → name + aliases 블록만 추가.
+
+# ────── 한국 반도체 8사 ──────────────────────────────
+
+"00126380":
+  name: 삼성전자
+  aliases:
+    - 삼성전자주식회사
+    - 삼성전자(주)
+    - (주)삼성전자
+    - Samsung Electronics
+    - "Samsung Electronics Co., Ltd."
+    - SEC
+  ticker: ["005930", "005935"]   # 보통주·우선주
+  ambiguous_alone: [삼성, Samsung]
+  subsidiaries:
+    - 삼성디스플레이
+    - 삼성SDI
+    - 삼성SDS
+    - Harman
+    - 하만
+
+"00164779":
+  name: SK하이닉스
+  aliases:
+    - 에스케이하이닉스
+    - 주식회사 SK하이닉스
+    - SK Hynix
+    - "SK Hynix Inc."
+    - Hynix
+  ticker: ["000660"]
+  ambiguous_alone: [SK, 에스케이, 하이닉스]
+
+"00118804":
+  name: 동진쎄미켐
+  aliases:
+    - 주식회사 동진쎄미켐
+    - (주)동진쎄미켐
+    - 동진세미켐
+    - Dongjin Semichem
+  ticker: ["005290"]
+  ambiguous_alone: [동진]
+
+"01489648":
+  name: 솔브레인
+  aliases:
+    - 솔브레인주식회사
+    - (주)솔브레인
+    - Soulbrain
+  ticker: ["357780"]
+  ambiguous_alone: [솔브]
+
+"00161383":
+  name: 한미반도체
+  aliases:
+    - 한미반도체주식회사
+    - (주)한미반도체
+    - HANMI Semiconductor
+  ticker: ["042700"]
+
+"00160843":
+  name: DB하이텍
+  aliases:
+    - DB HiTek
+    - "DB HiTek Co., Ltd."
+    - 동부하이텍
+  ticker: ["000990"]
+  ambiguous_alone: [DB]
+
+"00369657":
+  name: 이오테크닉스
+  aliases:
+    - 주식회사 이오테크닉스
+    - (주)이오테크닉스
+    - EO Technics
+  ticker: ["039030"]
+
+"00246417":
+  name: 리노공업
+  aliases:
+    - 주식회사 리노공업
+    - (주)리노공업
+    - Leeno Industrial
+  ticker: ["058470"]
+  ambiguous_alone: [리노]
+
+# ────── 글로벌 반도체 주요 회사 (LLM 추출 시 매칭 보강) ───────
+# corp_code 는 'X' 접두로 외부 회사 표시 (DART 8자리와 충돌 방지)
+
+"XTSMC0001":
+  name: TSMC
+  aliases:
+    - "Taiwan Semiconductor Manufacturing Company"
+    - "Taiwan Semiconductor"
+    - 대만반도체제조회사
+    - 타이완 세미컨덕터
+  source: external
+
+"XNVDA0001":
+  name: NVIDIA
+  aliases:
+    - 엔비디아
+    - "NVIDIA Corporation"
+  source: external
+
+"XASML0001":
+  name: ASML
+  aliases:
+    - "ASML Holding"
+    - ASML홀딩
+    - 에이에스엠엘
+  source: external
+
+"XINTC0001":
+  name: Intel
+  aliases:
+    - 인텔
+    - "Intel Corporation"
+  source: external
+
+"XMICR0001":
+  name: Micron
+  aliases:
+    - 마이크론
+    - "Micron Technology"
+  source: external
+
+"XKIOX0001":
+  name: Kioxia
+  aliases:
+    - 키오시아
+    - "Kioxia Holdings"
+  source: external
+
+"XAPPL0001":
+  name: Apple
+  aliases:
+    - 애플
+    - "Apple Inc."
+  source: external
+  ambiguous_alone: [Apple]
+
+"XAMD00001":
+  name: AMD
+  aliases:
+    - "Advanced Micro Devices"
+  source: external
+
+"XQCOM0001":
+  name: Qualcomm
+  aliases:
+    - 퀄컴
+    - "Qualcomm Inc."
+  source: external
+
+"XGOOG0001":
+  name: Google
+  aliases:
+    - 구글
+    - Alphabet
+  source: external
+
+"XAMKR0001":
+  name: Amkor
+  aliases:
+    - 앰코
+    - "Amkor Technology"
+  source: external
+
+"XASE00001":
+  name: ASE
+  aliases:
+    - "ASE Technology"
+    - "ASE Holdings"
+  source: external
+  ambiguous_alone: [ASE]
+
+"XRAPI0001":
+  name: Rapidus
+  aliases:
+    - 라피더스
+  source: external
+
+"XSMIC0001":
+  name: SMIC
+  aliases:
+    - "Semiconductor Manufacturing International"
+    - 중신국제집성전로제조
+  source: external
+
+"XLAMR0001":
+  name: "Lam Research"
+  aliases:
+    - 램리서치
+    - Lam
+  source: external
+  ambiguous_alone: [Lam]
+
+"XAMAT0001":
+  name: "Applied Materials"
+  aliases:
+    - 어플라이드 머티리얼즈
+    - "AMAT"
+  source: external
+
+"XKLAC0001":
+  name: KLA
+  aliases:
+    - "KLA Corporation"
+    - 케이엘에이
+  source: external
+  ambiguous_alone: [KLA]
+
+"XTOEL0001":
+  name: "Tokyo Electron"
+  aliases:
+    - "Tokyo Electron Ltd."
+    - 도쿄일렉트론
+    - TEL
+  source: external
+  ambiguous_alone: [TEL]
+
+# ────── 한국 8사 주요 자회사 ──────────────────────────────
+# X 접두 = 외부/자회사 corp_code (DART 8자리와 충돌 방지).
+# 동진쎄미켐·솔브레인 해외 자회사 + 삼성/LG 디스플레이·전기·SDI
+
+"XSDISP001":
+  name: 삼성디스플레이
+  aliases: ["삼성디스플레이", "Samsung Display"]
+  source: subsidiary_of_samsung
+
+"XSSDI0001":
+  name: 삼성SDI
+  aliases: ["삼성SDI", "삼성에스디아이", "Samsung SDI"]
+  source: subsidiary_of_samsung
+
+"XSEMC0001":
+  name: 삼성전기
+  aliases: ["삼성전기", "Samsung Electro-Mechanics", "SEMCO"]
+  source: subsidiary_of_samsung
+
+"XSSDS0001":
+  name: 삼성SDS
+  aliases: ["삼성SDS", "Samsung SDS"]
+  source: subsidiary_of_samsung
+
+"XHARM0001":
+  name: Harman
+  aliases: ["Harman", "하만", "Harman International"]
+  source: subsidiary_of_samsung
+
+"XLGDP0001":
+  name: LG디스플레이
+  aliases: ["LG디스플레이", "엘지디스플레이", "LG Display"]
+  source: external
+
+"XLGES0001":
+  name: LG에너지솔루션
+  aliases: ["LG에너지솔루션", "엘지에너지솔루션", "LG Energy Solution", "LGES"]
+  source: external
+
+"XSKON0001":
+  name: SK온
+  aliases: ["SK온", "SK On"]
+  source: external
+
+# ────── 동진쎄미켐 해외 자회사 ────────────────────────────
+"XDJ_XIAN":
+  name: "솔브레인(시안)전자재료유한공사"  # 솔브레인 자회사 아님 — 추출 오해 가능. 일단 별도 entity
+  aliases: ["솔브레인(시안)전자재료유한공사"]
+  source: subsidiary_of_solbrain
+"XDJ_SOLTX":
+  name: "SOULBRAIN TX LLC"
+  aliases: ["SOULBRAIN TX LLC", "Soulbrain TX"]
+  source: subsidiary_of_solbrain
+"XDJ_SOLRASA":
+  name: "SOULBRAIN RASA TX LLC"
+  aliases: ["SOULBRAIN RASA TX LLC"]
+  source: subsidiary_of_solbrain
+"XDJ_SOLRASAKR":
+  name: "솔브레인라사 주식회사"
+  aliases: ["솔브레인라사", "솔브레인라사 주식회사"]
+  source: subsidiary_of_solbrain
+
+"XDJ_SICHUAN":
+  name: "사천동진전자재료과기유한공사"
+  aliases: ["사천동진전자재료과기유한공사"]
+  source: subsidiary_of_dongjin
+"XDJ_WUHAN":
+  name: "무한동진쎄미켐과기유한공사"
+  aliases: ["무한동진쎄미켐과기유한공사"]
+  source: subsidiary_of_dongjin
+"XDJ_CHENGDU":
+  name: "성도동진쎄미켐과기유한공사"
+  aliases: ["성도동진쎄미켐과기유한공사"]
+  source: subsidiary_of_dongjin
+"XDJ_HEFEI":
+  name: "합비동진쎄미켐과기유한공사"
+  aliases: ["합비동진쎄미켐과기유한공사"]
+  source: subsidiary_of_dongjin
+"XDJ_CHONGQING":
+  name: "중경동진쎄미켐전자재료유한공사"
+  aliases: ["중경동진쎄미켐전자재료유한공사"]
+  source: subsidiary_of_dongjin
+"XDJ_HUIZHOU":
+  name: "혜주동진쎄미켐전자재료유한공사"
+  aliases: ["혜주동진쎄미켐전자재료유한공사"]
+  source: subsidiary_of_dongjin
+"XDJ_FUZHOU":
+  name: "복주동진쎄미켐과기유한공사"
+  aliases: ["복주동진쎄미켐과기유한공사"]
+  source: subsidiary_of_dongjin
+"XDJ_ORDOS":
+  name: "얼도스시동진쎄미켐전자재료유한공사"
+  aliases: ["얼도스시동진쎄미켐전자재료유한공사"]
+  source: subsidiary_of_dongjin
+"XDJ_BEIJING":
+  name: "북경동진쎄미켐과기유한공사"
+  aliases: ["북경동진쎄미켐과기유한공사"]
+  source: subsidiary_of_dongjin
+"XDJ_INDONESIA":
+  name: "PT.Dongjin Indonesia"
+  aliases: ["PT.Dongjin Indonesia", "PT Dongjin Indonesia"]
+  source: subsidiary_of_dongjin
+"XDJ_DCMAT":
+  name: "(주)동진첨단소재"
+  aliases: ["동진첨단소재", "(주)동진첨단소재"]
+  source: subsidiary_of_dongjin
+
+# ────── 글로벌 OSAT (후공정) ─────────────────────────────
+"XAMKR0002":
+  name: Amkor
+  aliases: ["AmKor", "Amkor", "Amkor Technology Korea"]
+  source: external
+"XJCET0001":
+  name: JCET
+  aliases: ["JCET", "JCET Group"]
+  source: external
+"XHUAT0001":
+  name: "Huatian Technology"
+  aliases: ["Huatian Technology", "Huatian", "화천기술"]
+  source: external
+
+# ────── 협력사·소재 ────────────────────────────────────────
+"XMGCT0001":
+  name: "Mitsubishi Gas Chemical Trading"
+  aliases: ["Mitsubishi Gas Chemical Trading, Inc.", "MGC Trading"]
+  source: external
+"XPURAC001":
+  name: "PURAC ASIA PACIFIC PTE LTD"
+  aliases: ["PURAC ASIA PACIFIC PTE LTD", "PURAC"]
+  source: external
+"XSYNC0001":
+  name: "(주)삼양엔씨켐"
+  aliases: ["(주)삼양엔씨켐", "삼양엔씨켐"]
+  source: external
+
+# ────── unlinked 빈도 기반 보강 (2026-05-27) ──────────────
+# DB하이텍 자회사
+"XDBGC0001":
+  name: "DB글로벌칩"
+  aliases: ["DB글로벌칩", "DB Global Chip", "디비글로벌칩"]
+  source: subsidiary_of_dbhitek
+
+# 솔브레인 자회사 (XDJ_* 가 동진 계열이라 별도 X 코드)
+"XSOL_TX":
+  name: "Soulbrain TX LLC"
+  aliases: ["Soulbrain TX LLC", "Soulbrain TX"]
+  source: subsidiary_of_soulbrain
+"XSOL_RASA":
+  name: "Soulbrain RASA TX LLC"
+  aliases: ["Soulbrain RASA TX LLC", "Soulbrain RASA"]
+  source: subsidiary_of_soulbrain
+
+# 한국 OSAT/PCB/부품
+"XLGIT0001":
+  name: "LG이노텍"
+  aliases: ["LG이노텍", "LG Innotek", "엘지이노텍"]
+  ticker: ["011070"]
+  source: external
+"XKORC0001":
+  name: "코리아써키트"
+  aliases: ["코리아써키트", "Korea Circuit", "(주)코리아써키트"]
+  source: external
+"XSFAS0001":
+  name: "SFA반도체"
+  aliases: ["SFA반도체", "에스에프에이반도체"]
+  source: external
+"XSIGN0001":
+  name: "시그네틱스"
+  aliases: ["시그네틱스", "Signetics"]
+  source: external
+"XBH0001":
+  name: "(주)비에이치"
+  aliases: ["(주)비에이치", "비에이치", "BH Co., Ltd."]
+  source: external
+"XMIWN0001":
+  name: "미원상사(주)"
+  aliases: ["미원상사(주)", "미원상사", "Miwon Commercial"]
+  source: external
+
+# 글로벌 반도체/패키징
+"XINF0001":
+  name: "Infineon"
+  aliases: ["Infineon", "Infineon Technologies", "인피니언"]
+  source: external
+"XSTM0001":
+  name: "STMicroelectronics"
+  aliases: ["ST Micro", "STMicroelectronics", "STMicro", "ST Microelectronics"]
+  source: external
+"XSWKS0001":
+  name: "Skyworks"
+  aliases: ["Skyworks", "Skyworks Solutions"]
+  source: external
+"XLXSH0001":
+  name: "Luxshare"
+  aliases: ["Luxshare", "Luxshare Precision", "Luxshare-ICT"]
+  source: external
+"XTFME0001":
+  name: "TFME"
+  aliases: ["TFME", "Tongfu Microelectronics", "통푸 마이크로일렉트로닉스"]
+  source: external
+"XPTI0001":
+  name: "PTI"
+  aliases: ["PTI", "Powertech Technology"]
+  source: external
+"XJCETK0001":
+  name: "JCET스태츠칩팩코리아"
+  aliases: ["JCET스태츠칩팩코리아", "JCET StatsChipPAC Korea", "스태츠칩팩코리아"]
+  source: subsidiary_of_jcet
+"XASEK0001":
+  name: "ASE코리아"
+  aliases: ["ASE코리아", "ASE Korea"]
+  source: subsidiary_of_ase
+"XAMKRK0001":
+  name: "Amkor코리아"
+  aliases: ["Amkor코리아", "Amkor Korea"]
+  source: subsidiary_of_amkor
+"XCSOT0001":
+  name: "CSOT"
+  aliases: ["CSOT", "China Star Optoelectronics"]
+  source: external
+"XSILT0001":
+  name: "Siltronic"
+  aliases: ["SILTRONIC", "Siltronic", "Siltronic AG"]
+  source: external
+
+# 컨설팅·일반 기업
+"XSIEM0001":
+  name: "지멘스"
+  aliases: ["지멘스", "Siemens", "Siemens AG"]
+  source: external
+"XGART0001":
+  name: "Gartner"
+  aliases: ["가트너", "Gartner", "Gartner Inc."]
+  source: external
+"XASH0001":
+  name: "Ashland"
+  aliases: ["Ashland Inc.", "Ashland", "애쉬랜드"]
+  source: external
+"XWNC0001":
+  name: "WNC"
+  aliases: ["WNC", "Wistron NeWeb Corporation"]
+  source: external
+
+# 삼성 부속 R&D (XSEMC0001 에 추가 alias 표기)
+"XSAIT0001":
+  name: "Samsung Advanced Institute of Technology"
+  aliases: ["SAIT", "Samsung Research", "Samsung Advanced Institute of Technology",
+            "삼성종합기술원", "삼성리서치", "반도체연구소"]
+  source: subsidiary_of_samsung
+
+
+# ────── 자동 추가 (polaris build) ──────
+"01135941":
+  name: 원익IPS
+  aliases:
+    - 원익IPS
+    - (주)원익IPS
+    - 원익IPS(주)
+    - 원익IPS주식회사
+    - 주식회사원익IPS
+  ticker: ["240810"]
+  source: auto_added_by_polaris_build

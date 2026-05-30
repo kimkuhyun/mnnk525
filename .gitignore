@@ -19,9 +19,18 @@ dist-ssr/
 !.env.example
 
 # ── 데이터 (pola — docker volume·대용량 raw) ──
-pola/data/
+pola/data/*
+# 단, LLM 추출 산출(jsonl)은 재현 픽스처로 커밋 → 다른 사람이 LLM 없이 graph_load 로 그래프 재현
+!pola/data/4_dbGoldTest/
+pola/data/4_dbGoldTest/*
+!pola/data/4_dbGoldTest/news_extracts/
+pola/data/4_dbGoldTest/news_extracts/*
+!pola/data/4_dbGoldTest/news_extracts/*.jsonl
 pola/.tmp_crawl_*/
 pola/.playwright-mcp/
+
+# ── 재생성 가능한 배치 입력 (export_batches.py 로 재생성) ──
+pola/scripts/news_graph/*/
 
 # ── OS / IDE ──
 .DS_Store
