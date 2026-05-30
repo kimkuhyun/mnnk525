@@ -88,18 +88,13 @@ def upsert_corp_type(client, run_id: str, corp: str, ctype: str) -> dict:
 
     n = 0
     for i in range(0, len(points), UPSERT_BATCH):
+        # 각 배치를 wait=True 로 적용 확정 (이전: wait=False 후 마지막 1포인트만 flush → 내구성 착시)
         client.upsert(
             collection_name=QDRANT_COLLECTION_STANDBY,
             points=points[i:i + UPSERT_BATCH],
-            wait=False,
+            wait=True,
         )
         n += min(UPSERT_BATCH, len(points) - i)
-    # 마지막에 flush
-    client.upsert(
-        collection_name=QDRANT_COLLECTION_STANDBY,
-        points=points[max(0, len(points) - 1):len(points)],
-        wait=True,
-    )
     return {"status": "ok", "n": n, "skipped": skipped}
 
 

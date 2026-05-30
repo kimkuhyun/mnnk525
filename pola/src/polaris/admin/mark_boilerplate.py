@@ -66,7 +66,7 @@ def main(dry_run: bool = False):
     OUT_LOG.parent.mkdir(parents=True, exist_ok=True)
     OUT_LOG.write_text(json.dumps(targets, ensure_ascii=False, indent=2),
                        encoding="utf-8")
-    print(f"[mark_boilerplate] 로그 → {OUT_LOG.relative_to(ROOT)}")
+    print(f"[mark_boilerplate] 로그 → {OUT_LOG.relative_to(DATA_ROOT)}")
 
     if dry_run:
         print("[mark_boilerplate] DRY-RUN — 실제 변경 없음")

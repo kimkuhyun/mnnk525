@@ -1,5 +1,7 @@
 # POLARIS 3-DB ERD
 
+> ⚠ **이 문서는 설계 의도·서사(v2.1, history) + 운영 현황·정리 대상(§9)이다.** "현재 실제 DB에 무엇이 존재하는가"의 **단일 진실은 루트 [`/docs/디비설계.md`](../../docs/DBdocs/디비설계.md)** 이다. 스키마 변경 시 루트 문서를 먼저 갱신할 것.
+>
 > Neo4j (그래프) + Qdrant (벡터) + MariaDB (관계형) 통합 스키마.
 > 작성: 2026-05-28 (claude-direct extraction + P0 fixes 후 상태 기준)
 
@@ -824,3 +826,33 @@ Neo4j Document 보조 라벨 += IRReport | RecruitPosting
 - ⏳ 구현 중 미세조정 허용(골격 불변): Sentiment 노드 vs 속성 · 중심성 캐시 컬럼 · 엣지 속성 세부.
 
 → **v2.1로 ERD 동결.** 이후 변경은 골격이 아니라 위 ⏳ 디테일 한정.
+
+---
+
+## 9. 운영 현황 · 정리 대상 (실측 기반, 2026-05-30 — 루트 디비설계.md 에서 이관)
+
+> 스키마 "설계"는 §0–§8. 아래는 **현재 실제 DB 운영 상태와 정리 항목**이다. (루트 [`/docs/디비설계.md`](../../docs/DBdocs/디비설계.md) 가 "무엇이 실제 존재하는가"의 단일 진실)
+
+### 9.1. init_mariadb.sql 동기화 (진행 중 — 부분 완료)
+2026-05-30 감사로 **15개 테이블 DDL 을 `init_mariadb.sql` 에 모았다**(이전엔 7개만 정의). 다만 2026-05-31 점검 결과 **각 모듈의 `ensure_tables`/`_ensure_*` 가 9곳 그대로 잔존**하며 일부는 SQL 과 drift(예: `document_unified` collation/타입). → 모듈 DDL 을 점진 제거하고 SQL 로 단일화하는 것이 잔여 과제(점검보고서 schema_integrity 참조). 신규 테이블은 반드시 SQL 에 DDL 을 추가한다.
+
+### 9.2. 폐기 / 미사용
+| 항목 | 판정 | 조치 |
+|---|---|---|
+| 커뮤니티/SNS 소스 (community_raw, source_type=community) | **폐기** | 설계 only 였음(실테이블 없음). 코드/문서에서 community 흔적 제거. 신규 추가 금지 |
+| `keyword_top` (live 20행) | **고아** | backend·pola 어디서도 참조 안 됨. init SQL 에 DDL 없음(주석만) → drop 후보(사용자 확인 후) |
+| `doc_sentiment` (2,069행) | 유지 | 파이프라인 전용·API 미노출. `sentiment.py` 가 씀 → `sentiment_daily` 집계 원천 |
+| Neo4j `Company` 라벨 (646) | 검토 | `Organization`(2,635)과 중복 의심 → ER/머지 검토 대상 |
+| 미구현(P1/P2 설계) | 보류 | keyword_daily·topic_daily·macro_series·alert_event·ir_report_raw·patent_raw 등 §8 로드맵. 필요 시 신설 |
+
+### 9.3. Deviation — `ir_report`
+- **설계 의도**(§8.10): IR/정기보고서는 `document_unified(source_type='ir')` 통합 레이어 경유 → 근거/검색 자동 편입.
+- **현재 구현**: 독립 `ir_report` 테이블(raw_text+summary)로 우회. `/ir-reports` 요약 카드엔 충분하나 `document_unified` 와 분리됨(근거 시스템 미통합).
+- **합의**: 속도 위해 **현행 유지(요약 캐시)**, **기술부채로 기록**. 향후 `document_unified(source_type='ir')` 로 정렬(요약은 metadata 또는 chunk_summary).
+
+### 9.4. 변경 규칙 (전문 — 위반 금지)
+1. 새 테이블/라벨/엣지 = **루트 `디비설계.md`(§1·§2) 먼저 갱신** + `pola/src/polaris/db/init_mariadb.sql` 반영. 모듈 `ensure_tables` 만으로 끝내지 말 것(스키마 흩어짐).
+2. 문서형 데이터(뉴스/공시/IR/특허 등)는 `document_unified`(source_type) 경유. 독립 doc 테이블 신설 금지 — 불가피하면 §9.3 처럼 deviation 기록.
+3. 커뮤니티/SNS 소스는 폐기. 신규 추가 금지.
+4. 교차키(`corp_code`/`rcept_no`/`chunk_id`/`doc_id`/`run_id`) 일관 유지. 단일 시드→다회사 확장은 스키마 변경 없이 `corp_code` 데이터만 추가.
+5. 엣지는 출처 구분(`extracted_by`: claude=언급 / NULL=DART 공시) 유지.

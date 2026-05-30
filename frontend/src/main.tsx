@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ThemeProvider } from './theme/ThemeContext'
 import { CompanyProvider } from './company/CompanyContext'
 import App from './App'
+import 'pretendard/dist/web/static/pretendard.css'
 import './index.css'
 
 const queryClient = new QueryClient({

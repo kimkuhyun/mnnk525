@@ -6,7 +6,7 @@ from __future__ import annotations
 
 from fastapi import APIRouter
 
-from ..db import mariadb, neo4j
+from ..db import mariadb_conn, neo4j
 from ..models import MentionPoint, RelationTopItem, TrendData
 from ..relations import COMPANY_REL_TYPES, PREDICATE_TO_GROUP
 
@@ -25,15 +25,13 @@ LIMIT 6
 
 @router.get("/dashboard/{corp}", response_model=TrendData)
 def dashboard(corp: str):
-    conn = mariadb()
-    with conn.cursor() as cur:
+    with mariadb_conn() as conn, conn.cursor() as cur:
         cur.execute(
             "SELECT DATE_FORMAT(date, '%%Y-%%m-%%d') AS date, mention_cnt AS count "
             "FROM mention_daily WHERE corp_code = %s AND source_type = 'news' ORDER BY date",
             (corp,),
         )
         mentions = [MentionPoint(date=r["date"], count=r["count"]) for r in cur.fetchall()]
-    conn.close()
 
     with neo4j().session() as s:
         rows = s.run(REL_TOP, corp=corp, types=COMPANY_REL_TYPES).data()

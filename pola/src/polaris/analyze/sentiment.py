@@ -14,10 +14,10 @@ import json
 
 import httpx
 
-from polaris.config import OLLAMA_BASE, mariadb_conn
+from polaris.config import CORP_NAMES, OLLAMA_BASE, mariadb_conn
 
 MODEL = "qwen3.5:9b"
-NAMES = {"00126380": "삼성전자", "00164779": "SK하이닉스", "00161383": "한미반도체"}
+NAMES = CORP_NAMES  # config(.env) 단일 소스
 
 PROMPT = (
     "다음 뉴스 기사가 '{corp}'에 대해 어떤 논조인지 판단하라.\n"
@@ -61,8 +61,10 @@ def main() -> None:
     ap.add_argument("--limit", type=int, default=None)
     args = ap.parse_args()
 
-    conn = mariadb_conn(); cur = conn.cursor()
-    ensure_tables(cur); conn.commit()
+    conn = mariadb_conn()
+    cur = conn.cursor()
+    ensure_tables(cur)
+    conn.commit()
 
     cur.execute("""SELECT d.doc_id, d.corp_code, d.title, d.body
                    FROM document_unified d
@@ -80,12 +82,14 @@ def main() -> None:
             try:
                 lab = classify(client, NAMES.get(corp, "해당 기업"), text)
             except Exception as e:
-                print(f"  skip {doc_id}: {str(e)[:60]}"); continue
+                print(f"  skip {doc_id}: {str(e)[:60]}")
+                continue
             cur.execute("INSERT INTO doc_sentiment (doc_id,corp_code,label) VALUES (%s,%s,%s) "
                         "ON DUPLICATE KEY UPDATE label=VALUES(label)", (doc_id, corp, lab))
             done += 1
             if done % 50 == 0:
-                conn.commit(); print(f"  {done}/{len(rows)}")
+                conn.commit()
+                print(f"  {done}/{len(rows)}")
     conn.commit()
 
     # 집계 → sentiment_daily
@@ -99,7 +103,8 @@ def main() -> None:
     conn.commit()
     cur.execute("SELECT COUNT(*) FROM sentiment_daily")
     n = cur.fetchone()[0]
-    cur.close(); conn.close()
+    cur.close()
+    conn.close()
     print(f"[sentiment] 처리 {done} 건 → sentiment_daily {n} 행 집계 완료")
 
 

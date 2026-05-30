@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import { TrendingUp, Heart } from 'lucide-react';
+import { TrendingUp, Heart, BarChart2 } from 'lucide-react';
 import {
   AreaChart,
   Area,
+  LineChart,
+  Line,
   XAxis,
   YAxis,
   Tooltip,
@@ -10,23 +12,28 @@ import {
 } from 'recharts';
 import { useTheme } from '../theme/ThemeContext';
 import { useCompany } from '../company/CompanyContext';
-import { useTrend, useSentiment, useKeywords } from '../api/hooks';
+import { useTrend, useSentiment, useStock } from '../api/hooks';
+import RelationTopCard from './RelationTopCard';
 
-type Tab = 'mention' | 'sentiment';
+type Tab = 'mention' | 'sentiment' | 'stock';
 
-export default function TrendBand() {
+interface Props {
+  onFocusNode: (id: string) => void;
+}
+
+export default function TrendBand({ onFocusNode }: Props) {
   const { theme } = useTheme();
   const { company } = useCompany();
   const [activeTab, setActiveTab] = useState<Tab>('mention');
 
   const { data: trendData } = useTrend(company.code);
   const { data: sentimentData } = useSentiment(company.code);
-  const { data: keywordsData } = useKeywords(company.code);
+  const { data: stockData } = useStock(company.code);
 
   const isDark = theme === 'dark';
 
   const cardClass =
-    'rounded-xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900';
+    'rounded-xl border border-slate-200/80 bg-white dark:border-slate-800 dark:bg-slate-900 shadow-sm';
   const textMuted = isDark ? 'text-slate-400' : 'text-slate-500';
   const textMain = isDark ? 'text-slate-100' : 'text-slate-900';
   const tabBase =
@@ -40,10 +47,10 @@ export default function TrendBand() {
 
   const mentions = trendData?.mentions ?? [];
   const sentiments = sentimentData ?? [];
-  const keywords = keywordsData ?? [];
+  const stockPoints = (stockData ?? []).map((p) => ({ ...p, close: Number(p.close) }));
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 h-44">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 h-56">
       {/* 탭 카드 col-span-2 */}
       <div className={`${cardClass} col-span-1 lg:col-span-2 flex flex-col p-3 overflow-hidden`}>
         {/* 탭 헤더 */}
@@ -62,6 +69,13 @@ export default function TrendBand() {
             <Heart size={12} />
             감성
           </button>
+          <button
+            className={`${tabBase} ${activeTab === 'stock' ? tabActive : tabInactive}`}
+            onClick={() => setActiveTab('stock')}
+          >
+            <BarChart2 size={12} />
+            주가
+          </button>
         </div>
 
         {/* 탭 콘텐츠 */}
@@ -72,16 +86,16 @@ export default function TrendBand() {
                 <AreaChart data={mentions} margin={{ top: 2, right: 8, left: -24, bottom: 0 }}>
                   <defs>
                     <linearGradient id="mentionGrad" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#2563eb" stopOpacity={0.25} />
-                      <stop offset="95%" stopColor="#2563eb" stopOpacity={0.02} />
+                      <stop offset="5%" stopColor="#2563eb" stopOpacity={0.34} />
+                      <stop offset="95%" stopColor="#2563eb" stopOpacity={0.04} />
                     </linearGradient>
                   </defs>
                   <XAxis
                     dataKey="date"
-                    tick={{ fontSize: 10, fill: isDark ? '#94a3b8' : '#64748b' }}
+                    tick={false}
                     tickLine={false}
                     axisLine={false}
-                    interval="preserveStartEnd"
+                    height={4}
                   />
                   <YAxis
                     tick={{ fontSize: 10, fill: isDark ? '#94a3b8' : '#64748b' }}
@@ -103,7 +117,7 @@ export default function TrendBand() {
                     type="monotone"
                     dataKey="count"
                     stroke="#2563eb"
-                    strokeWidth={1.5}
+                    strokeWidth={2}
                     fill="url(#mentionGrad)"
                     dot={false}
                     activeDot={{ r: 3 }}
@@ -112,7 +126,7 @@ export default function TrendBand() {
               </ResponsiveContainer>
             ) : (
               <div className={`flex items-center justify-center h-full text-xs ${textMuted}`}>
-                멘션 데이터가 없습니다
+                멘션 데이터 연결 시 표시
               </div>
             )
           )}
@@ -137,10 +151,10 @@ export default function TrendBand() {
                   </defs>
                   <XAxis
                     dataKey="date"
-                    tick={{ fontSize: 10, fill: isDark ? '#94a3b8' : '#64748b' }}
+                    tick={false}
                     tickLine={false}
                     axisLine={false}
-                    interval="preserveStartEnd"
+                    height={4}
                   />
                   <YAxis
                     tick={{ fontSize: 10, fill: isDark ? '#94a3b8' : '#64748b' }}
@@ -162,7 +176,7 @@ export default function TrendBand() {
                     dataKey="neu"
                     stackId="1"
                     stroke="#94a3b8"
-                    strokeWidth={1}
+                    strokeWidth={1.5}
                     fill="url(#neuGrad)"
                     dot={false}
                     name="중립"
@@ -172,7 +186,7 @@ export default function TrendBand() {
                     dataKey="neg"
                     stackId="1"
                     stroke="#D9737A"
-                    strokeWidth={1}
+                    strokeWidth={1.5}
                     fill="url(#negGrad)"
                     dot={false}
                     name="부정"
@@ -182,7 +196,7 @@ export default function TrendBand() {
                     dataKey="pos"
                     stackId="1"
                     stroke="#5FB39C"
-                    strokeWidth={1}
+                    strokeWidth={1.5}
                     fill="url(#posGrad)"
                     dot={false}
                     name="긍정"
@@ -191,36 +205,69 @@ export default function TrendBand() {
               </ResponsiveContainer>
             ) : (
               <div className={`flex items-center justify-center h-full text-xs ${textMuted} text-center px-4`}>
-                감성 데이터 연결 시 표시(qwen 수집 예정)
+                감성 데이터 연결 시 표시
+              </div>
+            )
+          )}
+
+          {activeTab === 'stock' && (
+            stockPoints.length > 0 ? (
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={stockPoints} margin={{ top: 2, right: 8, left: 4, bottom: 0 }}>
+                  <XAxis
+                    dataKey="date"
+                    tick={false}
+                    tickLine={false}
+                    axisLine={false}
+                    height={4}
+                  />
+                  <YAxis
+                    tick={{ fontSize: 10, fill: isDark ? '#94a3b8' : '#64748b' }}
+                    tickLine={false}
+                    axisLine={false}
+                    width={48}
+                    domain={['dataMin', 'dataMax']}
+                    tickFormatter={(v: number) =>
+                      `${(v / 10000).toLocaleString('ko-KR', { maximumFractionDigits: 0 })}만`
+                    }
+                  />
+                  <Tooltip
+                    contentStyle={{
+                      background: isDark ? '#1e293b' : '#fff',
+                      border: isDark ? '1px solid #334155' : '1px solid #e2e8f0',
+                      borderRadius: 8,
+                      fontSize: 11,
+                    }}
+                    labelStyle={{ color: isDark ? '#cbd5e1' : '#475569' }}
+                    itemStyle={{ color: '#2563eb' }}
+                    formatter={(value) => [
+                      (value as number).toLocaleString('ko-KR') + '원',
+                      '종가',
+                    ]}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="close"
+                    stroke="#2563eb"
+                    strokeWidth={1.5}
+                    dot={false}
+                    activeDot={{ r: 3 }}
+                    name="주가"
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            ) : (
+              <div className={`flex items-center justify-center h-full text-xs ${textMuted}`}>
+                주가 데이터 연결 시 표시
               </div>
             )
           )}
         </div>
       </div>
 
-      {/* 연관어 카드 */}
-      <div className={`${cardClass} flex flex-col p-3 overflow-hidden`}>
-        <p className={`text-xs font-semibold mb-2 shrink-0 ${textMain}`}>연관어 Top10</p>
-        {keywords.length > 0 ? (
-          <div className="flex-1 overflow-y-auto min-h-0 space-y-1">
-            {keywords.slice(0, 10).map((kw, i) => (
-              <div
-                key={i}
-                className={`flex items-center justify-between px-2 py-0.5 rounded-lg text-xs
-                  ${isDark ? 'bg-slate-800' : 'bg-slate-50'}`}
-              >
-                <span className={`truncate mr-1 ${isDark ? 'text-slate-200' : 'text-slate-700'}`}>
-                  {kw.term}
-                </span>
-                <span className={`tabular-nums shrink-0 ${textMuted}`}>{kw.freq}</span>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className={`flex items-center justify-center flex-1 text-xs ${textMuted} text-center`}>
-            연관어 연결 시 표시
-          </div>
-        )}
+      {/* 우측 슬롯: 핵심 관계 Top5 */}
+      <div className="col-span-1 h-full">
+        <RelationTopCard onFocusNode={onFocusNode} />
       </div>
     </div>
   );

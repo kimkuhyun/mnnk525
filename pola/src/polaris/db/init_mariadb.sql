@@ -158,3 +158,120 @@ CREATE TABLE IF NOT EXISTS news_raw (
   KEY idx_pub (publisher, published),
   KEY idx_published (published)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+-- ============================================================================
+-- §2  ad-hoc 생성 테이블 정식 흡수 (2026-05-30 감사 동기화)
+--     각 DDL 은 라이브 MariaDB SHOW CREATE TABLE 원본 기준.
+--     ENGINE/CHARSET/인덱스/PK 실제와 일치. 멱등 적용.
+-- ============================================================================
+
+-- 8. document_unified — 통합 문서 레이어 (source_type=news|dart|ir|…)
+--    BE /evidence·/node-evidence·/node 사용. 모든 근거 doc 단일 인터페이스.
+CREATE TABLE IF NOT EXISTS document_unified (
+  `doc_id`       varchar(32)   NOT NULL,
+  `source_type`  varchar(20)   NOT NULL,
+  `origin_id`    varchar(64)   DEFAULT NULL,
+  `corp_code`    varchar(8)    DEFAULT NULL,
+  `ts`           datetime      DEFAULT NULL,
+  `title`        varchar(500)  DEFAULT NULL,
+  `url`          varchar(1024) DEFAULT NULL,
+  `body`         longtext      DEFAULT NULL,
+  `metadata`     longtext      CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL
+                               CHECK (json_valid(`metadata`)),
+  `lang`         varchar(8)    DEFAULT 'ko',
+  `credibility`  varchar(8)    DEFAULT 'mid',
+  `ingested_at`  datetime      DEFAULT current_timestamp(),
+  PRIMARY KEY (`doc_id`),
+  KEY `idx_corp_ts` (`corp_code`, `ts`),
+  KEY `idx_source`  (`source_type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+
+-- 9. doc_sentiment — 문서별 감성 중간 산출 (파이프라인 전용, API 미노출)
+--    sentiment.py 가 쓰고 sentiment_daily 로 집계.
+CREATE TABLE IF NOT EXISTS doc_sentiment (
+  `doc_id`    varchar(32) NOT NULL,
+  `corp_code` varchar(8)  DEFAULT NULL,
+  `label`     varchar(4)  DEFAULT NULL,
+  PRIMARY KEY (`doc_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+
+-- 10. mention_daily — 일별 멘션 집계 (BE /trend)
+CREATE TABLE IF NOT EXISTS mention_daily (
+  `corp_code`        varchar(8)  NOT NULL,
+  `date`             date        NOT NULL,
+  `source_type`      varchar(20) NOT NULL,
+  `mention_cnt`      int(11)     DEFAULT 0,
+  `evidence_doc_ids` longtext    CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL
+                                 CHECK (json_valid(`evidence_doc_ids`)),
+  PRIMARY KEY (`corp_code`, `date`, `source_type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+
+-- 11. sentiment_daily — 일별 감성 집계 (BE /sentiment)
+CREATE TABLE IF NOT EXISTS sentiment_daily (
+  `corp_code` varchar(8) NOT NULL,
+  `date`      date       NOT NULL,
+  `pos`       int(11)    DEFAULT 0,
+  `neg`       int(11)    DEFAULT 0,
+  `neu`       int(11)    DEFAULT 0,
+  PRIMARY KEY (`corp_code`, `date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+
+-- 12. news_daily_summary — 일별 뉴스 요약 (BE /daily-digest·/briefing)
+CREATE TABLE IF NOT EXISTS news_daily_summary (
+  `corp_code`     varchar(8) NOT NULL,
+  `date`          date       NOT NULL,
+  `summary`       text       DEFAULT NULL,
+  `article_count` int(11)    NOT NULL DEFAULT 0,
+  PRIMARY KEY (`corp_code`, `date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+
+-- 13. stock_daily — 주가 일별 (BE /stock, 워터마크 증분)
+CREATE TABLE IF NOT EXISTS stock_daily (
+  `corp_code`  varchar(8) NOT NULL,
+  `date`       date       NOT NULL,
+  `close`      double     NOT NULL,
+  `change_pct` double     DEFAULT NULL,
+  `volume`     bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`corp_code`, `date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+
+-- 14. edge_snapshot — 엣지 스냅샷 소멸 비교 (BE /changes)
+CREATE TABLE IF NOT EXISTS edge_snapshot (
+  `id`        bigint(20)   NOT NULL AUTO_INCREMENT,
+  `run_ts`    datetime     NOT NULL,
+  `corp_code` varchar(8)   NOT NULL,
+  `grp`       varchar(16)  NOT NULL,
+  `predicate` varchar(32)  NOT NULL,
+  `target`    varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_edge_snapshot_run_ts`  (`run_ts`),
+  KEY `idx_edge_snapshot_corp`    (`corp_code`, `run_ts`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+
+-- 15. ir_report — IR/정기보고서 요약 캐시 (BE /ir-reports)
+--     DEVIATION: document_unified 미통합. docs/ERD.md §5 참조.
+CREATE TABLE IF NOT EXISTS ir_report (
+  `rcept_no`    varchar(20)  NOT NULL,
+  `corp_code`   varchar(8)   NOT NULL,
+  `doc_type`    varchar(255) DEFAULT NULL,
+  `date`        date         DEFAULT NULL,
+  `title`       text         DEFAULT NULL,
+  `raw_text`    mediumtext   DEFAULT NULL,
+  `summary`     text         DEFAULT NULL,
+  `source`      varchar(32)  DEFAULT NULL,
+  `ingested_at` datetime     DEFAULT NULL,
+  PRIMARY KEY (`rcept_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+
+-- DEPRECATED: keyword_top (고아 테이블, drop 후보 — docs/ERD.md §4)
+
+-- 동기화 기준: docs/ERD.md §1 (2026-05-30 감사)

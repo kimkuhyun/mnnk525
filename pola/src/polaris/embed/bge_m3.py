@@ -19,10 +19,10 @@ from pathlib import Path
 import httpx
 import numpy as np
 
-from polaris.config import OLLAMA_BASE, OLLAMA_EMBED_MODEL, CORPS, CHUNKS_DIR, DATA_ROOT
+from polaris.config import OLLAMA_BASE, OLLAMA_EMBED_MODEL, CORPS, CHUNKS_DIR, DATA_ROOT, EMBED_DIR
 
 CHUNKS = CHUNKS_DIR
-EMB = DATA_ROOT / "2_Chuck" / "04_embeddings"
+EMB = EMBED_DIR  # config SSOT (04_embed) — 이전 로컬 "04_embeddings" 경로 불일치 수정
 
 CHUNK_TYPES = ["table_nl", "text"]  # 파일명 기준
 VECTOR_SIZE = 1024

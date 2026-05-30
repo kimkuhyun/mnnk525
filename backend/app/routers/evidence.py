@@ -8,7 +8,7 @@ import json
 
 from fastapi import APIRouter, Query
 
-from ..db import mariadb, neo4j
+from ..db import mariadb_conn, neo4j
 from ..models import EvidenceItem
 from ..relations import GROUP_TO_PREDICATES
 
@@ -38,9 +38,8 @@ def evidence(source: str = Query(...), target: str = Query(...), group: str = Qu
     if not doc_ids:
         return []
 
-    conn = mariadb()
     out: list[EvidenceItem] = []
-    with conn.cursor() as cur:
+    with mariadb_conn() as conn, conn.cursor() as cur:
         ph = ",".join(["%s"] * len(doc_ids))
         cur.execute(
             f"SELECT doc_id, title, DATE_FORMAT(ts, '%%Y-%%m-%%d') AS d, url, body, metadata "
@@ -57,5 +56,4 @@ def evidence(source: str = Query(...), target: str = Query(...), group: str = Qu
                 docId=r["doc_id"], title=r["title"] or "", date=r["d"] or "",
                 url=r["url"] or "", publisher=pub, snippet=(r["body"] or "")[:120],
             ))
-    conn.close()
     return out

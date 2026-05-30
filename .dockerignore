@@ -1,0 +1,14 @@
+# 루트 빌드 컨텍스트용 (backend/·frontend/ 는 각자 .dockerignore 도 보유)
+.git
+.claude
+CLAUDE.md
+**/.venv
+**/node_modules
+**/__pycache__
+**/*.py[cod]
+**/.pytest_cache
+**/.ruff_cache
+dump/out
+pola/data
+docs
+*.md

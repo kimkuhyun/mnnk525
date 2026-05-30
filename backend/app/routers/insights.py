@@ -1,30 +1,59 @@
-"""GET /api/keywords/{corp}, /api/activity/{corp}, /api/sentiment/{corp} — 인사이트 3종."""
+"""GET /api/activity/{corp}, /api/sentiment/{corp}, /api/relation-top/{corp} — 인사이트."""
 from __future__ import annotations
 
 from fastapi import APIRouter
 
 from ..db import mariadb, neo4j
-from ..models import ActivityItem, KeywordItem, SentimentPoint
+from ..models import ActivityItem, RelationTop, SentimentPoint
 from ..relations import COMPANY_REL_TYPES, PREDICATE_TO_GROUP
 
 router = APIRouter(tags=["insights"])
 
 
-@router.get("/keywords/{corp}", response_model=list[KeywordItem])
-def get_keywords(corp: str) -> list[KeywordItem]:
-    conn = mariadb()
-    try:
-        with conn.cursor() as cur:
-            cur.execute(
-                "SELECT term, freq FROM keyword_top WHERE corp_code=%s ORDER BY rank LIMIT 10",
-                (corp,),
-            )
-            rows = cur.fetchall()
-        return [KeywordItem(term=r["term"], freq=r["freq"]) for r in rows]
-    except Exception:
+@router.get("/relation-top/{corp}", response_model=list[RelationTop])
+def get_relation_top(corp: str) -> list[RelationTop]:
+    """Neo4j 그래프에서 evidence_count 가중치 상위 5 관계 반환 (그룹 중복 허용, 자기루프 제외)."""
+    cypher = (
+        "MATCH (c:Organization {corp_code: $corp})-[r]-(o:Organization) "
+        "WHERE r.extracted_by = 'claude' AND type(r) IN $types "
+        "RETURN type(r) AS rtype, "
+        "coalesce(o.corp_code, o.ext_id) AS nodeId, "
+        "coalesce(o.name, o.corp_code, o.ext_id) AS target, "
+        "coalesce(o.corp_code, o.ext_id) AS rawId, "
+        "toInteger(coalesce(r.evidence_count, 1)) AS ec"
+    )
+    with neo4j().session() as session:
+        result = session.run(cypher, corp=corp, types=COMPANY_REL_TYPES)
+        rows = [
+            {
+                "rtype": rec["rtype"],
+                "nodeId": rec["nodeId"],
+                "target": rec["target"],
+                "rawId": rec["rawId"],
+                "ec": rec["ec"],
+            }
+            for rec in result
+        ]
+
+    # 자기루프 제거
+    rows = [r for r in rows if r["rawId"] != corp]
+
+    if not rows:
         return []
-    finally:
-        conn.close()
+
+    rows.sort(key=lambda x: x["ec"], reverse=True)
+    top = rows[:5]
+
+    return [
+        RelationTop(
+            nodeId=r["nodeId"],
+            target=r["target"],
+            group=PREDICATE_TO_GROUP.get(r["rtype"], "etc"),
+            predicate=r["rtype"],
+            evidenceCount=r["ec"],
+        )
+        for r in top
+    ]
 
 
 @router.get("/activity/{corp}", response_model=list[ActivityItem])

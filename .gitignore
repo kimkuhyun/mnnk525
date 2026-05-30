@@ -32,6 +32,13 @@ pola/.playwright-mcp/
 # ── 재생성 가능한 배치 입력 (export_batches.py 로 재생성) ──
 pola/scripts/news_graph/*/
 
+# ── Claude (워크플로 스크립트·로컬 에이전트 산출·로컬 지침) ──
+.claude/
+/CLAUDE.md
+
+# ── DB 덤프 산출물 (별도 전달 — 레포에 커밋 안 함) ──
+/dump/out/
+
 # ── OS / IDE ──
 .DS_Store
 Thumbs.db

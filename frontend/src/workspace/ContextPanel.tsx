@@ -11,7 +11,7 @@ interface Props {
 export default function ContextPanel({ selection, onClose }: Props) {
   if (!selection) return null;
 
-  const title = selection.kind === 'node' ? selection.name : '관계 근거';
+  const title = selection.kind === 'node' ? selection.name : '관계';
 
   return (
     <div className="fixed right-0 top-14 bottom-0 w-96 z-20 border-l bg-white dark:bg-slate-900 dark:border-slate-800 shadow-xl overflow-y-auto transition-transform">

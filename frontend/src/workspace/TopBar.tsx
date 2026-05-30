@@ -1,18 +1,21 @@
 import { Link } from 'react-router-dom';
-import { useCompany, COMPANIES } from '../company/CompanyContext';
+import { useCompany } from '../company/CompanyContext';
 import ThemeToggle from '../components/ThemeToggle';
 
 export default function TopBar() {
-  const { company, setCompany } = useCompany();
+  const { company, setCompany, companies } = useCompany();
 
   return (
     <header className="sticky top-0 z-30 h-14 flex items-center gap-4 px-5 border-b border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900 transition-colors">
-      <Link to="/" className="shrink-0">
+      <Link to="/" className="shrink-0 flex items-center gap-2">
+        <span className="grid h-6 w-6 place-items-center rounded-md bg-gradient-to-br from-blue-500 to-blue-700 shadow-sm">
+          <span className="h-2 w-2 rotate-45 bg-white/90" />
+        </span>
         <span className="font-bold tracking-tight text-slate-900 dark:text-white">POLARIS</span>
       </Link>
 
       <div className="flex items-center gap-1">
-        {COMPANIES.map((c) => (
+        {companies.map((c) => (
           <button
             key={c.code}
             onClick={() => setCompany(c)}

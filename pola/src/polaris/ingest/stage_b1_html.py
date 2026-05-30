@@ -156,7 +156,7 @@ def main():
     print(f"  PDF→PNG: {summary['pdf_ok']}건")
     print(f"  text→PNG: {summary['text_ok']}건")
     print(f"  fail: {summary['fail']}건")
-    print(f"  총 스냅샷: {total}/{135}")
+    print(f"  총 스냅샷: {total}건")
     print(f"  로그: {LOG}")
 
     # manifest 업데이트

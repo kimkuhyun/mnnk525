@@ -1945,8 +1945,8 @@ def main(
     profile: str = typer.Option("normal", help="텀 프로필: slow(30사+ 보수), normal(현재값), fast(개발)"),
     no_rebuild_pool: bool = typer.Option(False, help="rcept_no_pool 강제 유지 — list 응답 기반 재구성 안 함 (PDF 재시도 등 특정 rno만 처리 시)"),
 ):
+    """카탈로그 기반 일괄 수집기 — 자족 단일 파일 (회사 집합은 config.CORPS)."""
     apply_rate_profile(profile)
-    """카탈로그 기반 5사(+추가) 일괄 수집기 — 자족 단일 파일."""
     today = date.today()
     if to_year == 0:
         to_year = today.year

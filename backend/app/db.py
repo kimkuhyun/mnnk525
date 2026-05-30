@@ -5,6 +5,8 @@
 """
 from __future__ import annotations
 
+from contextlib import contextmanager
+
 import pymysql
 from neo4j import GraphDatabase
 from qdrant_client import QdrantClient
@@ -19,6 +21,16 @@ def mariadb() -> pymysql.connections.Connection:
         database=settings.mariadb_database, charset="utf8mb4",
         cursorclass=pymysql.cursors.DictCursor,
     )
+
+
+@contextmanager
+def mariadb_conn():
+    """MariaDB 커넥션 컨텍스트매니저 — 예외가 나도 close 보장(커넥션 누수 방지)."""
+    conn = mariadb()
+    try:
+        yield conn
+    finally:
+        conn.close()
 
 
 def qdrant() -> QdrantClient:

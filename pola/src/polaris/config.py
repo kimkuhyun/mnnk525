@@ -81,6 +81,15 @@ MARIADB_DATABASE = _env("MARIADB_DATABASE", "polaris")
 MARIADB_USER = _env("MARIADB_USER", "polaris")
 MARIADB_PASSWORD = _env("MARIADB_PASSWORD", "polaris_dev_only")
 
+# 운영(POLARIS_ENV=prod)인데 dev 기본 비밀번호면 경고 — 조용한 dev 크리덴셜 기동 방지.
+if _env("POLARIS_ENV", "").lower() in ("prod", "production") and (
+    "dev_only" in MARIADB_PASSWORD or "dev_only" in NEO4J_PASSWORD
+):
+    import logging as _logging
+    _logging.getLogger("polaris.config").warning(
+        "[보안] POLARIS_ENV=prod 인데 DB 비밀번호가 dev 기본값입니다 — .env 로 교체하세요."
+    )
+
 
 # ─── Ollama (임베딩 + LLM) ────────────────────────────────────
 OLLAMA_BASE = _env("OLLAMA_BASE", "http://localhost:11434")
@@ -106,7 +115,7 @@ def _csv(name: str, fallback: list[str]) -> list[str]:
 
 
 CORPS: list[str] = _csv("POLARIS_CORPS",
-                        ["00126380", "00164779", "00118804", "01489648", "00161383"])
+                        ["00126380", "00164779", "00161383"])  # 3사: 삼성·SK하이닉스·한미반도체
 
 # ─── P-2.4 S-09: CORPS_ALL vs CORPS_ACTIVE 분리 ───────────────
 # CORPS_ALL    : 적재 대상 전체 (그래프·청크에 들어가는 회사)
@@ -163,8 +172,6 @@ def get_corp_meta(corp_code: str) -> dict:
     _fallback = {
         "00126380": {"corp_name": "삼성전자", "stock_code": "005930"},
         "00164779": {"corp_name": "SK하이닉스", "stock_code": "000660"},
-        "00118804": {"corp_name": "동진쎄미켐", "stock_code": "005290"},
-        "01489648": {"corp_name": "솔브레인", "stock_code": "357780"},
         "00161383": {"corp_name": "한미반도체", "stock_code": "042700"},
     }
     return {"corp_code": corp_code.zfill(8), **_fallback.get(corp_code.zfill(8), {})}

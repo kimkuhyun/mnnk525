@@ -19,11 +19,11 @@ import httpx
 import numpy as np
 from qdrant_client.models import Distance, PointStruct, VectorParams
 
-from polaris.config import mariadb_conn, neo4j_driver, qdrant_client
+from polaris.config import CORP_NAME_TO_CODE, mariadb_conn, neo4j_driver, qdrant_client
 from polaris.embed.bge_m3 import embed_batch, normalize
 
-# 크롤 키워드(news_raw.category) → corp_code  (corps.json 확정)
-CORP_MAP = {"삼성전자": "00126380", "SK하이닉스": "00164779", "한미반도체": "00161383"}
+# 크롤 키워드(news_raw.category) → corp_code. config(.env) 단일 소스.
+CORP_MAP = CORP_NAME_TO_CODE
 QCOL = "polaris-doc-1024"
 VEC = 1024
 BATCH = 32

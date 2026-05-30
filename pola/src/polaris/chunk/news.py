@@ -1,4 +1,9 @@
-"""뉴스 본문 → 청킹 + 임베딩 + 3DB 적재 (매칭 단계 없음, 단순화 정책).
+"""[DEPRECATED — 구 MACRO 뉴스 경로] 뉴스 본문 → 청킹 + 임베딩 + 3DB 적재.
+
+⚠ 신규는 `polaris.ingest.news_crawl.load`(v2)를 쓴다: 회사별(corp_code) document_unified 경유 +
+  polaris-doc-1024 컬렉션. 본 모듈은 corp_code='00000000'(MACRO)·DART 컬렉션에 적재하는 구경로로
+  유지보수 비권장(점검보고서 chunk_embed 참조).
+
 
 입력:
   - MariaDB news_raw 테이블 (SSOT)

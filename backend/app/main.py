@@ -5,13 +5,25 @@
 """
 from __future__ import annotations
 
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from .config import settings
-from .routers import company, dashboard, evidence, graph, insights, meta, news
+from .routers import briefing, changes, company, dashboard, digest, evidence, fundamentals, graph, insights, ir, market, meta, news, node, node_evidence
+from .routers import track
+from .scheduler import start_scheduler, stop_scheduler
 
-app = FastAPI(title="POLARIS API", version="0.1.0")
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    start_scheduler()
+    yield
+    stop_scheduler()
+
+
+app = FastAPI(title="POLARIS API", version="0.1.0", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
@@ -23,11 +35,20 @@ app.add_middleware(
 
 app.include_router(meta.router, prefix="/api")
 app.include_router(graph.router, prefix="/api")
+app.include_router(node.router, prefix="/api")
+app.include_router(node_evidence.router, prefix="/api")
 app.include_router(dashboard.router, prefix="/api")
 app.include_router(company.router, prefix="/api")
+app.include_router(fundamentals.router, prefix="/api")
 app.include_router(evidence.router, prefix="/api")
 app.include_router(news.router, prefix="/api")
 app.include_router(insights.router, prefix="/api")
+app.include_router(market.router, prefix="/api")
+app.include_router(digest.router, prefix="/api")
+app.include_router(briefing.router, prefix="/api")
+app.include_router(track.router, prefix="/api")
+app.include_router(changes.router, prefix="/api")
+app.include_router(ir.router, prefix="/api")
 
 
 @app.get("/")

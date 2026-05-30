@@ -61,7 +61,7 @@ def _build_product_payload(link: LinkResult, source_chunk_id: str,
         "name": link.surface, "canonical": link.canonical,
         "category": "other", "aliases": [link.surface],
         "confidence": link.score,
-        "extracted_by": "qwen3.5:9b" if link.stage > 1 else "alias_dict_v1",
+        "extracted_by": OLLAMA_LLM_MODEL if link.stage > 1 else "alias_dict_v1",
         "source_chunk_id": source_chunk_id, "run_id": run_id,
     }
 
@@ -74,7 +74,7 @@ def _build_tech_payload(link: LinkResult, source_chunk_id: str,
         "category": "other", "node_size_nm": None,
         "aliases": [link.surface],
         "confidence": link.score,
-        "extracted_by": "qwen3.5:9b" if link.stage > 1 else "alias_dict_v1",
+        "extracted_by": OLLAMA_LLM_MODEL if link.stage > 1 else "alias_dict_v1",
         "source_chunk_id": source_chunk_id, "run_id": run_id,
     }
 
@@ -173,7 +173,7 @@ def _process_chunk_record(record: dict, run_id: str,
             "confidence": conf,
             "valid_from": valid_from, "valid_to": None,
             "evidence_count": 1,
-            "extracted_by": "qwen3.5:9b",
+            "extracted_by": OLLAMA_LLM_MODEL,
             "source_chunk_id": cid, "run_id": run_id,
         }
         if decision.tier == Tier.STATEMENT:
@@ -258,7 +258,7 @@ def run_load(*, limit: Optional[int] = None) -> dict:
     activity_id = hash16("activity", run_id, "p3.6", OLLAMA_LLM_MODEL)
     activity = {
         "activity_id": activity_id, "run_id": run_id,
-        "extractor": "qwen3.5:9b",
+        "extractor": OLLAMA_LLM_MODEL,
         "pipeline_version": PIPELINE_VERSION,
         "prompt_hash": compute_prompt_hash(),
         "model_temp": 0.0,

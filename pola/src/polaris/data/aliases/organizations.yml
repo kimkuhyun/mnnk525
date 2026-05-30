@@ -23,6 +23,7 @@
     - SEC
   ticker: ["005930", "005935"]   # 보통주·우선주
   ambiguous_alone: [삼성, Samsung]
+  domain: samsung.com
   subsidiaries:
     - 삼성디스플레이
     - 삼성SDI
@@ -40,6 +41,7 @@
     - Hynix
   ticker: ["000660"]
   ambiguous_alone: [SK, 에스케이, 하이닉스]
+  domain: skhynix.com
 
 "00118804":
   name: 동진쎄미켐
@@ -50,6 +52,7 @@
     - Dongjin Semichem
   ticker: ["005290"]
   ambiguous_alone: [동진]
+  domain: dongjin.com
 
 "01489648":
   name: 솔브레인
@@ -59,6 +62,7 @@
     - Soulbrain
   ticker: ["357780"]
   ambiguous_alone: [솔브]
+  domain: soulbrain.co.kr
 
 "00161383":
   name: 한미반도체
@@ -67,6 +71,7 @@
     - (주)한미반도체
     - HANMI Semiconductor
   ticker: ["042700"]
+  domain: hanmisemi.com
 
 "00160843":
   name: DB하이텍
@@ -76,6 +81,7 @@
     - 동부하이텍
   ticker: ["000990"]
   ambiguous_alone: [DB]
+  domain: dbhitek.com
 
 "00369657":
   name: 이오테크닉스
@@ -84,6 +90,7 @@
     - (주)이오테크닉스
     - EO Technics
   ticker: ["039030"]
+  domain: eo.co.kr
 
 "00246417":
   name: 리노공업
@@ -93,6 +100,7 @@
     - Leeno Industrial
   ticker: ["058470"]
   ambiguous_alone: [리노]
+  domain: leeno.co.kr
 
 # ────── 글로벌 반도체 주요 회사 (LLM 추출 시 매칭 보강) ───────
 # corp_code 는 'X' 접두로 외부 회사 표시 (DART 8자리와 충돌 방지)
@@ -104,6 +112,7 @@
     - "Taiwan Semiconductor"
     - 대만반도체제조회사
     - 타이완 세미컨덕터
+  domain: tsmc.com
   source: external
 
 "XNVDA0001":
@@ -111,6 +120,7 @@
   aliases:
     - 엔비디아
     - "NVIDIA Corporation"
+  domain: nvidia.com
   source: external
 
 "XASML0001":
@@ -119,6 +129,7 @@
     - "ASML Holding"
     - ASML홀딩
     - 에이에스엠엘
+  domain: asml.com
   source: external
 
 "XINTC0001":
@@ -126,6 +137,7 @@
   aliases:
     - 인텔
     - "Intel Corporation"
+  domain: intel.com
   source: external
 
 "XMICR0001":
@@ -133,6 +145,7 @@
   aliases:
     - 마이크론
     - "Micron Technology"
+  domain: micron.com
   source: external
 
 "XKIOX0001":
@@ -147,6 +160,7 @@
   aliases:
     - 애플
     - "Apple Inc."
+  domain: apple.com
   source: external
   ambiguous_alone: [Apple]
 
@@ -154,6 +168,7 @@
   name: AMD
   aliases:
     - "Advanced Micro Devices"
+  domain: amd.com
   source: external
 
 "XQCOM0001":
@@ -161,6 +176,7 @@
   aliases:
     - 퀄컴
     - "Qualcomm Inc."
+  domain: qualcomm.com
   source: external
 
 "XGOOG0001":
@@ -168,6 +184,7 @@
   aliases:
     - 구글
     - Alphabet
+  domain: google.com
   source: external
 
 "XAMKR0001":
@@ -175,6 +192,7 @@
   aliases:
     - 앰코
     - "Amkor Technology"
+  domain: amkor.com
   source: external
 
 "XASE00001":
@@ -203,6 +221,7 @@
   aliases:
     - 램리서치
     - Lam
+  domain: lamresearch.com
   source: external
   ambiguous_alone: [Lam]
 
@@ -211,6 +230,7 @@
   aliases:
     - 어플라이드 머티리얼즈
     - "AMAT"
+  domain: appliedmaterials.com
   source: external
 
 "XKLAC0001":
@@ -218,6 +238,7 @@
   aliases:
     - "KLA Corporation"
     - 케이엘에이
+  domain: kla.com
   source: external
   ambiguous_alone: [KLA]
 
@@ -227,6 +248,7 @@
     - "Tokyo Electron Ltd."
     - 도쿄일렉트론
     - TEL
+  domain: tel.com
   source: external
   ambiguous_alone: [TEL]
 
@@ -236,43 +258,153 @@
 
 "XSDISP001":
   name: 삼성디스플레이
-  aliases: ["삼성디스플레이", "Samsung Display"]
+  aliases:
+    - 삼성디스플레이
+    - 삼성디스플레이주식회사
+    - 주식회사삼성디스플레이
+    - (주)삼성디스플레이
+    - Samsung Display
+    - "Samsung Display Co., Ltd."
+  domain: samsungdisplay.com
   source: subsidiary_of_samsung
 
 "XSSDI0001":
   name: 삼성SDI
-  aliases: ["삼성SDI", "삼성에스디아이", "Samsung SDI"]
+  aliases:
+    - 삼성SDI
+    - 삼성에스디아이
+    - 삼성SDI주식회사
+    - 주식회사삼성SDI
+    - (주)삼성SDI
+    - Samsung SDI
+    - "Samsung SDI Co., Ltd."
+  domain: samsungsdi.com
   source: subsidiary_of_samsung
 
 "XSEMC0001":
   name: 삼성전기
-  aliases: ["삼성전기", "Samsung Electro-Mechanics", "SEMCO"]
+  aliases:
+    - 삼성전기
+    - 삼성전기주식회사
+    - 주식회사삼성전기
+    - (주)삼성전기
+    - Samsung Electro-Mechanics
+    - SEMCO
+  domain: samsungsem.com
   source: subsidiary_of_samsung
 
 "XSSDS0001":
   name: 삼성SDS
-  aliases: ["삼성SDS", "Samsung SDS"]
+  aliases:
+    - 삼성SDS
+    - 삼성SDS주식회사
+    - 주식회사삼성SDS
+    - (주)삼성SDS
+    - Samsung SDS
+    - "Samsung SDS Co., Ltd."
+  domain: samsungsds.com
   source: subsidiary_of_samsung
 
 "XHARM0001":
   name: Harman
-  aliases: ["Harman", "하만", "Harman International"]
+  aliases:
+    - Harman
+    - 하만
+    - Harman International
+    - "Harman International Industries"
+  domain: harman.com
   source: subsidiary_of_samsung
 
 "XLGDP0001":
   name: LG디스플레이
-  aliases: ["LG디스플레이", "엘지디스플레이", "LG Display"]
+  aliases:
+    - LG디스플레이
+    - 엘지디스플레이
+    - LG디스플레이주식회사
+    - (주)LG디스플레이
+    - LG Display
+    - "LG Display Co., Ltd."
+  domain: lgdisplay.com
   source: external
 
 "XLGES0001":
   name: LG에너지솔루션
-  aliases: ["LG에너지솔루션", "엘지에너지솔루션", "LG Energy Solution", "LGES"]
+  aliases:
+    - LG에너지솔루션
+    - 엘지에너지솔루션
+    - LG에너지솔루션주식회사
+    - (주)LG에너지솔루션
+    - LG Energy Solution
+    - LGES
+  domain: lgensol.com
   source: external
 
 "XSKON0001":
   name: SK온
-  aliases: ["SK온", "SK On"]
+  aliases:
+    - SK온
+    - 에스케이온
+    - SK온주식회사
+    - (주)SK온
+    - SK On
   source: external
+
+"XSKHYN0001":
+  name: SK실트론
+  aliases:
+    - SK실트론
+    - 에스케이실트론
+    - SK실트론주식회사
+    - (주)SK실트론
+    - SK Siltron
+  source: subsidiary_of_sk
+
+"XSKMTR0001":
+  name: SK머티리얼즈
+  aliases:
+    - SK머티리얼즈
+    - 에스케이머티리얼즈
+    - SK Materials
+    - SK머티리얼즈주식회사
+  source: subsidiary_of_sk
+
+"XSKSP0001":
+  name: SK스페셜티
+  aliases:
+    - SK스페셜티
+    - 에스케이스페셜티
+    - SK Specialty
+    - SK스페셜티주식회사
+  source: subsidiary_of_sk
+
+"XSAMSUG001":
+  name: 삼성물산
+  aliases:
+    - 삼성물산
+    - 삼성물산주식회사
+    - (주)삼성물산
+    - Samsung C&T
+    - "Samsung C&T Corporation"
+  domain: samsung.com
+  source: samsung_group
+
+"XSAMSEC001":
+  name: 삼성증권
+  aliases:
+    - 삼성증권
+    - 삼성증권주식회사
+    - (주)삼성증권
+    - Samsung Securities
+  source: samsung_group
+
+"XSAMLIFE001":
+  name: 삼성생명
+  aliases:
+    - 삼성생명
+    - 삼성생명보험
+    - 삼성생명보험주식회사
+    - Samsung Life Insurance
+  source: samsung_group
 
 # ────── 동진쎄미켐 해외 자회사 ────────────────────────────
 "XDJ_XIAN":
@@ -387,6 +519,7 @@
   name: "LG이노텍"
   aliases: ["LG이노텍", "LG Innotek", "엘지이노텍"]
   ticker: ["011070"]
+  domain: lginnotek.com
   source: external
 "XKORC0001":
   name: "코리아써키트"
@@ -481,6 +614,80 @@
   source: subsidiary_of_samsung
 
 
+# ────── 반복 등장 정부·규제·금융 기관 ─────────────────────────────
+# 노조는 corp 아님 → normalize_news_graph.py (b) 단계로 처리
+# 이 섹션은 공식 기관만. X 접두 = 비상장·비DART
+
+"XFTC0001":
+  name: "공정거래위원회"
+  aliases:
+    - "공정위"
+    - "Fair Trade Commission"
+    - "Korea Fair Trade Commission"
+    - "KFTC"
+  source: government
+
+"XFSC0001":
+  name: "금융위원회"
+  aliases:
+    - "금융위"
+    - "Financial Services Commission"
+    - "FSC"
+  source: government
+
+"XFSS0001":
+  name: "금융감독원"
+  aliases:
+    - "금감원"
+    - "Financial Supervisory Service"
+    - "FSS"
+  source: government
+
+"XMKE0001":
+  name: "산업통상자원부"
+  aliases:
+    - "산업부"
+    - "Ministry of Trade, Industry and Energy"
+    - "MOTIE"
+  source: government
+
+"XMSIT0001":
+  name: "과학기술정보통신부"
+  aliases:
+    - "과기정통부"
+    - "Ministry of Science and ICT"
+    - "MSIT"
+  source: government
+
+"XKRX0001":
+  name: "한국거래소"
+  aliases:
+    - "KRX"
+    - "Korea Exchange"
+  source: quasi_government
+
+"XKOFIA0001":
+  name: "금융투자협회"
+  aliases:
+    - "금투협"
+    - "KOFIA"
+    - "Korea Financial Investment Association"
+  source: quasi_government
+
+"XKBI0001":
+  name: "한국은행"
+  aliases:
+    - "BOK"
+    - "Bank of Korea"
+  source: quasi_government
+
+"XKDI0001":
+  name: "산업연구원"
+  aliases:
+    - "KIET"
+    - "Korea Institute for Industrial Economics and Trade"
+  source: research_institute
+
 # ────── 자동 추가 (polaris build) ──────
 "01135941":
   name: 원익IPS
@@ -491,4 +698,5 @@
     - 원익IPS주식회사
     - 주식회사원익IPS
   ticker: ["240810"]
+  domain: wonik.com
   source: auto_added_by_polaris_build

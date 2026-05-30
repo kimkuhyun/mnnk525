@@ -64,15 +64,18 @@ uv run python -m polaris.ingest.news_crawl.graph_load --input full_00126380.json
 #    (b) 새로 추출하려면: export_batches → Claude(Workflow) 또는 로컬 qwen → assemble → graph_load
 #        (상세: src/polaris/ingest/news_crawl/README.md)
 
-# 5) 연관어(kiwi) · 감성(로컬 qwen) — 둘 다 로컬 재현
-uv run python -m polaris.analyze.keywords     # → keyword_top
+# 5) 감성·주가·일별요약 — 모두 로컬 재현
 uv run python -m polaris.analyze.sentiment    # → sentiment_daily (Ollama qwen)
+uv run python -m polaris.analyze.stock_load   # → stock_daily (KRX JSON 멱등 적재)
+uv run python -m polaris.analyze.daily_digest # → news_daily_summary (Ollama qwen, 재개가능)
 
 # 6) 서비스
 cd ../backend ; uv run uvicorn app.main:app --reload     # http://localhost:8000/docs
 cd ../frontend ; npm install ; npm run dev               # http://localhost:5173
 ```
 
-화면: 진입 → **시작하기** → 워크스페이스(관계지도 마인드맵 + 트렌드 탭 + 행보 타임라인). 백엔드 API 4종이 채움:
-`/api/graph` `/api/dashboard` `/api/company` `/api/activity` `/api/keywords` `/api/sentiment` `/api/news` `/api/evidence`.
+화면: 진입 → **시작하기** → 워크스페이스(관계지도 마인드맵 + 트렌드 탭 + 행보 타임라인). 백엔드 API가 채움:
+`/api/graph` `/api/dashboard` `/api/company` `/api/activity`
+`/api/stock/{corp}` `/api/relation-top/{corp}` `/api/daily-digest/{corp}` `/api/news-timeline/{corp}`
+`/api/sentiment` `/api/news` `/api/evidence`.
 

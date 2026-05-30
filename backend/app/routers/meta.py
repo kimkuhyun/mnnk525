@@ -4,6 +4,7 @@ from __future__ import annotations
 from fastapi import APIRouter
 
 from ..db import mariadb, neo4j, qdrant
+from ..relations import SEED_CORPS
 
 router = APIRouter(tags=["meta"])
 
@@ -34,3 +35,9 @@ def db_status():
     except Exception as e:
         out["neo4j"] = f"fail: {str(e)[:80]}"
     return out
+
+
+@router.get("/companies")
+def companies():
+    """활성 회사 목록 (프론트 회사 선택기·노드 강조의 SSOT). relations.SEED_CORPS 기준."""
+    return [{"code": code, "name": name} for code, name in SEED_CORPS.items()]

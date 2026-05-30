@@ -10,6 +10,5 @@ export async function api<T>(path: string, init?: RequestInit): Promise<T> {
   return res.json() as Promise<T>
 }
 
-// 화면별 호출은 여기에 모으면 됨:
-// export const getDbStatus = () => api<Record<string,string>>('/db/status')
-// export const getMentionDaily = (corp: string) => api(`/dashboard/mentions?corp=${corp}`)
+// 활성 회사 목록 (회사 선택기 SSOT — 백엔드 relations.SEED_CORPS)
+export const getCompanies = () => api<{ code: string; name: string }[]>('/companies')

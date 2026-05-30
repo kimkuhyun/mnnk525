@@ -11,26 +11,26 @@ export default function EvidencePanel({ sel }: Props) {
   const { data, isLoading, isError } = useEvidence(sel);
 
   return (
-    <div className="rounded-xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900 p-4 transition-colors">
+    <div className="rounded-xl border border-slate-200/80 bg-white dark:border-slate-800 dark:bg-slate-900 p-4 transition-colors">
       <div className="flex flex-wrap items-center gap-2 mb-4">
-        <span className="font-semibold text-slate-700 dark:text-slate-200 tabular-nums">
+        <span className="text-sm font-semibold text-slate-800 dark:text-slate-100">
           {sel.source} → {sel.target}
         </span>
         <span
-          className="rounded-full px-2 py-0.5 text-xs font-medium text-white"
+          className="rounded-full px-2 py-0.5 text-[11px] font-medium text-white"
           style={{ backgroundColor: GROUP_COLOR[sel.group] }}
         >
           {GROUP_LABEL[sel.group]}
         </span>
-        <span className="text-sm text-slate-500 dark:text-slate-400 tabular-nums">
-          근거 {sel.weight}건
+        <span className="ml-auto text-xs text-slate-400 dark:text-slate-500 tabular-nums">
+          언급 {sel.weight}건
         </span>
       </div>
 
       {isLoading ? (
-        <p className="text-sm text-slate-500 dark:text-slate-400">불러오는 중…</p>
+        <p className="text-xs text-slate-400 dark:text-slate-500">불러오는 중…</p>
       ) : isError || !data || data.length === 0 ? (
-        <p className="text-sm text-slate-500 dark:text-slate-400">근거 기사 연결 시 표시됩니다</p>
+        <p className="text-xs text-slate-400 dark:text-slate-500">언급 기사 연결 시 표시됩니다</p>
       ) : (
         <ul className="space-y-3">
           {data.map((item) => (
@@ -44,12 +44,12 @@ export default function EvidencePanel({ sel }: Props) {
                 <span>{item.title}</span>
                 <ExternalLink size={13} className="mt-0.5 shrink-0" />
               </a>
-              <div className="mt-1 flex flex-wrap gap-2 text-xs text-slate-500 dark:text-slate-400">
-                <span>{item.date}</span>
+              <div className="mt-1 flex flex-wrap gap-2 text-xs text-slate-400 dark:text-slate-500">
+                <span className="tabular-nums">{item.date}</span>
                 {item.publisher && <span>· {item.publisher}</span>}
               </div>
               {item.snippet && (
-                <p className="mt-1 text-xs text-slate-500 dark:text-slate-400 line-clamp-2">
+                <p className="mt-1 text-xs text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">
                   {item.snippet}
                 </p>
               )}

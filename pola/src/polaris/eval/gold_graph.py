@@ -9,7 +9,7 @@
 게이트: F1 ≥ 0.95 (deterministic Cypher 이라 거의 1.0 기대).
 """
 from __future__ import annotations
-import json, time
+import json, sys, time
 from pathlib import Path
 
 from polaris.config import neo4j_driver, DATA_ROOT, ROOT as PKG_ROOT
@@ -125,8 +125,8 @@ def main():
     print(f"  F1           : {avg_f1:.4f}")
     print(f"  Exact match  : {exact_rate:.4f}  ({sum(1 for m in all_metrics if m['exact'])}/{n})")
     print(f"  판정          : {'PASS' if summary['passed'] else 'FAIL'} (게이트 F1 >= 0.95)")
-    print(f"  per-query    : {per_q_path.relative_to(ROOT)}")
-    print(f"  summary      : {summary_path.relative_to(ROOT)}")
+    print(f"  per-query    : {per_q_path.relative_to(PKG_ROOT)}")
+    print(f"  summary      : {summary_path.relative_to(PKG_ROOT)}")
     return 0 if summary["passed"] else 1
 
 

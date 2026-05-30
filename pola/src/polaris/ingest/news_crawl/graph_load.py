@@ -22,6 +22,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 from pathlib import Path
 
 from polaris.config import DATA_ROOT, neo4j_driver, get_active_run
@@ -29,6 +30,29 @@ from polaris.graph.common import canonicalize_name
 from polaris.graph.linker import EntityLinker
 
 EXTRACTS = DATA_ROOT / "4_dbGoldTest" / "news_extracts"
+
+# ── 노이즈 필터 ─────────────────────────────────────────────────────
+_NOISE_REPEAT_RE = re.compile(r"(.{1,10})\1{2,}")  # 같은 패턴 3회+ 연속
+_HAS_KO_EN = re.compile(r"[가-힣a-zA-Z]")           # 한글·영문 최소 1자
+
+
+def is_noise(surface: str) -> bool:
+    """True 이면 해당 surface 를 엔티티로 적재하지 않는다.
+
+    규칙:
+      1. 길이 < 2 또는 > 40
+      2. 한글·영문 글자가 하나도 없음 (순수 기호·숫자)
+      3. 같은 토큰(1~10자) 이 3회 이상 연속 반복
+    """
+    s = (surface or "").strip()
+    if len(s) < 2 or len(s) > 40:
+        return True
+    if not _HAS_KO_EN.search(s):
+        return True
+    if _NOISE_REPEAT_RE.search(s):
+        return True
+    return False
+
 
 KEYPROP = {"Organization": "corp_code", "Person": "person_id",
            "Product": "product_id", "Technology": "tech_id", "Place": "iso_code"}
@@ -41,9 +65,16 @@ EXTRACTED_BY = "claude"  # 모델 무관(샘플 opus·전체 sonnet) — 뉴스 
 
 
 # ── 엔티티 해석 (링킹 + 미링크 노드 키) ─────────────────────────────
-def resolve(linker: EntityLinker, surface: str, etype: str, cache: dict) -> dict | None:
+def resolve(linker: EntityLinker, surface: str, etype: str, cache: dict,
+            st: dict | None = None) -> dict | None:
+    """surface → 노드 정보. 노이즈면 None 반환하고 st['noise_dropped'] 증가."""
     key = (surface or "").strip(), (etype or "").strip()
     if not key[0] or not key[1]:
+        return None
+    # 방어적 노이즈 필터
+    if is_noise(key[0]):
+        if st is not None:
+            st["noise_dropped"] = st.get("noise_dropped", 0) + 1
         return None
     if key in cache:
         return cache[key]
@@ -116,7 +147,7 @@ def load(input_name: str) -> dict:
     linker = EntityLinker(run_id=run_id, enable_vector=True)
     cache: dict = {}
     st = {"docs": 0, "mentions": 0, "rels": 0, "linked": 0, "news_node": 0,
-          "rel_dropped": 0, "doc_missing": 0}
+          "rel_dropped": 0, "doc_missing": 0, "noise_dropped": 0}
 
     drv = neo4j_driver()
     with drv.session() as sess:
@@ -131,7 +162,7 @@ def load(input_name: str) -> dict:
 
             eid_by_surface: dict[str, str] = {}
             for e in rec.get("entities", []) or []:
-                rv = resolve(linker, e.get("text"), e.get("type"), cache)
+                rv = resolve(linker, e.get("text"), e.get("type"), cache, st)
                 if not rv:
                     continue
                 eid = merge_node(sess, rv, run_id)
@@ -150,11 +181,11 @@ def load(input_name: str) -> dict:
                 b_eid = eid_by_surface.get(obj)
                 # subject/object 가 entities 누락 시 즉석 해석 (object 가 빠진 케이스 구제)
                 if a_eid is None and subj:
-                    rv = resolve(linker, subj, _guess_type(subj), cache)
+                    rv = resolve(linker, subj, _guess_type(subj), cache, st)
                     if rv:
                         a_eid = merge_node(sess, rv, run_id); eid_by_surface[subj] = a_eid
                 if b_eid is None and obj:
-                    rv = resolve(linker, obj, _guess_type(obj), cache)
+                    rv = resolve(linker, obj, _guess_type(obj), cache, st)
                     if rv:
                         b_eid = merge_node(sess, rv, run_id); eid_by_surface[obj] = b_eid
                 if a_eid is None or b_eid is None:
