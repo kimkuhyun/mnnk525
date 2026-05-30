@@ -38,7 +38,7 @@ cd frontend ; npm install ; npm run dev        # npm install 은 첫 1회만
 
 > 적재(`pola`)와 서비스(`backend`/`frontend`)는 분리. 서버 DB에 **로컬 CLI로 원격 적재** 가능.
 
-## 처음부터 재현 (전체 파이프라인 — 다른 PC·다른 사람도 로컬로)
+## 처음부터 재현
 
 > 모든 단계 로컬·멱등. LLM 단계(관계 추출·감성)는 **로컬 Ollama(qwen)** 로 돌리거나, 커밋된
 > 추출 산출(`news_extracts/*.jsonl`)로 LLM 없이 재현 가능. ⚠️ Windows 는 `$env:PYTHONIOENCODING="utf-8"` 필수.
