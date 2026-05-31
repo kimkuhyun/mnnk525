@@ -27,6 +27,7 @@ services:
   neo4j:
     image: neo4j:5.24-community
     restart: unless-stopped
+    hostname: neo4j          # 컨테이너가 자기 호스트네임을 해소 못 해 기동 실패하는 문제 방지(/etc/hosts)
     environment:
       NEO4J_AUTH: "${NEO4J_USER:-neo4j}/${NEO4J_PASSWORD:-polaris_dev_only}"
       NEO4J_PLUGINS: '["apoc"]'
@@ -35,6 +36,7 @@ services:
 
   backend:
     build: ./backend
+    profiles: ["full"]        # 기본 `docker compose up` 에선 제외. 풀스택: `docker compose --profile full up`
     restart: unless-stopped
     environment:
       MARIADB_HOST: mariadb
@@ -52,6 +54,7 @@ services:
 
   frontend:
     build: ./frontend
+    profiles: ["full"]        # 기본 `docker compose up` 에선 제외. 풀스택: `docker compose --profile full up`
     restart: unless-stopped
     ports: ["80:80"]
     depends_on: [backend]
