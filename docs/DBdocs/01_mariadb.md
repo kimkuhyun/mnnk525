@@ -126,7 +126,7 @@ erDiagram
 | rcept_no | VARCHAR(14) | FK | 접수번호(14자리), 출처 공시 |
 | bsns_year | SMALLINT | | 사업연도 |
 | reprt_code | VARCHAR(8) | | 보고서 코드(분기/반기/사업보고서 등) |
-| account_id | VARCHAR(128) | | 계정 식별자 |
+| account_id | VARCHAR(255) | | 계정 식별자(IFRS taxonomy id, 최대 약 145자) |
 | value | DECIMAL(28,2) | | 지표 값 |
 | unit | VARCHAR(16) | | 단위 |
 | fs_div | VARCHAR(8) | | 재무제표 구분(CFS/OFS 등) |

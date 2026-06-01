@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS fin_metric (
   rcept_no   VARCHAR(14)  NULL,
   bsns_year  SMALLINT     NULL,
   reprt_code VARCHAR(8)   NULL,
-  account_id VARCHAR(128) NULL,
+  account_id VARCHAR(255) NULL,
   value      DECIMAL(28,2) NULL,
   unit       VARCHAR(16)  NULL,
   fs_div     VARCHAR(8)   NULL,

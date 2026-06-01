@@ -67,10 +67,10 @@ def main() -> None:
                 account_id = (row.get("account_id") or "").strip()
                 if not account_id or account_id == "-":
                     continue
-                # account_id 는 스키마상 VARCHAR(128). 초과(>128)는 일부 비핵심
-                # 지분법 OCII 세부계정뿐 — 스키마 SSOT 유지 위해 스킵(결정론).
-                if len(account_id) > 128:
-                    continue
+                # account_id 는 스키마상 VARCHAR(255). IFRS 계정 최대 145자.
+                # 초과(>255) 안전 절단(현재 데이터엔 해당 없음).
+                if len(account_id) > 255:
+                    account_id = account_id[:255]
                 rcept_no = (row.get("rcept_no") or "").strip()
                 bsns_year_raw = (row.get("bsns_year") or "").strip()
                 try:

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { width:1600px; height:1100px; background:#ffffff;
+    font-family:"Segoe UI","Malgun Gothic","Apple SD Gothic Neo",sans-serif;
+    -webkit-font-smoothing:antialiased; }
+  .canvas { position:relative; width:1600px; height:1100px; }
+
+  .head { position:absolute; top:40px; left:64px; z-index:5; }
+  .head .title { font-size:34px; font-weight:700; color:#202124; letter-spacing:-0.5px; }
+  .head .title .db { color:#1a73e8; }
+  .head .sub { margin-top:8px; font-size:16px; color:#5f6368; }
+
+  svg.graph { position:absolute; top:0; left:0; width:1600px; height:1100px; }
+
+  /* node bubbles */
+  .node { position:absolute; transform:translate(-50%,-50%);
+    border-radius:50%; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    box-shadow:0 3px 10px rgba(60,64,67,.18); text-align:center; }
+  .node .lab { font-weight:700; color:#fff; line-height:1.1; }
+  .node .key { font-size:11px; color:rgba(255,255,255,.85); margin-top:2px; }
+  .node .cnt { font-size:12px; color:rgba(255,255,255,.95); font-weight:600; margin-top:3px;
+    background:rgba(0,0,0,.16); border-radius:11px; padding:1px 9px; }
+
+  .n-org   { background:#1a73e8; }
+  .n-person{ background:#3b8eea; }
+  .n-filing{ background:#5f6368; }
+  .n-chunk { background:#80868b; }
+  .n-metric{ background:#1558d6; }
+  .n-prod  { background:#7b61c9; }
+  .n-tech  { background:#9168d8; }
+
+  /* edge labels */
+  .elab { position:absolute; transform:translate(-50%,-50%);
+    font-size:12px; font-weight:600; background:#fff; border-radius:6px; padding:2px 7px; white-space:nowrap; }
+  .elab.solid { color:#1558d6; border:1px solid #d2e3fc; }
+  .elab.dash  { color:#80868b; border:1px dashed #c4c7cc; }
+
+  /* legend */
+  .legend { position:absolute; right:56px; top:150px; width:380px;
+    background:#fff; border:1px solid #dadce0; border-radius:14px;
+    box-shadow:0 2px 8px rgba(60,64,67,.10); padding:18px 20px; }
+  .legend h3 { font-size:14px; color:#202124; margin-bottom:12px; }
+  .lg-row { display:flex; align-items:center; gap:11px; margin-bottom:9px; font-size:13px; color:#3c4043; }
+  .lg-row .ln { width:46px; height:0; flex:none; }
+  .ln.solid { border-top:3px solid #1a73e8; }
+  .ln.dash  { border-top:3px dashed #9aa0a6; }
+  .lg-row b { color:#1558d6; }
+  .lg-row .gray { color:#80868b; }
+  .lg-sub { font-size:12px; color:#80868b; margin:4px 0 14px 57px; }
+  .hl { margin-top:6px; padding:11px 13px; background:#e8f0fe; border:1px solid #c6dafc;
+    border-radius:10px; font-size:12.5px; color:#1558d6; font-weight:600; line-height:1.5; }
+
+  /* edge list panel */
+  .panel { position:absolute; right:56px; width:380px; background:#fff;
+    border:1px solid #dadce0; border-radius:14px; box-shadow:0 2px 8px rgba(60,64,67,.10);
+    padding:16px 20px; }
+  .panel h3 { font-size:13.5px; margin-bottom:10px; }
+  .panel h3.blue { color:#1558d6; }
+  .panel h3.gray { color:#80868b; }
+  .er { display:flex; justify-content:space-between; font-size:12.5px; color:#3c4043;
+    padding:4px 0; border-bottom:1px solid #f1f3f4; }
+  .er .nm { font-weight:600; }
+  .er .cn { color:#5f6368; font-weight:600; }
+  .er:last-child { border-bottom:none; }
+</style>
+</head>
+<body>
+<div class="canvas">
+
+  <div class="head">
+    <div class="title">POLARIS · <span class="db">Neo4j</span> 그래프 스키마</div>
+    <div class="sub">지분 &middot; 임원 &middot; 재무 &middot; 공급망 지식그래프 — 정형(DART 사실) / 비정형(Claude 추출) 구분</div>
+  </div>
+
+  <!-- edges layer -->
+  <svg class="graph">
+    <defs>
+      <marker id="arr" markerWidth="11" markerHeight="11" refX="8" refY="5" orient="auto">
+        <path d="M1,1 L9,5 L1,9" fill="none" stroke="#1a73e8" stroke-width="1.8"/>
+      </marker>
+      <marker id="arrg" markerWidth="11" markerHeight="11" refX="8" refY="5" orient="auto">
+        <path d="M1,1 L9,5 L1,9" fill="none" stroke="#9aa0a6" stroke-width="1.8"/>
+      </marker>
+    </defs>
+
+    <!-- ===== solid (structured) =====  Org center = (500,475) r=64 -->
+    <!-- Person(230,285) -> Org : EXECUTIVE_OF -->
+    <line x1="298" y1="333" x2="452" y2="438" stroke="#1a73e8" stroke-width="2.2" marker-end="url(#arr)"/>
+    <!-- IS_MAJOR_SHAREHOLDER_OF : top self-arc on Org -->
+    <path d="M470,418 C485,340 515,340 530,418" fill="none" stroke="#1a73e8" stroke-width="2.2" marker-end="url(#arr)"/>
+    <!-- INVESTS_IN : right self-loop -->
+    <path d="M560,448 C672,415 672,535 560,502" fill="none" stroke="#1a73e8" stroke-width="2.2" marker-end="url(#arr)"/>
+    <!-- IS_SUBSIDIARY_OF : left self-loop -->
+    <path d="M442,500 C338,535 338,415 442,448" fill="none" stroke="#1a73e8" stroke-width="2.2" marker-end="url(#arr)"/>
+    <!-- Org -> FinMetric(250,735) : HAS_METRIC -->
+    <line x1="452" y1="520" x2="300" y2="694" stroke="#1a73e8" stroke-width="2.2" marker-end="url(#arr)"/>
+    <!-- Org -> Filing(790,585) : reports -->
+    <line x1="562" y1="498" x2="742" y2="565" stroke="#1a73e8" stroke-width="2.2" marker-end="url(#arr)"/>
+    <!-- FinMetric -> Filing : DERIVED_FROM -->
+    <line x1="328" y1="763" x2="738" y2="612" stroke="#1a73e8" stroke-width="2.2" marker-end="url(#arr)"/>
+    <!-- Filing -> Chunk(920,810) : has_chunk -->
+    <line x1="820" y1="630" x2="892" y2="772" stroke="#1a73e8" stroke-width="2.2" marker-end="url(#arr)"/>
+
+    <!-- ===== dashed (unstructured / claude) ===== -->
+    <!-- Org -> Product(780,330) : PRODUCES -->
+    <line x1="556" y1="438" x2="752" y2="356" stroke="#9aa0a6" stroke-width="2.2" stroke-dasharray="7 6" marker-end="url(#arrg)"/>
+    <!-- Org -> Tech(940,410) : USES_TECH -->
+    <line x1="562" y1="462" x2="906" y2="420" stroke="#9aa0a6" stroke-width="2.2" stroke-dasharray="7 6" marker-end="url(#arrg)"/>
+    <!-- Org -> Org : SUPPLIES_TO  bottom self-loop -->
+    <path d="M474,528 C440,628 500,628 522,532" fill="none" stroke="#9aa0a6" stroke-width="2.2" stroke-dasharray="7 6" marker-end="url(#arrg)"/>
+    <!-- Org -> Org : RELATED_PARTY  bottom-right self-loop -->
+    <path d="M534,530 C600,612 560,470 555,500" fill="none" stroke="#9aa0a6" stroke-width="2.2" stroke-dasharray="7 6" marker-end="url(#arrg)"/>
+    <!-- Chunk(920,810) -> Product/Tech : hasObject -->
+    <line x1="906" y1="772" x2="812" y2="430" stroke="#9aa0a6" stroke-width="2.2" stroke-dasharray="7 6" marker-end="url(#arrg)"/>
+  </svg>
+
+  <!-- ===== nodes ===== -->
+  <div class="node n-org"    style="left:500px; top:475px; width:128px; height:128px;">
+    <div class="lab" style="font-size:17px;">Organization</div>
+    <div class="key">corp_code</div><div class="cnt">653</div></div>
+
+  <div class="node n-person" style="left:230px; top:285px; width:96px; height:96px;">
+    <div class="lab" style="font-size:15px;">Person</div><div class="cnt">72</div></div>
+
+  <div class="node n-filing" style="left:790px; top:585px; width:110px; height:110px;">
+    <div class="lab" style="font-size:15px;">Filing<br>Document</div>
+    <div class="key">rcept_no</div><div class="cnt">4,061</div></div>
+
+  <div class="node n-chunk"  style="left:920px; top:810px; width:108px; height:108px;">
+    <div class="lab" style="font-size:15px;">Chunk</div>
+    <div class="key">chunk_id</div><div class="cnt">10,774</div></div>
+
+  <div class="node n-metric" style="left:250px; top:735px; width:104px; height:104px;">
+    <div class="lab" style="font-size:15px;">FinMetric</div><div class="cnt">6,193</div></div>
+
+  <div class="node n-prod"   style="left:780px; top:330px; width:90px; height:90px;">
+    <div class="lab" style="font-size:14px;">Product</div><div class="cnt">183</div></div>
+
+  <div class="node n-tech"   style="left:940px; top:410px; width:82px; height:82px;">
+    <div class="lab" style="font-size:14px;">Technology</div><div class="cnt">58</div></div>
+
+  <!-- edge labels: solid -->
+  <div class="elab solid" style="left:360px; top:368px;">EXECUTIVE_OF · 35</div>
+  <div class="elab solid" style="left:500px; top:330px;">IS_MAJOR_SHAREHOLDER_OF · 47</div>
+  <div class="elab solid" style="left:660px; top:420px;">INVESTS_IN · 201</div>
+  <div class="elab solid" style="left:338px; top:425px;">IS_SUBSIDIARY_OF · 376</div>
+  <div class="elab solid" style="left:340px; top:618px;">HAS_METRIC · 6,193</div>
+  <div class="elab solid" style="left:672px; top:518px;">reports · 4,061</div>
+  <div class="elab solid" style="left:530px; top:705px;">DERIVED_FROM · 6,193</div>
+  <div class="elab solid" style="left:892px; top:706px;">has_chunk · 10,774</div>
+
+  <!-- edge labels: dashed -->
+  <div class="elab dash" style="left:660px; top:388px;">PRODUCES · 196</div>
+  <div class="elab dash" style="left:760px; top:455px;">USES_TECH · 60</div>
+  <div class="elab dash" style="left:498px; top:638px;">SUPPLIES_TO · 86</div>
+  <div class="elab dash" style="left:610px; top:582px;">RELATED_PARTY · 110</div>
+  <div class="elab dash" style="left:905px; top:566px;">hasObject · 1,243</div>
+
+  <!-- legend -->
+  <div class="legend">
+    <h3>범례 — 엣지 출처</h3>
+    <div class="lg-row"><span class="ln solid"></span><div><b>실선 (파랑)</b> 정형 · DART 사실</div></div>
+    <div class="lg-sub">extracted_by = NULL · 공시 원본에서 결정론적 적재</div>
+    <div class="lg-row"><span class="ln dash"></span><div><span class="gray"><b style="color:#80868b">점선 (회색)</b> 비정형 · Claude 추출</span></div></div>
+    <div class="lg-sub">extracted_by = &#39;claude&#39; · 근거 chunk_id · rcept_no 추적</div>
+    <div class="hl">지분 + 재무가 1급 시민 — INVESTS_IN / IS_MAJOR_SHAREHOLDER_OF 를 따라가며 각 회사 FinMetric 을 멀티홉 질의</div>
+  </div>
+
+  <!-- edge count panels -->
+  <div class="panel" style="top:470px;">
+    <h3 class="blue">정형 엣지 (DART 사실)</h3>
+    <div class="er"><span class="nm">EXECUTIVE_OF</span><span class="cn">Person → Org · 35</span></div>
+    <div class="er"><span class="nm">IS_MAJOR_SHAREHOLDER_OF</span><span class="cn">→ Org · 47</span></div>
+    <div class="er"><span class="nm">INVESTS_IN</span><span class="cn">Org → Org · 201</span></div>
+    <div class="er"><span class="nm">IS_SUBSIDIARY_OF</span><span class="cn">Org → Org · 376</span></div>
+    <div class="er"><span class="nm">HAS_METRIC</span><span class="cn">Org → FinMetric · 6,193</span></div>
+    <div class="er"><span class="nm">DERIVED_FROM</span><span class="cn">FinMetric → Filing · 6,193</span></div>
+    <div class="er"><span class="nm">reports</span><span class="cn">Org → Filing · 4,061</span></div>
+    <div class="er"><span class="nm">has_chunk</span><span class="cn">Filing → Chunk · 10,774</span></div>
+  </div>
+
+  <div class="panel" style="top:790px;">
+    <h3 class="gray">비정형 엣지 (Claude 추출)</h3>
+    <div class="er"><span class="nm">PRODUCES</span><span class="cn">Org → Product/Tech · 196</span></div>
+    <div class="er"><span class="nm">USES_TECH</span><span class="cn">Org → Tech · 60</span></div>
+    <div class="er"><span class="nm">SUPPLIES_TO</span><span class="cn">Org → Org · 86</span></div>
+    <div class="er"><span class="nm">RELATED_PARTY</span><span class="cn">Org → Org · 110</span></div>
+    <div class="er"><span class="nm">hasObject</span><span class="cn">Chunk → Product/Tech · 1,243</span></div>
+  </div>
+
+</div>
+</body>
+</html>
