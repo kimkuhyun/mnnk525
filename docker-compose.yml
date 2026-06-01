@@ -1,7 +1,8 @@
-# POLARIS 배포 스택 — backend + frontend + 3DB 
-# 데이터 적재는 pola CLI 로 
+# POLARIS 3-DB 스택 (MariaDB + Qdrant + Neo4j)
+# 백엔드/프론트는 제외 — 서버 배포 시 git에서 받아 별도 기동.
+# 데이터 적재는 pola CLI 로.
 #
-# 기동:  docker compose up -d --build
+# 기동:  docker compose up -d
 # 종료:  docker compose down            (볼륨 유지)
 name: polaris
 
@@ -33,31 +34,6 @@ services:
       NEO4J_PLUGINS: '["apoc"]'
     ports: ["7474:7474", "7687:7687"]
     volumes: ["neo4j_data:/data"]
-
-  backend:
-    build: ./backend
-    profiles: ["full"]        # 기본 `docker compose up` 에선 제외. 풀스택: `docker compose --profile full up`
-    restart: unless-stopped
-    environment:
-      MARIADB_HOST: mariadb
-      MARIADB_PORT: "3306"                                  # 컨테이너 내부 포트(호스트 3307 매핑과 별개)
-      MARIADB_USER: ${MARIADB_USER:-polaris}
-      MARIADB_PASSWORD: ${MARIADB_PASSWORD:-polaris_dev_only}
-      MARIADB_DATABASE: ${MARIADB_DATABASE:-polaris}
-      QDRANT_HOST: qdrant
-      NEO4J_URI: bolt://neo4j:7687
-      NEO4J_USER: ${NEO4J_USER:-neo4j}
-      NEO4J_PASSWORD: ${NEO4J_PASSWORD:-polaris_dev_only}
-      CORS_ORIGINS: '["http://localhost","http://localhost:80"]'
-    ports: ["8000:8000"]
-    depends_on: [mariadb, qdrant, neo4j]
-
-  frontend:
-    build: ./frontend
-    profiles: ["full"]        # 기본 `docker compose up` 에선 제외. 풀스택: `docker compose --profile full up`
-    restart: unless-stopped
-    ports: ["80:80"]
-    depends_on: [backend]
 
 volumes:
   mariadb_data:

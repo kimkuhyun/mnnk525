@@ -195,111 +195,38 @@ def reembed_table_cmd():
         raise SystemExit(reembed_table_contextual.main())
 
 
-SOURCE_MODULES = {
-    "news": ("polaris.chunk.news", "뉴스 (한경/매경 RSS) - 선행: ingest --stage b4"),
-    "krx": ("polaris.chunk.krx", "KRX 일별 OHLCV (월별 요약)"),
-    "bok": ("polaris.chunk.bok", "BOK 거시 시계열 + Neo4j MacroIndicator"),
-    "kosis": ("polaris.chunk.kosis", "KOSIS 통계표 메타"),
-    "ftc": ("polaris.chunk.ftc", "FTC 공정위 대규모기업집단"),
-}
-
-
-@app.command(name="load-source")
-def load_source_cmd(
-    name: str = typer.Argument(..., help="news / krx / bok / kosis / ftc / all"),
-):
-    """6 종 source 청킹·임베딩·3DB 적재. all 이면 5종 순차 실행.
-
-    예시:
-      polaris load-source news     # 뉴스만
-      polaris load-source all      # 5종 전부 (news, krx, bok, kosis, ftc)
-    """
-    import importlib
-    targets = list(SOURCE_MODULES) if name == "all" else [name]
-    for t in targets:
-        if t not in SOURCE_MODULES:
-            typer.echo(f"unknown source: {t}. choose: {list(SOURCE_MODULES)} or 'all'")
-            raise typer.Exit(1)
-        mod_name, desc = SOURCE_MODULES[t]
-        typer.echo(f"=== load-source {t} - {desc} ===")
-        mod = importlib.import_module(mod_name)
-        with _isolated_argv(f"polaris-load-{t}"):
-            rc = mod.main()
-        if rc not in (None, 0):
-            typer.echo(f"[{t}] non-zero exit: {rc}")
-            raise typer.Exit(rc)
-
-
-# 하위 호환 alias (옛 명령 그대로 동작)
-@app.command(name="load-news", hidden=True)
-def _alias_load_news():
-    from polaris.chunk import news
-    with _isolated_argv("polaris-load-news"):
-        raise SystemExit(news.main())
-
-
-@app.command(name="load-kosis", hidden=True)
-def _alias_load_kosis():
-    from polaris.chunk import kosis
-    with _isolated_argv("polaris-load-kosis"):
-        raise SystemExit(kosis.main())
-
-
-@app.command(name="load-bok", hidden=True)
-def _alias_load_bok():
-    from polaris.chunk import bok
-    with _isolated_argv("polaris-load-bok"):
-        raise SystemExit(bok.main())
-
-
-@app.command(name="load-krx", hidden=True)
-def _alias_load_krx():
-    from polaris.chunk import krx
-    with _isolated_argv("polaris-load-krx"):
-        raise SystemExit(krx.main())
-
-
-@app.command(name="load-ftc", hidden=True)
-def _alias_load_ftc():
-    from polaris.chunk import ftc
-    with _isolated_argv("polaris-load-ftc"):
-        raise SystemExit(ftc.main())
-
-
 @app.command()
 def ingest(
     stage: str = typer.Option("all",
-        help="all=bulk_collect / a,b1,b2,b3,b4=단일 stage"),
+        help="all=bulk_collect / a,b1,b2,b3=단일 stage"),
     only: str = typer.Option("",
-        help="bulk_collect 단계 제한 (stage=all 일 때만): dart,documents,krx,news,ftc,bok,kosis 중 콤마"),
+        help="bulk_collect 단계 제한 (stage=all 일 때만): dart,documents 중 콤마"),
     skip: str = typer.Option("",
-        help="bulk_collect 에서 제외: dart,documents,krx,news,ftc,bok,kosis 중 콤마"),
+        help="bulk_collect 에서 제외: dart,documents 중 콤마"),
     corp_codes: str = typer.Option("",
         help="corp_code 콤마. 비우면 .env POLARIS_CORPS 전체"),
     from_year: int = typer.Option(2025, help="시작 사업연도"),
     to_year: int = typer.Option(0, help="종료 사업연도 (0=올해)"),
-    news_since: str = typer.Option("2026-01-01", help="이 날짜 이후 뉴스만"),
     profile: str = typer.Option("normal", help="rate-limit: slow / normal / fast"),
 ):
-    """raw 데이터 수집·정제 - bulk_collect (stage=all, 기본) 또는 b1~b4 단일 stage.
+    """raw 데이터 수집·정제 - bulk_collect (stage=all, 기본) 또는 b1~b3 단일 stage.
 
     예시:
-      polaris ingest                                    # 6종 전체 수집 (5사+추가)
-      polaris ingest --only dart,krx --from-year 2024   # DART + KRX 만
-      polaris ingest --corp-codes 00160843,00369657 --only dart,krx
-      polaris ingest --stage b4                         # 뉴스 회사 매칭 단일
+      polaris ingest                                    # DART 전체 수집 (5사+추가)
+      polaris ingest --only dart --from-year 2024       # DART 만
+      polaris ingest --corp-codes 00160843,00369657 --only dart
+      polaris ingest --stage b3                         # document_index 단일
     """
     from polaris.ingest import (stage_a_collect, stage_b1_html,
-                                 stage_b2_clean, stage_b3_doc_index, stage_b4_news)
+                                 stage_b2_clean, stage_b3_doc_index)
     single_stage_mods = {"a": stage_a_collect, "b1": stage_b1_html,
-                          "b2": stage_b2_clean, "b3": stage_b3_doc_index,
-                          "b4": stage_b4_news}
+                          "b2": stage_b2_clean, "b3": stage_b3_doc_index}
     if stage in single_stage_mods:
         if only or skip or corp_codes:
             typer.echo(f"[warn] --only/--skip/--corp-codes 는 --stage all 일 때만 적용 (현재 stage={stage} 무시)")
         raise SystemExit(single_stage_mods[stage].main())
     if stage != "all":
-        typer.echo(f"unknown stage: {stage}. choose: all/a/b1/b2/b3/b4")
+        typer.echo(f"unknown stage: {stage}. choose: all/a/b1/b2/b3")
         raise typer.Exit(1)
 
     # bulk_collect: argv 조립
@@ -310,7 +237,6 @@ def ingest(
     if corp_codes: argv += ["--corp-codes", corp_codes]
     argv += ["--from-year", str(from_year),
              "--to-year", str(to_year),
-             "--news-since", news_since,
              "--profile", profile]
     sys.argv = argv
     raise SystemExit(_bc.app(standalone_mode=False))
@@ -352,47 +278,18 @@ def promote_run_cmd():
         raise SystemExit(promote_run.main())
 
 
-def _detect_new_corps_and_mark_rule_recheck() -> int:
-    """.env CORPS vs Neo4j Organization 비교. 신규 회사 있으면
-    news_raw.meta 에 rule_recheck 마커 (LLM 결과 보존, 룰만 재실행).
-    Returns: 마크된 row 수 (0 이면 신규 회사 없음)."""
-    import json as _json
-    from polaris.config import mariadb_conn, neo4j_driver, CORPS
-    drv = neo4j_driver()
-    try:
-        with drv.session() as s:
-            rows = s.run("MATCH (o:Organization) RETURN o.corp_code AS c").data()
-            org_set = {r["c"] for r in rows if r.get("c")}
-    finally:
-        drv.close()
-    new_corps = [c for c in CORPS if c not in org_set]
-    if not new_corps:
-        return 0
-    typer.echo(f"[build] 신규 회사 감지: {new_corps} → news_raw.meta rule_recheck 마커 (룰 재실행, LLM 결과 보존)")
-    conn = mariadb_conn(); cur = conn.cursor()
-    # 기존 meta 보존하고 needs_rule_recheck 플래그만 추가
-    cur.execute("""UPDATE news_raw
-                   SET meta = JSON_SET(COALESCE(meta, JSON_OBJECT()), '$.needs_rule_recheck', TRUE)""")
-    n = cur.rowcount; conn.commit(); cur.close(); conn.close()
-    return n
-
-
 @app.command()
 def build(
     skip_init: bool = typer.Option(False, "--skip-init",
         help="init-db 건너뛰기 (이미 스키마 있을 때)"),
-    sources: str = typer.Option("all",
-        help="load-source 대상 (all / news,krx,bok,kosis,ftc / none)"),
     skip_chunking: bool = typer.Option(False, "--skip-chunking",
         help="stage_a/b + chunk/table + chunk/text + embed 건너뛰기 (raw·청크·임베딩 이미 갱신 완료 시)"),
     skip_graph: bool = typer.Option(False, "--skip-graph",
         help="graph-extract + ER 인덱스 재빌드 건너뛰기 (정형 그래프 영역 갱신 X)"),
     skip_semantic: bool = typer.Option(False, "--skip-semantic",
         help="의미 그래프 LLM 추출 건너뛰기 (회사당 30분~수 시간 절약, 기본 실행)"),
-    no_invalidate_news: bool = typer.Option(False, "--no-invalidate-news",
-        help="신규 회사 감지 시 news_raw.meta 무효화 skip"),
 ):
-    """전체 적재 통합: alias + 정제 + 청크화 + 임베딩 + 3DB 적재 + load-source + finmetric + 그래프 추출.
+    """전체 적재 통합 (DART 단일 소스): alias + 정제 + 청크화 + 임베딩 + 3DB 적재 + finmetric + 그래프 추출.
 
     신규 회사 추가 자동 처리 (정형 영역, 항상 실행):
       1)  organizations.yml 에 corps.json lookup 기반 stub 엔트리 자동 append
@@ -401,25 +298,22 @@ def build(
       4)  DART JSON -> table_nl.jsonl + body_clean -> text.jsonl (chunk.table/text)
       5)  bge-m3 임베딩 (idempotent: 기존 npy 보존, --force 로 재생성)
       6)  MariaDB / Qdrant / Neo4j 적재 (chunk_index + dart_raw_index + document_index)
-      7)  news / krx / bok / kosis / ftc load-source
-      8)  Neo4j Organization + FinMetric (load-finmetric)
-      9)  graph-extract (Person / EXECUTIVE_OF / INVESTS_IN / AFFILIATED_WITH / Event)
-      10) ER 인덱스 재빌드 (polaris-org-er, 신규 회사 alias 임베딩 추가)
-      11) load-chunk-nodes (Neo4j :Chunk T4 lookup, 의미 그래프 evidence anchor)
+      7)  Neo4j Organization + FinMetric (load-finmetric)
+      8)  graph-extract (Person / EXECUTIVE_OF / INVESTS_IN / AFFILIATED_WITH / Event)
+      9)  ER 인덱스 재빌드 (polaris-org-er, 신규 회사 alias 임베딩 추가)
+      10) load-chunk-nodes (Neo4j :Chunk T4 lookup, 의미 그래프 evidence anchor)
 
     의미 그래프 (항상 실행, --skip-semantic 으로 끌 수 있음):
-      12) graph-extract-semantic (qwen3.5:9b, --resume 으로 신규 청크만)
-      13) graph-load-semantic (Statement / Relation / Event :LLMExtracted MERGE)
+      11) graph-extract-semantic (qwen3.5:9b, --resume 으로 신규 청크만)
+      12) graph-load-semantic (Statement / Relation / Event :LLMExtracted MERGE)
 
     예시:
       polaris build                    # 전부 자동 (의미 그래프 포함, 회사당 30분~수 시간)
       polaris build --skip-init        # 스키마 그대로 (회사 추가 표준)
       polaris build --skip-semantic    # 의미 그래프 LLM skip (정형만)
-      polaris build --sources none     # DART + FinMetric + 그래프 만
       polaris build --skip-chunking    # 이미 청크·임베딩 끝나 있을 때
       polaris build --skip-graph       # 정형 그래프 추출도 skip (검색만 갱신)
     """
-    import importlib
     from polaris.db import init_qdrant, init_mariadb, init_neo4j
     from polaris.db import load_qdrant, load_mariadb, load_neo4j
     from polaris.admin import (load_finmetric, ensure_aliases as _ea,
@@ -474,7 +368,7 @@ def build(
     _run("polaris-load-qdrant", load_qdrant)
     _run("polaris-load-neo4j", load_neo4j)
 
-    # 6/8 이 standby_run_id 를 발급 → 이후 load-source(7/8)·finmetric(8/N)·graph(9~)
+    # 6/8 이 standby_run_id 를 발급 → 이후 finmetric(7/N)·graph(8~)
     # 가 active(promote 전엔 None) 가 아닌 standby 로 적재하도록 환경변수 노출.
     import os as _os
     from polaris.config import mariadb_conn as _mc
@@ -484,23 +378,9 @@ def build(
     _cur.close(); _conn.close()
     if _standby:
         _os.environ["POLARIS_TARGET_RUN_ID"] = _standby
-        typer.echo(f"[build] 적재 대상 run_id = standby={_standby} (load-source·finmetric·graph 공통)")
+        typer.echo(f"[build] 적재 대상 run_id = standby={_standby} (finmetric·graph 공통)")
 
-    if sources != "none":
-        typer.echo(f"\n=== 7/8 load-source {sources} ===")
-        targets = list(SOURCE_MODULES) if sources == "all" else \
-                  [s.strip() for s in sources.split(",") if s.strip()]
-        for t in targets:
-            if t not in SOURCE_MODULES:
-                typer.echo(f"[warn] unknown source: {t} (skip)")
-                continue
-            mod_name, desc = SOURCE_MODULES[t]
-            typer.echo(f"  - {t}: {desc}")
-            _run(f"polaris-load-{t}", importlib.import_module(mod_name))
-    else:
-        typer.echo("\n=== 7/8 load-source: skip (sources=none) ===")
-
-    typer.echo("\n=== 8/N load-finmetric (Neo4j Organization + FinMetric) ===")
+    typer.echo("\n=== 7/N load-finmetric (Neo4j Organization + FinMetric) ===")
     _run("polaris-load-finmetric", load_finmetric)
 
     if not skip_graph:
@@ -517,13 +397,13 @@ def build(
             typer.echo(f"\n[build] graph 적재 대상 run_id = standby={_standby}")
 
         try:
-            typer.echo("\n=== 9/N graph-extract (Person/EXECUTIVE_OF/INVESTS_IN/AFFILIATED_WITH/Event) ===")
+            typer.echo("\n=== 8/N graph-extract (Person/EXECUTIVE_OF/INVESTS_IN/AFFILIATED_WITH/Event) ===")
             _run("polaris-graph-extract", graph_extract)
 
-            typer.echo("\n=== 10/N graph-rebuild-er-index (polaris-org-er Qdrant 컬렉션) ===")
+            typer.echo("\n=== 9/N graph-rebuild-er-index (polaris-org-er Qdrant 컬렉션) ===")
             _run("polaris-graph-er", graph_er)
 
-            typer.echo("\n=== 11/N load-chunk-nodes (Neo4j :Chunk T4 lookup, 의미 그래프 evidence anchor) ===")
+            typer.echo("\n=== 10/N load-chunk-nodes (Neo4j :Chunk T4 lookup, 의미 그래프 evidence anchor) ===")
             _run("polaris-load-chunk-nodes", load_chunk_nodes)
         finally:
             if _prev_target:
@@ -531,11 +411,11 @@ def build(
             else:
                 _os.environ.pop("POLARIS_TARGET_RUN_ID", None)
     else:
-        typer.echo("\n=== 9~11/N graph-extract + ER + chunk-nodes: skip (--skip-graph) ===")
+        typer.echo("\n=== 8~10/N graph-extract + ER + chunk-nodes: skip (--skip-graph) ===")
 
     if not skip_semantic:
         from polaris.graph import pipeline as graph_semantic, loader_semantic
-        typer.echo("\n=== 12/N graph-extract-semantic (qwen3.5:9b 의미 추출, --resume) ===")
+        typer.echo("\n=== 11/N graph-extract-semantic (qwen3.5:9b 의미 추출, --resume) ===")
         typer.echo("  ※ 회사당 30분~수 시간 — 끄려면 --skip-semantic")
         # --resume 으로 idempotent: 이미 처리한 chunk_id 이후만
         import sys as _sys
@@ -546,10 +426,10 @@ def build(
         finally:
             _sys.argv = saved
 
-        typer.echo("\n=== 13/N graph-load-semantic (Statement/Relation/Event :LLMExtracted) ===")
+        typer.echo("\n=== 12/N graph-load-semantic (Statement/Relation/Event :LLMExtracted) ===")
         _run("polaris-graph-load-semantic", loader_semantic)
     else:
-        typer.echo("\n=== 12~13/N graph-extract-semantic: skip (--skip-semantic) ===")
+        typer.echo("\n=== 11~12/N graph-extract-semantic: skip (--skip-semantic) ===")
 
     typer.echo("\n빌드 완료. 검증 후 promote 하세요:")
     typer.echo("  polaris verify        # 적재 정합 확인")

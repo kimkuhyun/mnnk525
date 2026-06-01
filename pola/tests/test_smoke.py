@@ -23,7 +23,6 @@ def test_config_corps_is_three():
     "polaris.analyze.sentiment",
     "polaris.analyze.daily_digest",
     "polaris.analyze.stock_load",
-    "polaris.ingest.news_crawl.load",
     "polaris.ingest.ir_report_ingest",
     "polaris.db.load_qdrant",
     "polaris.db.load_neo4j",
