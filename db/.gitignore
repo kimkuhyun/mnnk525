@@ -1,0 +1,17 @@
+# 로컬 환경 (루트 .gitignore에도 있지만 명시)
+.env
+.venv/
+__pycache__/
+*.pyc
+
+# 대용량·재수집 가능한 raw 데이터 (DART에서 다시 받음 — 커밋 안 함)
+raw/
+
+# 재생성 가능 산출물 (청크·추출 원장)
+chunk/output/
+graph/ledger/
+graph/extract_ledger.jsonl
+
+# 로그
+*.log
+raw_fetch.log
