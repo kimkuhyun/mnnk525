@@ -28,8 +28,35 @@ LEDGER_PATH = Path(__file__).resolve().parent / "extract_ledger.jsonl"
 # 허용 엣지 타입 (03_neo4j.md §2-2)
 EDGE_TYPES = {"PRODUCES", "USES_TECH", "SUPPLIES_TO", "RELATED_PARTY", "hasObject"}
 
-# 3사 corp_code ← 정규화 이름 역인덱스 (Organization 매칭용)
-_CORP_BY_ERNAME = {normalize_corp_name(nm): cc for cc, nm in CORP_NAME.items()}
+# corp_code ← 정규화 이름 역인덱스 (Organization 매칭용)
+# 3사 + extra28(corps.tsv) + Neo4j 의 모든 corp_code 노드 이름(㈜ 변형 포함)을 모아
+# 본문에 등장한 회사명을 실제 corp_code 노드로 연결한다(needs_er 중복 방지).
+def _build_corp_index() -> dict:
+    idx = {normalize_corp_name(nm): cc for cc, nm in CORP_NAME.items()}
+    tsv = Path(__file__).resolve().parent.parent / "extra28" / "corps.tsv"
+    if tsv.exists():
+        for line in tsv.read_text(encoding="utf-8").splitlines()[1:]:
+            parts = line.split("\t")
+            if len(parts) >= 2:
+                k = normalize_corp_name(parts[1].strip())
+                if k:
+                    idx.setdefault(k, parts[0].strip())
+    try:
+        drv = neo4j_driver()
+        with drv.session() as s:
+            for rec in s.run(
+                "MATCH (o:Organization) WHERE o.corp_code IS NOT NULL "
+                "AND o.name IS NOT NULL RETURN o.corp_code AS cc, o.name AS nm"
+            ):
+                k = normalize_corp_name(rec["nm"])
+                if k:
+                    idx.setdefault(k, rec["cc"])
+    except Exception:
+        pass
+    return idx
+
+
+_CORP_BY_ERNAME = _build_corp_index()
 
 
 # ── 결정론 id ──────────────────────────────────────────────

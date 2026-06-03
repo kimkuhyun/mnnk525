@@ -36,8 +36,12 @@ pola/scripts/news_graph/*/
 .claude/
 /CLAUDE.md
 
-# ── DB 덤프 산출물 (별도 전달 — 레포에 커밋 안 함) ──
-/dump/out/
+# ── DB 덤프 폴더 (별도 전달 — 레포에 커밋 안 함) ──
+/dump/
+
+# ── 추출 런타임 작업물 (auto_runner가 생성·삭제하는 배치/결과) ──
+db/graph/_auto/*
+!db/graph/_auto/PROMPT.txt
 
 # ── OS / IDE ──
 .DS_Store

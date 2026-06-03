@@ -178,14 +178,17 @@ def resolve_org_corp(target_name: str) -> str | None:
     return None
 
 
-def link_org_to_target(tx, src_corp: str, target_name: str, rel: str, props: dict):
-    """src(corp_code) → target(31사 corp_code 노드 또는 needs_er 임시 노드)."""
+def link_org_to_target(tx, src_corp: str, target_name: str, rel: str, props: dict,
+                       reverse: bool = False):
+    """src(corp_code) → target(31사 corp_code 노드 또는 needs_er 임시 노드).
+    reverse=True 면 target→src 방향(최대주주현황: 명시 회사가 주주, 공시회사가 피소유)."""
     target_corp = resolve_org_corp(target_name)
+    edge = f"(t)-[r:{rel}]->(s)" if reverse else f"(s)-[r:{rel}]->(t)"
     if target_corp:
         cy = (
             "MATCH (s:Organization {corp_code:$src}) "
             "MERGE (t:Organization {corp_code:$tc}) "
-            f"MERGE (s)-[r:{rel}]->(t) SET r += $props"
+            f"MERGE {edge} SET r += $props"
         )
         tx.run(cy, src=src_corp, tc=target_corp, props=props)
     else:
@@ -196,7 +199,7 @@ def link_org_to_target(tx, src_corp: str, target_name: str, rel: str, props: dic
             "MATCH (s:Organization {corp_code:$src}) "
             "MERGE (t:Organization {er_name:$er, has_corp_code:false}) "
             "ON CREATE SET t.name=$name, t.needs_er=true, t.has_corp_code=false "
-            f"MERGE (s)-[r:{rel}]->(t) SET r += $props"
+            f"MERGE {edge} SET r += $props"
         )
         tx.run(cy, src=src_corp, er=er, name=target_name, props=props)
 
@@ -413,7 +416,7 @@ def main() -> None:
                             continue
                         seen_msh.add(key)
                         s.execute_write(link_org_to_target, corp_code, nm,
-                                        "IS_MAJOR_SHAREHOLDER_OF", props)
+                                        "IS_MAJOR_SHAREHOLDER_OF", props, reverse=True)
                         counters["msh_org"] += 1
 
             # 2-3 타법인출자 INVESTS_IN

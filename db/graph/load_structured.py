@@ -92,9 +92,12 @@ def upsert_name_org(tx, name: str):
     )
 
 
-def link_org_to_target(tx, src_corp: str, target_name: str, rel: str, props: dict):
+def link_org_to_target(tx, src_corp: str, target_name: str, rel: str, props: dict,
+                       reverse: bool = False):
     """src(corp_code) → target(name 노드 또는 corp_code 노드) 정형 엣지.
-    target 이 3사면 corp_code 매칭, 아니면 er_name 임시 노드."""
+    target 이 3사면 corp_code 매칭, 아니면 er_name 임시 노드.
+    reverse=True 면 엣지 방향을 target→src 로 만든다(최대주주현황: 명시된 회사가 주주,
+    공시회사가 피소유 → 주주→회사 방향이어야 함)."""
     er = normalize_corp_name(target_name)
     # 3사 corp_code 매칭 시도
     target_corp = None
@@ -102,11 +105,12 @@ def link_org_to_target(tx, src_corp: str, target_name: str, rel: str, props: dic
         if normalize_corp_name(nm) == er:
             target_corp = cc
             break
+    edge = f"(t)-[r:{rel}]->(s)" if reverse else f"(s)-[r:{rel}]->(t)"
     if target_corp:
         cy = (
             "MATCH (s:Organization {corp_code:$src}) "
             "MERGE (t:Organization {corp_code:$tc}) "
-            f"MERGE (s)-[r:{rel}]->(t) SET r += $props"
+            f"MERGE {edge} SET r += $props"
         )
         tx.run(cy, src=src_corp, tc=target_corp, props=props)
     else:
@@ -114,7 +118,7 @@ def link_org_to_target(tx, src_corp: str, target_name: str, rel: str, props: dic
             "MATCH (s:Organization {corp_code:$src}) "
             "MERGE (t:Organization {er_name:$er, has_corp_code:false}) "
             "ON CREATE SET t.name=$name, t.needs_er=true, t.has_corp_code=false "
-            f"MERGE (s)-[r:{rel}]->(t) SET r += $props"
+            f"MERGE {edge} SET r += $props"
         )
         tx.run(cy, src=src_corp, er=er, name=target_name, props=props)
 
@@ -224,7 +228,7 @@ def main() -> None:
                             continue
                         seen_msh.add(key)
                         s.execute_write(link_org_to_target, corp_code, nm,
-                                        "IS_MAJOR_SHAREHOLDER_OF", props)
+                                        "IS_MAJOR_SHAREHOLDER_OF", props, reverse=True)
                         counters["msh_org"] += 1
 
             # 2-3 타법인출자 INVESTS_IN (Org→Org, 피출자=inv_prm)

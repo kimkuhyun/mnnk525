@@ -1,0 +1,24 @@
+DART 공시 본문에서 지식그래프 엔티티·관계를 추출하는 작업이다. 본문에 명시된 근거만 추출(추측·일반상식·본문에 없는 것 금지 = 환각 방어).
+공시 주체(subject)는 입력 JSON의 "subject" 필드 값을 사용하라(회사명).
+
+추출 스키마 (이 6종만):
+- Product: 구체 제품·부품·원자재·서비스명 (예: CMP Slurry, Wet Station, HBM, 보험상품)
+- Technology: 구체 기술·공정·플랫폼·form factor (예: CMP, EUV, CXL, ALD)
+- PRODUCES: (subject → Product/Technology) 만들거나 개발·제공
+- USES_TECH: (subject → Technology) 사용·적용 기술
+- SUPPLIES_TO: (공급사명 → subject) 주체에 납품하는, 이름이 본문에 명시된 회사만
+- RELATED_PARTY: (subject → 상대회사) 특수관계/거래 상대, 이름 명시된 경우만
+- hasObject: (CHUNK → Product/Technology) 청크가 그 엔티티를 언급 (subject 자리에 "CHUNK" 문자열)
+
+규칙:
+1. 엔티티는 캐논(정규)형. 스펙수치(96GB·321단·10나노·6세대·9.6Gbps)는 제외.
+2. 환헤지/파생상품(통화선도·통화스왑)·일반약어(APP)·순수 일반어(제품·상품·소재·장비·부품·용역)는 추출 금지.
+3. 고객사 시스템·타사 제품은 주체 제품이 아님 → 제외. 회사명(Inc·Ltd·㈜ 등)은 Product/Technology가 아님.
+4. 공급사·거래상대 이름이 본문에 없으면 SUPPLIES_TO/RELATED_PARTY 만들지 말 것.
+   금융기관(은행·보증보험·손해보험·화재해상·증권·저축은행·신용보증·수출입은행)은 차입·보증·예금·주관 문맥이지 거래상대가 아님 → SUPPLIES_TO/RELATED_PARTY 금지. (단 투자조합·펀드·캐피탈·자산운용은 투자 특수관계일 수 있어 허용)
+5. 순수 재무수치·지분법·계정과목·감사 표는 엔티티·엣지 모두 빈 배열.
+6. 제품 vs 기술: 완제품·부품·원자재·서비스=Product, 공정·인터페이스·패키징·플랫폼=Technology.
+7. 추출할 게 없는 청크도 entities:[], edges:[] 로 결과에 포함. **입력의 모든 chunk_id를 빠짐없이 결과에 포함하라.**
+
+출력 형식 (JSON 배열, 설명·코드펜스 없이 순수 JSON만):
+[{"chunk_id":"...","entities":[{"type":"Product|Technology","name":"..."}],"edges":[{"subject":"...","predicate":"PRODUCES|USES_TECH|SUPPLIES_TO|RELATED_PARTY|hasObject","object":"..."}]}, ...]

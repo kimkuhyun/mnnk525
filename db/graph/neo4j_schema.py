@@ -10,10 +10,8 @@ CONSTRAINTS = [
     ("finmetric_id", "FinMetric", "metric_id"),
     ("product_id", "Product", "product_id"),
     ("tech_id", "Technology", "tech_id"),
-    ("activity_key", "ExtractionActivity", "activity_id"),
     ("chunk_key", "Chunk", "chunk_id"),
-    ("statement_key", "Statement", "statement_id"),
-    ("event_key", "Event", "event_id"),
+    # Statement·Event·ExtractionActivity reification 노드는 설계에서 제거(03_neo4j.md §1) — 제약 미생성
 ]
 
 
