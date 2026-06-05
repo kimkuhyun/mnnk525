@@ -44,7 +44,7 @@ PROMPT = """공시 주체(subject) = "{subject}".
 - entity `Technology`: 구체 기술·공정·플랫폼·form factor (예: TLC, EUV, CXL, SOCAMM, AI)
 - edge `PRODUCES`: ({subject} → Product/Technology) — 주체가 만들거나 개발·제공
 - edge `USES_TECH`: ({subject} → Technology) — 주체가 사용·적용하는 기술
-- edge `SUPPLIES_TO`: (공급사명 → {subject}) — 주체에 납품하는 **이름이 명시된** 회사만
+- edge `SUPPLIES_TO`: 실제 공급 방향(공급사 → 수요사). 주체의 주요 매출처/고객사는 `{subject} → 고객사`, 주체의 주요 매입처/공급사는 `공급사 → {subject}`.
 - edge `RELATED_PARTY`: ({subject} → 상대회사) — 특수관계/거래 상대, **이름 명시된** 경우만
 - edge `hasObject`: (CHUNK → Product/Technology) — 청크가 그 엔티티를 언급(주어는 청크 자리표시자 "CHUNK")
 
@@ -52,7 +52,7 @@ PROMPT = """공시 주체(subject) = "{subject}".
 1. 엔티티는 캐논(정규)형. **스펙 수치는 제품/기술이 아님 → 제외**: 용량(96GB), 단수(321단),
    공정노드(1cnm·10나노), 세대수식(6세대), 속도(9.6Gbps). 예: "321단 1Tb TLC"→ TLC 만.
 2. 고객사 시스템·타사 제품은 주체 제품이 아님 → 제외.
-3. 공급사·거래상대 **이름이 본문에 없으면**(예: "6개사로부터 공급") SUPPLIES_TO/RELATED_PARTY 만들지 말 것.
+3. 공급사·고객사·거래상대 **이름이 본문에 없으면**(예: "6개사로부터 공급") SUPPLIES_TO/RELATED_PARTY 만들지 말 것.
 4. 순수 재무수치·지분법·계정과목 표는 엔티티·엣지 모두 빈 배열.
 5. 제품 vs 기술: 완제품·부품·원자재·서비스=Product, 공정·인터페이스·패키징·플랫폼·form factor=Technology.
 

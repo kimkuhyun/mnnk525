@@ -5,7 +5,7 @@
 1) MariaDB fin_metric upsert (graph/load_finmetric.py 와 동일 규칙).
 2) Neo4j: 기존 needs_er Organization 노드(이름 변형 포함)에 corp_code 부여 + needs_er=false.
    새 Organization 노드 만들지 않음(기존 지분/계열 엣지 보존).
-   FinMetric + HAS_METRIC(Org→FinMetric) + DERIVED_FROM(FinMetric→FilingDocument).
+   FinMetric + HAS_METRIC(Org→FinMetric). v3: FilingDocument/DERIVED_FROM 제거(출처=rcept_no 속성).
 3) 재무없는 비상장사는 corp_code 만 부여, FinMetric 생략.
 
 실행: cd db && uv run python extra_finance/load_extra_finance.py
@@ -205,6 +205,7 @@ def main() -> None:
             # 3) FinMetric + HAS_METRIC + DERIVED_FROM (재무 있을 때만)
             #    변형 노드가 여럿이면 corp_code 매칭으로 모두에 연결됨(HAS_METRIC).
             if neo_rows:
+                # v3: FilingDocument/DERIVED_FROM 제거 — 출처는 FinMetric.rcept_no 속성.
                 for i in range(0, len(neo_rows), 500):
                     batch = neo_rows[i:i + 500]
                     s.run(
@@ -212,14 +213,10 @@ def main() -> None:
                         UNWIND $rows AS row
                         MERGE (m:FinMetric {metric_id: row.metric_id})
                         SET m.account_id=row.account_id, m.bsns_year=row.bsns_year,
-                            m.value=row.value, m.unit=row.unit
+                            m.value=row.value, m.unit=row.unit, m.rcept_no=row.rcept_no
                         WITH m, row
                         MATCH (o:Organization {corp_code: row.corp_code})
                         MERGE (o)-[:HAS_METRIC]->(m)
-                        WITH m, row
-                        WHERE row.rcept_no IS NOT NULL AND row.rcept_no <> ''
-                        MERGE (f:FilingDocument {rcept_no: row.rcept_no})
-                        MERGE (m)-[:DERIVED_FROM]->(f)
                         """,
                         rows=batch,
                     )

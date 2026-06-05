@@ -10,6 +10,7 @@
 """
 from __future__ import annotations
 
+import argparse
 import sys
 from pathlib import Path
 
@@ -68,15 +69,24 @@ def load_doc_dates(cur) -> dict[str, str]:
     return out
 
 
-def fetch_chunks(cur):
+def fetch_chunks(cur, *, only_pending: bool = True):
+    where = "WHERE ingest_status='pending'" if only_pending else ""
     cur.execute(
         "SELECT chunk_id, corp_code, rcept_no, chunk_type, section_path, embedding_text "
-        "FROM chunk_index ORDER BY chunk_id"
+        f"FROM chunk_index {where} ORDER BY chunk_id"
     )
     return cur.fetchall()
 
 
 def main() -> None:
+    ap = argparse.ArgumentParser()
+    ap.add_argument(
+        "--all",
+        action="store_true",
+        help="ready 상태까지 포함해 전체 chunk를 다시 upsert",
+    )
+    args = ap.parse_args()
+
     qc = qdrant_client()
     print("[1/3] 컬렉션 보장...")
     ensure_collection(qc)
@@ -86,9 +96,10 @@ def main() -> None:
     try:
         with conn.cursor() as cur:
             doc_dates = load_doc_dates(cur)
-            rows = fetch_chunks(cur)
+            rows = fetch_chunks(cur, only_pending=not args.all)
         total = len(rows)
-        print(f"[2/3] 임베딩+upsert 시작 — 청크 {total}건, 배치 {BATCH}.")
+        scope = "전체" if args.all else "pending"
+        print(f"[2/3] 임베딩+upsert 시작 — {scope} 청크 {total}건, 배치 {BATCH}.")
 
         points: list[PointStruct] = []
         ready_ids: list[str] = []

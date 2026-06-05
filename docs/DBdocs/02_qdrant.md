@@ -111,7 +111,7 @@ client.create_payload_index(
 
 ### 2.2 `polaris-org-er`
 
-추출된 회사명을 임베딩하여 기존 `corp_code` 와 매칭하는 Entity Resolution 전용 컬렉션이다. 뉴스·공시에서 등장한 회사명을 정규 코드로 연결한다.
+추출된 회사명을 임베딩하여 기존 `corp_code` 와 매칭하는 Entity Resolution 전용 컬렉션이다. 공시 본문에서 등장한 회사명을 정규 코드로 연결한다.
 
 #### 컬렉션 스펙 표
 
@@ -129,7 +129,7 @@ client.create_payload_index(
 |---|---|---|---|
 | `corp_code` | keyword | ○ | 매칭 대상 회사 코드(교차키) |
 | `name` | text | - | 회사명 표면형 |
-| `source` | keyword | - | 회사명 출처(DART, 뉴스 추출 등) |
+| `source` | keyword | - | 회사명 출처(DART, 본문 추출 등) |
 
 #### 생성 예시 — JSON config
 

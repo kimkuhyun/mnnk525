@@ -5,7 +5,7 @@
 지분구조와 재무를 1급 시민으로 다루고, 시점별 변화를 감지하는 것이 핵심입니다.
 
 > 목적: 사업화가 아니라 AI 엔지니어링 학습·포트폴리오 용도입니다.
-> 기준일: 2026-06-01
+> 기준일: 2026-06-05 (적재 41개사)
 
 ---
 
@@ -55,8 +55,8 @@ SSOT = Single Source of Truth. 즉, 같은 사실이 여러 군데 흩어져 있
 
 | 키 | 형식 | MariaDB 위치 | Qdrant 위치 | Neo4j 위치 |
 |----|------|-------------|-------------|-----------|
-| `corp_code` | 8자리 숫자 (기업 고유코드) | 기업·재무·지분·임원 테이블 PK/FK | payload 필드 | `(:Company {corp_code})` |
-| `rcept_no` | 14자리 숫자 (공시 접수번호) | `dart_raw_index` PK, 근거원장 | payload 필드 | `(:Form {rcept_no})`, 관계 근거 |
+| `corp_code` | 8자리 숫자 (기업 고유코드) | 기업·재무·지분·임원 테이블 PK/FK | payload 필드 | `(:Organization {corp_code})` |
+| `rcept_no` | 14자리 숫자 (공시 접수번호) | `dart_raw_index` PK, 근거원장 | payload 필드 | `FinMetric`·`Chunk` 노드 속성 + 추출엣지 속성(관계 근거) |
 | `chunk_id` | 16자리 hex (청크 식별자, 콘텐츠 해시이므로 단독 유일) | `chunk_index` PK | point id | `(:Chunk {chunk_id})` |
 
 `rcept_no`가 답변의 출처가 되는 핵심 근거키입니다. 모든 추출 관계는 결국 이 번호로 역추적됩니다.
@@ -77,19 +77,19 @@ dart_raw_index  (원본 SSOT, rcept_no 기준)
    +--[정형 데이터]----> fin_metric (재무) / 지분 / 임원  ──┐
    |                                                      │ (청킹 우회, 정형 직행)
    |                                                      v
-   |                                                  Neo4j: FinMetric · OWNS(지분) · 임원
+   |              Neo4j: FinMetric · IS_MAJOR_SHAREHOLDER_OF/INVESTS_IN(지분) · EXECUTIVE_OF(임원)
    |
    +--[본문 데이터]----> chunk_index (본문 청킹, chunk_id 기준)
                               |
                               +--(임베딩 bge-m3)----> Qdrant 컬렉션 (의미검색)
                               |
-                              +--(Claude 추출)------> Neo4j 관계 + DERIVED_FROM→Chunk
+                              +--(추출)------------> Neo4j 관계(엣지 속성 chunk_id로 근거 역추적)
 ```
 
 포인트:
 - 정형 재무·지분·임원은 청킹을 거치지 않고 곧장 Neo4j로 들어갑니다(정형 직행).
 - 본문은 `chunk_index`를 거쳐 임베딩(Qdrant)과 관계추출(Neo4j) 양쪽으로 갑니다.
-- 관계추출은 Claude가 직접 수행하며, 추출된 관계는 반드시 출처 청크(`Chunk`)와 `rcept_no`에 연결됩니다.
+- 관계추출은 Claude 직접 우선(로컬LLM은 빡센 QC 통과 시 조건부 허용), 추출 관계는 엣지 속성 `chunk_id`(→`Chunk`)·`rcept_no`로 근거 역추적됩니다(별도 FilingDocument/DERIVED_FROM 노드 없음).
 
 ### 3.1 청킹 정책 (본문 → `chunk_index`)
 
@@ -156,6 +156,7 @@ dart_raw_index  (원본 SSOT, rcept_no 기준)
 | [01_mariadb.md](01_mariadb.md) | MariaDB ERD — 원본 테이블, 정형 재무, 청크, 근거원장(PROV) |
 | [02_qdrant.md](02_qdrant.md) | Qdrant 컬렉션 스펙 — bge-m3 1024차원 Cosine, payload |
 | [03_neo4j.md](03_neo4j.md) | Neo4j 노드·관계·다이어그램 — 지분/재무 1급, 멀티홉, PROV 근거추적 |
+| [04_graphrag.md](04_graphrag.md) | GraphRAG 답변 레이어 — 5단계 사다리, 재무 조회 규약(계정사전·연간연결 필터), 의도 카탈로그, 온톨로지 규칙 Cypher |
 
 ---
 
@@ -164,9 +165,9 @@ dart_raw_index  (원본 SSOT, rcept_no 기준)
 1. 스키마 우선 갱신 — 새 테이블·노드·엣지를 추가/변경하면 반드시 이 설계 문서를 먼저 갱신한 뒤 구현합니다.
 2. 교차키 일관 — `corp_code`·`rcept_no`·`chunk_id`의 형식을 모든 DB에서 동일하게 유지합니다.
 3. 관계 출처 구분 — 관계 엣지는 출처를 구분해 보존합니다.
-   - `extracted_by = 'claude'` : Claude가 본문에서 추출(언급·해석)한 관계
+   - `extracted_by = 'claude'`(또는 로컬LLM `'q3.5:9b'` 등) : 본문에서 추출(언급·해석)한 관계
    - `extracted_by IS NULL` : DART 공시에 명시된 사실 그대로
-4. 근거추적 필수 — 모든 추출 관계는 `DERIVED_FROM → Chunk`로 연결하고, `rcept_no`로 원본 공시까지 역추적 가능해야 합니다(PROV-O 표준 준용).
+4. 근거추적 필수 — 모든 추출 관계는 **엣지 속성 `chunk_id`**(→ `(:Chunk {chunk_id})`)와 `rcept_no`로 원본 공시까지 역추적 가능해야 합니다 + MariaDB `extraction_provenance` 원장 1행(PROV-O 준용). **별도 reification/FilingDocument/DERIVED_FROM 노드는 만들지 않습니다**(v3 — 03_neo4j.md §1·§6).
 
 ---
 
@@ -178,10 +179,10 @@ dart_raw_index  (원본 SSOT, rcept_no 기준)
 |------|------|----------|
 | 제거 | 감성(sentiment) | 삭제 — 공시는 사실 기반이라 감성 분석 불필요 |
 | 제거 | 키워드(keyword) | 삭제 — 키워드 집계 레이어 폐기 |
-| 제거 | 뉴스 일별집계 | 삭제 — 뉴스는 선택(기본 제외) |
+| 제거 | 뉴스 일별집계 | 삭제 — 뉴스 소스 자체 폐기(신규 추가 금지) |
 | 제거 | 커뮤니티/SNS | 삭제 — 소스 자체 폐기 |
 | 제거 | `document_unified` 통합레이어 | 삭제 — `dart_raw_index → chunk_index` 직행으로 단순화 |
-| 승격 | 지분 + 재무 그래프 | 1급 시민으로 승격 — Neo4j `OWNS(지분,시점)`·`FinMetric` |
+| 승격 | 지분 + 재무 그래프 | 1급 시민으로 승격 — Neo4j `IS_MAJOR_SHAREHOLDER_OF`/`INVESTS_IN`/`IS_SUBSIDIARY_OF`(지분)·`FinMetric` |
 | 승격 | 변화감지 | 시점별 변화 추적을 핵심 기능으로 채택 |
 
 참고한 레퍼런스: Neo4j sec-edgar(Company/Person/Form/Chunk + OWNS{지분,시점}), Microsoft GraphRAG(Local/Global 검색), PROV-O(근거추적 표준).

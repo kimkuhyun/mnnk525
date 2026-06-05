@@ -47,9 +47,8 @@ def main() -> None:
             """
             MATCH (o:Organization {corp_code:$cc})-[:HAS_METRIC]->(m:FinMetric)
             WHERE m.account_id = 'ifrs-full_Revenue'
-            OPTIONAL MATCH (m)-[:DERIVED_FROM]->(f:FilingDocument)
             RETURN m.bsns_year AS 연도, m.value AS 매출, m.unit AS 단위,
-                   f.rcept_no AS 원문, m.metric_id AS metric_id
+                   m.rcept_no AS 원문, m.metric_id AS metric_id
             ORDER BY 연도 DESC, 매출 DESC LIMIT 8
             """,
             cc=SAMSUNG,
@@ -57,12 +56,14 @@ def main() -> None:
         for r in rows:
             print(f"  {r['연도']} 매출={r['매출']} {r['단위']} (rcept={r['원문']})")
 
-        # reports / has_chunk 연결 수
-        print("\n===== reports / has_chunk 연결 수 =====")
-        r = s.run("MATCH ()-[r:reports]->() RETURN count(r) AS c").single()
-        print(f"  reports: {r['c']}")
-        r = s.run("MATCH ()-[r:has_chunk]->() RETURN count(r) AS c").single()
-        print(f"  has_chunk: {r['c']}")
+        # v3 회귀 가드: FilingDocument/reports/has_chunk/DERIVED_FROM = 전부 0 이어야 정상
+        print("\n===== v3 회귀 가드 (전부 0 이어야 함) =====")
+        for q, nm in [("MATCH (f:FilingDocument) RETURN count(f) AS c", "FilingDocument"),
+                      ("MATCH ()-[r:reports]->() RETURN count(r) AS c", "reports"),
+                      ("MATCH ()-[r:has_chunk]->() RETURN count(r) AS c", "has_chunk"),
+                      ("MATCH ()-[r:DERIVED_FROM]->() RETURN count(r) AS c", "DERIVED_FROM")]:
+            c = s.run(q).single()["c"]
+            print(f"  {nm}: {c}" + ("  ⚠회귀!" if c else ""))
     d.close()
 
     conn = mariadb_conn()

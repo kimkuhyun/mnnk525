@@ -357,6 +357,8 @@ def main() -> int:
                     help="시작 전 대기(초) — DART 차단 쿨다운 해제용")
     ap.add_argument("--start-from", default="",
                     help="이 회사명부터 재개 (앞 회사들 건너뜀)")
+    ap.add_argument("--corp-code", action="append", default=[],
+                    help="지정한 corp_code만 처리. 여러 번 지정 가능")
     args = ap.parse_args()
 
     if not API_KEY:
@@ -372,8 +374,19 @@ def main() -> int:
         log("corps.tsv 비어 있음")
         return 1
 
+    if args.corp_code:
+        wanted = {c.strip() for c in args.corp_code if c.strip()}
+        original_len = len(corps)
+        corps = [(code, name) for code, name in corps if code in wanted]
+        missing = sorted(wanted - {code for code, _ in corps})
+        if missing:
+            log(f"--corp-code: corps.tsv 미발견 {', '.join(missing)}")
+        log(f"--corp-code: {len(corps)}개 선택 ({original_len - len(corps)}개 제외)")
+        if not corps:
+            return 1
+
     # --start-from 재개 처리
-    if args.start_from:
+    if args.start_from and not args.corp_code:
         skip_until = args.start_from.strip()
         original_len = len(corps)
         found = False
@@ -386,6 +399,8 @@ def main() -> int:
             log(f"--start-from: {skip_until} 부터 재개 ({original_len - len(corps)}개 건너뜀)")
         else:
             log(f"--start-from: '{skip_until}' 미발견 — 전체 처리")
+    elif args.start_from and args.corp_code:
+        log("--corp-code 지정으로 --start-from은 fetch 단계에서 무시")
 
     log(f"대상 {len(corps)}개사  기간 {BGN_DE}~{END_DE}")
     log(f"저장 경로: {RAW}")

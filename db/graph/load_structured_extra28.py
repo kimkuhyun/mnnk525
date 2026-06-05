@@ -1,13 +1,13 @@
-"""28개 연결사 정형 노드+엣지 적재 (extracted_by 미부여 = DART 사실). 멱등 MERGE.
+"""extra corps 정형 노드+엣지 적재 (extracted_by 미부여 = DART 사실). 멱등 MERGE.
 
-load_structured.py 와 동일 로직. 대상만 28개사 + resolve_org 에 3사+28사(=31사)
+load_structured.py 와 동일 로직. 대상은 db/extra28/corps.tsv + 원본 3사.
 corp_code 마스터 포함 → 회사 간 지분 엣지를 실제 corp_code 노드끼리 연결(다홉 체인).
 
-노드: Organization(28개사) · Person(임원·개인주주) · FilingDocument · Chunk
+노드: Organization(extra corps) · Person(임원·개인주주)
 엣지: EXECUTIVE_OF · IS_MAJOR_SHAREHOLDER_OF · INVESTS_IN · IS_SUBSIDIARY_OF
-      · reports · has_chunk
+(v3: FilingDocument/Chunk 노드·reports/has_chunk 엣지 생성 제거 — 03_neo4j.md §7-5)
 
-입력: db/raw/{회사}/ds002/*.json + 사업보고서 zip(종속회사) + MariaDB chunk_index/document_index.
+입력: db/raw/{회사}/ds002/*.json + 사업보고서 zip(종속회사).
 """
 from __future__ import annotations
 
@@ -21,7 +21,6 @@ if str(GRAPH_DIR) not in sys.path:
     sys.path.insert(0, str(GRAPH_DIR))
 
 from db import (
-    mariadb_conn,
     neo4j_driver,
     normalize_corp_name,
     parse_number,
@@ -29,39 +28,30 @@ from db import (
     person_id,
 )
 
-RAW_DIR = Path(r"C:\Users\kimkuhyn\Desktop\mnnk525\db\raw")
+DB_DIR = GRAPH_DIR.parent
+RAW_DIR = DB_DIR / "raw"
+CORPS_TSV = DB_DIR / "extra28" / "corps.tsv"
 
-# ── 28개사 corp_code / 폴더명 매핑 ─────────────────────────
-EXTRA28: list[tuple[str, str]] = [
-    ("00126362", "삼성SDI"),
-    ("00126371", "삼성전기"),
-    ("00126186", "삼성에스디에스"),
-    ("00912006", "삼성디스플레이"),
-    ("00149655", "삼성물산"),
-    ("00126256", "삼성생명"),
-    ("00139214", "삼성화재"),
-    ("00126478", "삼성중공업"),
-    ("00877059", "삼성바이오로직스"),
-    ("00148276", "제일기획"),
-    ("00158501", "에스원"),
-    ("00165680", "호텔신라"),
-    ("00181712", "SK"),
-    ("01596425", "SK스퀘어"),
-    ("01555631", "SK키파운드리"),
-    ("01265516", "SK하이닉스시스템IC"),
-    ("00652706", "SK하이스텍"),
-    ("00415390", "SK하이이엔지"),
-    ("00560070", "한미네트웍스"),
-    ("01241987", "한화세미텍"),
-    ("00118804", "동진쎄미켐"),
-    ("01489648", "솔브레인"),
-    ("01135941", "원익IPS"),
-    ("00216647", "원익홀딩스"),
-    ("01261893", "케이씨텍"),
-    ("00411048", "에스앤에스텍"),
-    ("00223434", "에프에스티"),
-    ("01478712", "대덕전자"),
-]
+
+def _load_extra_corps() -> list[tuple[str, str]]:
+    corps: list[tuple[str, str]] = []
+    if not CORPS_TSV.exists():
+        raise FileNotFoundError(f"corps.tsv not found: {CORPS_TSV}")
+    for line in CORPS_TSV.read_text(encoding="utf-8").splitlines()[1:]:
+        line = line.strip()
+        if not line:
+            continue
+        parts = line.split("\t")
+        if len(parts) < 2:
+            continue
+        corp_code = parts[0].strip()
+        folder = parts[1].strip()
+        if corp_code and folder:
+            corps.append((corp_code, folder))
+    return corps
+
+
+EXTRA28: list[tuple[str, str]] = _load_extra_corps()
 
 # 원본 3사
 BASE3: dict[str, str] = {
@@ -70,10 +60,10 @@ BASE3: dict[str, str] = {
     "00161383": "한미반도체(주)",
 }
 
-# 전체 31사 corp_code → name (resolve_org 매칭용)
+# 전체 대상 corp_code → name (resolve_org 매칭용)
 ALL_CORP_NAME: dict[str, str] = dict(BASE3)
 
-# 28사 company.json 에서 이름 로드 → ALL_CORP_NAME 채움
+# extra corps company.json 에서 이름 로드 → ALL_CORP_NAME 채움
 def _load_company_name(corp_code: str, folder: str) -> str:
     cj_path = RAW_DIR / folder / "company.json"
     if cj_path.exists():
@@ -166,9 +156,9 @@ def base_orgs_extra28() -> list[dict]:
     return orgs
 
 
-# ── resolve_org: 31사 corp_code 로 매칭 ────────────────────
+# ── resolve_org: 대상 corp_code 로 매칭 ────────────────────
 def resolve_org_corp(target_name: str) -> str | None:
-    """target_name 이 31사(3+28) 중 하나면 corp_code 반환, 아니면 None."""
+    """target_name 이 대상 회사 중 하나면 corp_code 반환, 아니면 None."""
     er = normalize_corp_name(target_name)
     if not er:
         return None
@@ -180,7 +170,7 @@ def resolve_org_corp(target_name: str) -> str | None:
 
 def link_org_to_target(tx, src_corp: str, target_name: str, rel: str, props: dict,
                        reverse: bool = False):
-    """src(corp_code) → target(31사 corp_code 노드 또는 needs_er 임시 노드).
+    """src(corp_code) → target(corp_code 노드 또는 needs_er 임시 노드).
     reverse=True 면 target→src 방향(최대주주현황: 명시 회사가 주주, 공시회사가 피소유)."""
     target_corp = resolve_org_corp(target_name)
     edge = f"(t)-[r:{rel}]->(s)" if reverse else f"(s)-[r:{rel}]->(t)"
@@ -320,7 +310,7 @@ def _parse_subsidiaries(zip_path: Path, rcept_no: str) -> list[dict]:
 
 
 def iter_company_subsidiaries_extra28():
-    """28개사 폴더별 (폴더, corp_code, [subs]) 산출."""
+    """extra corps 폴더별 (폴더, corp_code, [subs]) 산출."""
     for corp_code, folder in EXTRA28:
         docs_dir = RAW_DIR / folder / "documents"
         rcepts = BIZ_REPORT_RCEPT28.get(folder, [])
@@ -343,12 +333,12 @@ def main() -> None:
     d = neo4j_driver()
     counters = {
         "exec": 0, "msh_org": 0, "msh_person": 0,
-        "invest": 0, "subs": 0, "reports": 0, "has_chunk": 0,
+        "invest": 0, "subs": 0,
     }
 
     with d.session() as s:
-        # 1) 28개사 Organization MERGE
-        print("[1] 28개사 Organization MERGE ...")
+        # 1) extra corps Organization MERGE
+        print("[1] extra corps Organization MERGE ...")
         for o in base_orgs_extra28():
             s.execute_write(upsert_base_org, o)
         print(f"    완료: {len(EXTRA28)}개사")
@@ -452,7 +442,7 @@ def main() -> None:
                 er = normalize_corp_name(sub["name"])
                 if not er:
                     continue
-                # 자회사가 31사 중 하나면 corp_code 노드 재사용
+                # 자회사가 대상 회사 중 하나면 corp_code 노드 재사용
                 child_corp = resolve_org_corp(sub["name"])
                 if child_corp:
                     def _link_known(tx, cc=child_corp, pc=parent_corp, rc=sub["rcept_no"]):
@@ -487,93 +477,9 @@ def main() -> None:
                 counters["subs"] += 1
         print(f"[ok] IS_SUBSIDIARY_OF: {counters['subs']}건")
 
-        # 4) FilingDocument + reports (document_index — 28개사만)
-        print("[4] FilingDocument + reports ...")
-        conn = mariadb_conn()
-        cur = conn.cursor()
-        extra28_codes = [cc for cc, _ in EXTRA28]
-        placeholders = ",".join(["%s"] * len(extra28_codes))
-        cur.execute(
-            f"SELECT rcept_no, corp_code, doc_type, date FROM document_index "
-            f"WHERE corp_code IN ({placeholders})",
-            extra28_codes,
-        )
-        docs = cur.fetchall()
-
-        BATCH = 500
-        batch: list[dict] = []
-        all_corps_set = set(extra28_codes)
-
-        def flush_docs(tx, rows):
-            tx.run(
-                """
-                UNWIND $rows AS row
-                MERGE (f:FilingDocument {rcept_no: row.rcept_no})
-                SET f.doc_type = row.doc_type, f.date = row.date
-                WITH f, row
-                WHERE row.corp_code IS NOT NULL AND row.corp_code <> ''
-                MATCH (o:Organization {corp_code: row.corp_code})
-                MERGE (o)-[:reports]->(f)
-                """,
-                rows=rows,
-            )
-
-        for rcept_no, corp_code, doc_type, date in docs:
-            batch.append({
-                "rcept_no": rcept_no,
-                "corp_code": corp_code if corp_code in all_corps_set else "",
-                "doc_type": doc_type,
-                "date": date.isoformat() if date else None,
-            })
-            counters["reports"] += 1 if corp_code in all_corps_set else 0
-            if len(batch) >= BATCH:
-                s.execute_write(flush_docs, batch)
-                batch = []
-        if batch:
-            s.execute_write(flush_docs, batch)
-        print(f"[ok] FilingDocument {len(docs)}건 + reports {counters['reports']}건")
-
-        # 5) Chunk + has_chunk (chunk_index — 28개사만)
-        print("[5] Chunk + has_chunk ...")
-        cur.execute(
-            f"SELECT chunk_id, corp_code, rcept_no, chunk_type, section_path "
-            f"FROM chunk_index WHERE corp_code IN ({placeholders})",
-            extra28_codes,
-        )
-        chunks = cur.fetchall()
-        cbatch: list[dict] = []
-
-        def flush_chunks(tx, rows):
-            tx.run(
-                """
-                UNWIND $rows AS row
-                MERGE (c:Chunk {chunk_id: row.chunk_id})
-                SET c.corp_code = row.corp_code, c.chunk_type = row.chunk_type,
-                    c.section_path = row.section_path
-                WITH c, row
-                WHERE row.rcept_no IS NOT NULL AND row.rcept_no <> ''
-                MATCH (f:FilingDocument {rcept_no: row.rcept_no})
-                MERGE (f)-[:has_chunk]->(c)
-                """,
-                rows=rows,
-            )
-
-        for chunk_id, corp_code, rcept_no, chunk_type, section_path in chunks:
-            cbatch.append({
-                "chunk_id": chunk_id, "corp_code": corp_code,
-                "rcept_no": rcept_no, "chunk_type": chunk_type,
-                "section_path": section_path,
-            })
-            counters["has_chunk"] += 1
-            if len(cbatch) >= BATCH:
-                s.execute_write(flush_chunks, cbatch)
-                cbatch = []
-        if cbatch:
-            s.execute_write(flush_chunks, cbatch)
-        print(f"[ok] Chunk {len(chunks)}건 + has_chunk {counters['has_chunk']}건")
-
-        cur.close()
-        conn.close()
+        # v3: steps 4·5(FilingDocument+reports / Chunk+has_chunk) 제거.
+        # FilingDocument 노드는 폐기 — 공시메타는 MariaDB document_index, 근거 Chunk 는
+        # restore_provenance_chunks.py(추출 엣지 chunk_id 기준)로만 생성. 여기서 만들면 회귀.
 
     d.close()
     print("\n=== load_structured_extra28 카운터 ===")

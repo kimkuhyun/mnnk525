@@ -2,8 +2,9 @@
 
 MariaDB: fin_metric(metric_id PK, corp_code, rcept_no, bsns_year, reprt_code,
                     account_id, value, unit, fs_div). 멱등 upsert.
-Neo4j: FinMetric(metric_id, account_id, bsns_year, value, unit)
-       + HAS_METRIC(Org→FinMetric) + DERIVED_FROM(FinMetric→FilingDocument).
+Neo4j: FinMetric(metric_id, account_id, bsns_year, value, unit, reprt_code, fs_div, rcept_no)
+       + HAS_METRIC(Org→FinMetric). v3: FilingDocument/DERIVED_FROM 제거(출처=rcept_no 속성).
+       reprt_code·fs_div = 멀티홉 재무질의 중복방지 필터키(연간 11011·연결 CFS).
 
 수치는 JSON 그대로(LLM 생성 금지). value = thstrm_amount(당기) 결정론 파싱.
 계정 전수 적재(수치는 결정론). fs_div = 파일명 CFS/OFS.
@@ -94,6 +95,7 @@ def main() -> None:
                 neo_rows.append({
                     "metric_id": mid, "account_id": account_id,
                     "bsns_year": bsns_year, "value": value, "unit": unit,
+                    "reprt_code": reprt_code, "fs_div": fs_div,
                     "corp_code": corp_code, "rcept_no": rcept_no,
                 })
                 total_rows += 1
@@ -105,21 +107,19 @@ def main() -> None:
     conn.commit()
     print(f"[ok] MariaDB fin_metric upsert {len(maria_rows)}건")
 
-    # ── Neo4j FinMetric + HAS_METRIC + DERIVED_FROM (배치) ──
+    # ── Neo4j FinMetric + HAS_METRIC (배치) ──
+    # v3: FilingDocument/DERIVED_FROM 제거 — 출처는 FinMetric.rcept_no 속성으로 보존.
     def flush_fm(tx, rows):
         tx.run(
             """
             UNWIND $rows AS row
             MERGE (m:FinMetric {metric_id: row.metric_id})
             SET m.account_id=row.account_id, m.bsns_year=row.bsns_year,
-                m.value=row.value, m.unit=row.unit
+                m.value=row.value, m.unit=row.unit,
+                m.reprt_code=row.reprt_code, m.fs_div=row.fs_div, m.rcept_no=row.rcept_no
             WITH m, row
             MATCH (o:Organization {corp_code: row.corp_code})
             MERGE (o)-[:HAS_METRIC]->(m)
-            WITH m, row
-            WHERE row.rcept_no IS NOT NULL AND row.rcept_no <> ''
-            MERGE (f:FilingDocument {rcept_no: row.rcept_no})
-            MERGE (m)-[:DERIVED_FROM]->(f)
             """,
             rows=rows,
         )
@@ -128,7 +128,7 @@ def main() -> None:
         for i in range(0, len(neo_rows), 500):
             s.execute_write(flush_fm, neo_rows[i:i + 500])
             fm_nodes += len(neo_rows[i:i + 500])
-    print(f"[ok] Neo4j FinMetric MERGE {fm_nodes}건 + HAS_METRIC + DERIVED_FROM")
+    print(f"[ok] Neo4j FinMetric MERGE {fm_nodes}건 + HAS_METRIC")
 
     cur.close()
     conn.close()

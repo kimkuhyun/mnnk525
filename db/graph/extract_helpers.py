@@ -153,7 +153,7 @@ def _org_match_clause(var: str, org: dict, pkey: str):
 
 def add_edge(driver, rel_type: str, from_match: dict, to_match: dict,
              chunk_id: str, rcept_no: str, confidence: float,
-             relation_type: str = None) -> None:
+             relation_type: str = None, extracted_by: str = "claude") -> None:
     """비정형 엣지 멱등 MERGE + 근거속성 SET.
 
     from_match / to_match: {'kind':'org','org':<resolve_org dict>}
@@ -161,7 +161,12 @@ def add_edge(driver, rel_type: str, from_match: dict, to_match: dict,
                         또는 {'kind':'chunk','chunk_id':...}  (hasObject 출발점)
     """
     assert rel_type in EDGE_TYPES, rel_type
-    params = {"chunk_id": chunk_id, "rcept_no": rcept_no, "confidence": float(confidence)}
+    params = {
+        "chunk_id": chunk_id,
+        "rcept_no": rcept_no,
+        "confidence": float(confidence),
+        "extracted_by": extracted_by,
+    }
     clauses = []
 
     def node_clause(var, m, pkey):
@@ -186,7 +191,7 @@ def add_edge(driver, rel_type: str, from_match: dict, to_match: dict,
     cy = (
         "\n".join(clauses)
         + f"\nMERGE (a)-[r:{rel_type}]->(b)"
-        + "\nSET r.extracted_by='claude', r.chunk_id=$chunk_id, "
+        + "\nSET r.extracted_by=$extracted_by, r.chunk_id=$chunk_id, "
           "r.rcept_no=$rcept_no, r.confidence=$confidence" + set_extra
     )
     with driver.session() as s:
@@ -195,16 +200,18 @@ def add_edge(driver, rel_type: str, from_match: dict, to_match: dict,
 
 # ── MariaDB: provenance 원장 ───────────────────────────────
 def write_provenance(conn, subject_id: str, predicate: str, object_id: str,
-                     chunk_id: str, rcept_no: str, confidence: float) -> str:
+                     chunk_id: str, rcept_no: str, confidence: float,
+                     extracted_by: str = "claude") -> str:
     """extraction_provenance 멱등 INSERT(ON DUP). prov_id = 결정론. 반환 prov_id."""
     pid = prov_id(subject_id, predicate, object_id, chunk_id)
     cur = conn.cursor()
     cur.execute(
         "INSERT INTO extraction_provenance "
         "(prov_id, subject_id, predicate, object_id, chunk_id, rcept_no, extracted_by, confidence) "
-        "VALUES (%s,%s,%s,%s,%s,%s,'claude',%s) "
-        "ON DUPLICATE KEY UPDATE confidence=VALUES(confidence), rcept_no=VALUES(rcept_no)",
-        (pid, subject_id, predicate, object_id, chunk_id, rcept_no, float(confidence)),
+        "VALUES (%s,%s,%s,%s,%s,%s,%s,%s) "
+        "ON DUPLICATE KEY UPDATE confidence=VALUES(confidence), rcept_no=VALUES(rcept_no), "
+        "extracted_by=VALUES(extracted_by)",
+        (pid, subject_id, predicate, object_id, chunk_id, rcept_no, extracted_by, float(confidence)),
     )
     cur.close()
     return pid

@@ -1,11 +1,10 @@
 """정형 노드 + 정형 엣지 적재 (extracted_by 미부여 = DART 사실). 멱등 MERGE.
 
-노드: Organization(3사 + 등장 타법인) · Person(임원·개인주주) · FilingDocument · Chunk
+노드: Organization(3사 + 등장 타법인) · Person(임원·개인주주)
 엣지: EXECUTIVE_OF · IS_MAJOR_SHAREHOLDER_OF · INVESTS_IN · IS_SUBSIDIARY_OF
-      · reports · has_chunk
+(v3: FilingDocument/Chunk 노드·reports/has_chunk 엣지 생성 제거 — 03_neo4j.md §7-5)
 
-입력: db/raw/{회사}/ds002/*.json (exctv/hyslr/otrCpr) + 사업보고서 zip(종속회사)
-      + MariaDB document_index / chunk_index.
+입력: db/raw/{회사}/ds002/*.json (exctv/hyslr/otrCpr) + 사업보고서 zip(종속회사).
 """
 from __future__ import annotations
 
@@ -16,7 +15,6 @@ from db import (
     CORP_CODE,
     CORP_NAME,
     RAW_DIR,
-    mariadb_conn,
     name_org_key,
     neo4j_driver,
     normalize_corp_name,
@@ -167,7 +165,7 @@ def _looks_like_person(name: str) -> bool:
 def main() -> None:
     d = neo4j_driver()
     counters = {"exec": 0, "msh_org": 0, "msh_person": 0, "invest": 0, "subs": 0,
-                "reports": 0, "has_chunk": 0, "name_org": 0}
+                "name_org": 0}
 
     with d.session() as s:
         # 1) 3사 Organization
@@ -282,80 +280,9 @@ def main() -> None:
                 counters["subs"] += 1
         print("[ok] IS_SUBSIDIARY_OF 엣지")
 
-        # 4) FilingDocument + reports (document_index)
-        conn = mariadb_conn()
-        cur = conn.cursor()
-        cur.execute("SELECT rcept_no, corp_code, doc_type, date FROM document_index")
-        docs = cur.fetchall()
-        # 배치 MERGE
-        BATCH = 500
-        batch: list[dict] = []
-
-        def flush_docs(tx, rows):
-            tx.run(
-                """
-                UNWIND $rows AS row
-                MERGE (f:FilingDocument {rcept_no: row.rcept_no})
-                SET f.doc_type = row.doc_type, f.date = row.date
-                WITH f, row
-                WHERE row.corp_code IS NOT NULL AND row.corp_code <> ''
-                MATCH (o:Organization {corp_code: row.corp_code})
-                MERGE (o)-[:reports]->(f)
-                """,
-                rows=rows,
-            )
-
-        known_corps = set(CORP_CODE.values())
-        for rcept_no, corp_code, doc_type, date in docs:
-            batch.append({
-                "rcept_no": rcept_no,
-                "corp_code": corp_code if corp_code in known_corps else "",
-                "doc_type": doc_type,
-                "date": date.isoformat() if date else None,
-            })
-            counters["reports"] += 1 if (corp_code in known_corps) else 0
-            if len(batch) >= BATCH:
-                s.execute_write(flush_docs, batch)
-                batch = []
-        if batch:
-            s.execute_write(flush_docs, batch)
-        print(f"[ok] FilingDocument {len(docs)}건 + reports")
-
-        # 5) Chunk + has_chunk (chunk_index)
-        cur.execute("SELECT chunk_id, corp_code, rcept_no, chunk_type, section_path FROM chunk_index")
-        chunks = cur.fetchall()
-        cbatch: list[dict] = []
-
-        def flush_chunks(tx, rows):
-            tx.run(
-                """
-                UNWIND $rows AS row
-                MERGE (c:Chunk {chunk_id: row.chunk_id})
-                SET c.corp_code = row.corp_code, c.chunk_type = row.chunk_type,
-                    c.section_path = row.section_path
-                WITH c, row
-                WHERE row.rcept_no IS NOT NULL AND row.rcept_no <> ''
-                MATCH (f:FilingDocument {rcept_no: row.rcept_no})
-                MERGE (f)-[:has_chunk]->(c)
-                """,
-                rows=rows,
-            )
-
-        for chunk_id, corp_code, rcept_no, chunk_type, section_path in chunks:
-            cbatch.append({
-                "chunk_id": chunk_id, "corp_code": corp_code, "rcept_no": rcept_no,
-                "chunk_type": chunk_type, "section_path": section_path,
-            })
-            counters["has_chunk"] += 1
-            if len(cbatch) >= BATCH:
-                s.execute_write(flush_chunks, cbatch)
-                cbatch = []
-        if cbatch:
-            s.execute_write(flush_chunks, cbatch)
-        print(f"[ok] Chunk {len(chunks)}건 + has_chunk")
-
-        cur.close()
-        conn.close()
+        # v3: steps 4·5(FilingDocument+reports / Chunk+has_chunk) 제거.
+        # FilingDocument 폐기 — 공시메타는 MariaDB document_index, 근거 Chunk 는
+        # restore_provenance_chunks.py(추출 엣지 chunk_id 기준)로만 생성. 여기서 만들면 회귀.
 
     d.close()
     print("=== load_structured 카운터 ===")

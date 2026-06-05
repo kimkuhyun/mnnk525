@@ -142,7 +142,7 @@ erDiagram
 | object_id | VARCHAR(64) | | 관계 목적어 식별자 |
 | chunk_id | VARCHAR(16) | FK | 근거 청크 식별자(16자리 hex) |
 | rcept_no | VARCHAR(14) | | 접수번호(14자리), 근거 공시 |
-| extracted_by | VARCHAR(16) | | `'claude'`(뉴스/문서 추출) 또는 `NULL`(DART 사실) |
+| extracted_by | VARCHAR(16) | | `'claude'`(본문 추출, 로컬LLM `'q3.5:9b'` 등 포함) 또는 `NULL`(DART 사실) |
 | confidence | FLOAT | | 추출 신뢰도 |
 
 ## 3. 교차키 노트
